@@ -1,0 +1,3 @@
+people:
+    path: /people/{id}
+    controller: App\Controller\MBOController::index

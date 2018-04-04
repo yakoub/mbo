@@ -29,4 +29,13 @@ class PersonRepository extends ServiceEntityRepository
             ->getQuery();
         return $query->getResult();
     }
+
+    public function getTree(Person $person) {
+        $queryBuilder = $this->createQueryBuilder('p');
+        $query = $queryBuilder->innerJoin('p.manager', 'e', 'WITH', 'p.manager = :id')
+            ->setParameter('id', $person->getId())
+            ->addSelect('e')
+            ->getQuery();
+        return $query->getResult();
+    }
 }

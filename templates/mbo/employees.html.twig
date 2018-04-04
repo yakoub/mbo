@@ -1,0 +1,13 @@
+<table class="table table-striped"><tbody>
+{% for person in people %}
+    <tr>
+        <td> 
+            <a href="{{ path('people', {'id': person.id}) }}">
+                {{ person.name }} 
+            </a>
+        </td>
+        <td> {{ person.email }} </td>
+        <td> 
+    </tr>
+{% endfor %}
+</tbody></table>

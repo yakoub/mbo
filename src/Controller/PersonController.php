@@ -50,7 +50,7 @@ class PersonController extends Controller
     /**
      * @Route("/{id}", name="person_show", methods="GET")
      */
-    public function show(Person $person): Response
+    public function show(Person $person, PersonRepository $personRepository): Response
     {
         return $this->render('person/show.html.twig', ['person' => $person]);
     }
