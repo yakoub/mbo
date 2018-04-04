@@ -20,7 +20,8 @@ class PersonController extends Controller
      */
     public function index(PersonRepository $personRepository): Response
     {
-        return $this->render('person/index.html.twig', ['people' => $personRepository->findAll()]);
+        $people = $personRepository->getRoot();
+        return $this->render('person/index.html.twig', ['people' => $people]);
     }
 
     /**

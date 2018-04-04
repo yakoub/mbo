@@ -5,33 +5,19 @@
 {% block body %}
     <h1>Person index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
         {% for person in people %}
-            <tr>
-                <td>{{ person.id }}</td>
-                <td>{{ person.name }}</td>
-                <td>{{ person.email }}</td>
-                <td>
+            <ul>
+                <li>{{ person.name }}</li>
+                <li>
                     <a href="{{ path('person_show', {'id': person.id}) }}">show</a>
                     <a href="{{ path('person_edit', {'id': person.id}) }}">edit</a>
-                </td>
-            </tr>
+                </li>
+            </ul>
+            {{ include('person/people_table.html.twig', {people: person.employees}, with_context = false) }}
+
         {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
+            <p> no records found </p>
         {% endfor %}
-        </tbody>
-    </table>
 
     <a href="{{ path('person_new') }}">Create new</a>
 {% endblock %}
