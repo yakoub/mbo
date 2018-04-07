@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}MBOYearly index{% endblock %}
+
+{% block body %}
+    <h1>MBOYearly index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Year</th>
+                <th>Type</th>
+                <th>Subject</th>
+                <th>Description</th>
+                <th>Weight</th>
+                <th>Status</th>
+                <th>Score</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for m_b_o_yearly in m_b_o_yearlies %}
+            <tr>
+                <td>{{ m_b_o_yearly.id }}</td>
+                <td>{{ m_b_o_yearly.year }}</td>
+                <td>{{ m_b_o_yearly.Type }}</td>
+                <td>{{ m_b_o_yearly.subject }}</td>
+                <td>{{ m_b_o_yearly.description }}</td>
+                <td>{{ m_b_o_yearly.weight }}</td>
+                <td>{{ m_b_o_yearly.status }}</td>
+                <td>{{ m_b_o_yearly.score }}</td>
+                <td>
+                    <a href="{{ path('m_b_o_yearly_show', {'id': m_b_o_yearly.id}) }}">show</a>
+                    <a href="{{ path('m_b_o_yearly_edit', {'id': m_b_o_yearly.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('m_b_o_yearly_new') }}">Create new</a>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New MBOYearly{% endblock %}
+
+{% block body %}
+    <h1>Create new MBOYearly</h1>
+
+    {{ include('m_b_o_yearly/_form.html.twig') }}
+
+    <a href="{{ path('m_b_o_yearly_index') }}">back to list</a>
+{% endblock %}

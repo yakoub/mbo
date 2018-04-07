@@ -38,9 +38,15 @@ class Person
      */
     private $manager;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\MBOYearly", mappedBy="by_manager")
+     */
+    private $mbo_yearlies;
+
     public function __construct()
     {
         $this->employees = new ArrayCollection();
+        $this->mbo_yearlies = new ArrayCollection();
     }
 
     public function getId()
@@ -108,6 +114,37 @@ class Person
             // set the owning side to null (unless already changed)
             if ($employee->getManager() === $this) {
                 $employee->setManager(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|MBOYearly[]
+     */
+    public function getMboYearlies(): Collection
+    {
+        return $this->mbo_yearlies;
+    }
+
+    public function addMboYearly(MBOYearly $mboYearly): self
+    {
+        if (!$this->mbo_yearlies->contains($mboYearly)) {
+            $this->mbo_yearlies[] = $mboYearly;
+            $mboYearly->setByManager($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMboYearly(MBOYearly $mboYearly): self
+    {
+        if ($this->mbo_yearlies->contains($mboYearly)) {
+            $this->mbo_yearlies->removeElement($mboYearly);
+            // set the owning side to null (unless already changed)
+            if ($mboYearly->getByManager() === $this) {
+                $mboYearly->setByManager(null);
             }
         }
 
