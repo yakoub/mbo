@@ -20,19 +20,19 @@
             </tr>
         </thead>
         <tbody>
-        {% for m_b_o_yearly in m_b_o_yearlies %}
+        {% for mbo_yearly in mbo_yearlies %}
             <tr>
-                <td>{{ m_b_o_yearly.id }}</td>
-                <td>{{ m_b_o_yearly.year }}</td>
-                <td>{{ m_b_o_yearly.Type }}</td>
-                <td>{{ m_b_o_yearly.subject }}</td>
-                <td>{{ m_b_o_yearly.description }}</td>
-                <td>{{ m_b_o_yearly.weight }}</td>
-                <td>{{ m_b_o_yearly.status }}</td>
-                <td>{{ m_b_o_yearly.score }}</td>
+                <td>{{ mbo_yearly.id }}</td>
+                <td>{{ mbo_yearly.year }}</td>
+                <td>{{ mbo_yearly.Type }}</td>
+                <td>{{ mbo_yearly.subject }}</td>
+                <td>{{ mbo_yearly.description }}</td>
+                <td>{{ mbo_yearly.weight }}</td>
+                <td>{{ mbo_yearly.status }}</td>
+                <td>{{ mbo_yearly.score }}</td>
                 <td>
-                    <a href="{{ path('m_b_o_yearly_show', {'id': m_b_o_yearly.id}) }}">show</a>
-                    <a href="{{ path('m_b_o_yearly_edit', {'id': m_b_o_yearly.id}) }}">edit</a>
+                    <a href="{{ path('mbo_yearly_show', {'id': mbo_yearly.id}) }}">show</a>
+                    <a href="{{ path('mbo_yearly_edit', {'id': mbo_yearly.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -43,5 +43,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('m_b_o_yearly_new') }}">Create new</a>
+    <a href="{{ path('mbo_yearly_new') }}">Create new</a>
 {% endblock %}

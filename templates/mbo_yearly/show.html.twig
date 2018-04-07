@@ -9,42 +9,42 @@
         <tbody>
             <tr>
                 <th>Id</th>
-                <td>{{ m_b_o_yearly.id }}</td>
+                <td>{{ mbo_yearly.id }}</td>
             </tr>
             <tr>
                 <th>Year</th>
-                <td>{{ m_b_o_yearly.year }}</td>
+                <td>{{ mbo_yearly.year }}</td>
             </tr>
             <tr>
                 <th>Type</th>
-                <td>{{ m_b_o_yearly.Type }}</td>
+                <td>{{ mbo_yearly.Type }}</td>
             </tr>
             <tr>
                 <th>Subject</th>
-                <td>{{ m_b_o_yearly.subject }}</td>
+                <td>{{ mbo_yearly.subject }}</td>
             </tr>
             <tr>
                 <th>Description</th>
-                <td>{{ m_b_o_yearly.description }}</td>
+                <td>{{ mbo_yearly.description }}</td>
             </tr>
             <tr>
                 <th>Weight</th>
-                <td>{{ m_b_o_yearly.weight }}</td>
+                <td>{{ mbo_yearly.weight }}</td>
             </tr>
             <tr>
                 <th>Status</th>
-                <td>{{ m_b_o_yearly.status }}</td>
+                <td>{{ mbo_yearly.status }}</td>
             </tr>
             <tr>
                 <th>Score</th>
-                <td>{{ m_b_o_yearly.score }}</td>
+                <td>{{ mbo_yearly.score }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('m_b_o_yearly_index') }}">back to list</a>
+    <a href="{{ path('mbo_yearly_index') }}">back to list</a>
 
-    <a href="{{ path('m_b_o_yearly_edit', {'id': m_b_o_yearly.id}) }}">edit</a>
+    <a href="{{ path('mbo_yearly_edit', {'id': mbo_yearly.id}) }}">edit</a>
 
-    {{ include('m_b_o_yearly/_delete_form.html.twig') }}
+    {{ include('mbo_yearly/_delete_form.html.twig') }}
 {% endblock %}

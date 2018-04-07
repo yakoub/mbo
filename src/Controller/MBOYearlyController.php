@@ -11,20 +11,20 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/m/b/o/yearly")
+ * @Route("/mbo_yearly")
  */
 class MBOYearlyController extends Controller
 {
     /**
-     * @Route("/", name="m_b_o_yearly_index", methods="GET")
+     * @Route("/", name="mbo_yearly_index", methods="GET")
      */
     public function index(MBOYearlyRepository $mBOYearlyRepository): Response
     {
-        return $this->render('m_b_o_yearly/index.html.twig', ['m_b_o_yearlies' => $mBOYearlyRepository->findAll()]);
+        return $this->render('mbo_yearly/index.html.twig', ['mbo_yearlies' => $mBOYearlyRepository->findAll()]);
     }
 
     /**
-     * @Route("/new", name="m_b_o_yearly_new", methods="GET|POST")
+     * @Route("/new", name="mbo_yearly_new", methods="GET|POST")
      */
     public function new(Request $request): Response
     {
@@ -37,25 +37,25 @@ class MBOYearlyController extends Controller
             $em->persist($mBOYearly);
             $em->flush();
 
-            return $this->redirectToRoute('m_b_o_yearly_index');
+            return $this->redirectToRoute('mbo_yearly_index');
         }
 
-        return $this->render('m_b_o_yearly/new.html.twig', [
-            'm_b_o_yearly' => $mBOYearly,
+        return $this->render('mbo_yearly/new.html.twig', [
+            'mbo_yearly' => $mBOYearly,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/{id}", name="m_b_o_yearly_show", methods="GET")
+     * @Route("/{id}", name="mbo_yearly_show", methods="GET")
      */
     public function show(MBOYearly $mBOYearly): Response
     {
-        return $this->render('m_b_o_yearly/show.html.twig', ['m_b_o_yearly' => $mBOYearly]);
+        return $this->render('mbo_yearly/show.html.twig', ['mbo_yearly' => $mBOYearly]);
     }
 
     /**
-     * @Route("/{id}/edit", name="m_b_o_yearly_edit", methods="GET|POST")
+     * @Route("/{id}/edit", name="mbo_yearly_edit", methods="GET|POST")
      */
     public function edit(Request $request, MBOYearly $mBOYearly): Response
     {
@@ -65,17 +65,17 @@ class MBOYearlyController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('m_b_o_yearly_edit', ['id' => $mBOYearly->getId()]);
+            return $this->redirectToRoute('mbo_yearly_edit', ['id' => $mBOYearly->getId()]);
         }
 
-        return $this->render('m_b_o_yearly/edit.html.twig', [
-            'm_b_o_yearly' => $mBOYearly,
+        return $this->render('mbo_yearly/edit.html.twig', [
+            'mbo_yearly' => $mBOYearly,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/{id}", name="m_b_o_yearly_delete", methods="DELETE")
+     * @Route("/{id}", name="mbo_yearly_delete", methods="DELETE")
      */
     public function delete(Request $request, MBOYearly $mBOYearly): Response
     {
@@ -85,6 +85,6 @@ class MBOYearlyController extends Controller
             $em->flush();
         }
 
-        return $this->redirectToRoute('m_b_o_yearly_index');
+        return $this->redirectToRoute('mbo_yearly_index');
     }
 }
