@@ -18,4 +18,15 @@ class MBOYearlyRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, MBOYearly::class);
     }
+
+    public function aggregateYearForEmployee($year, $employee) {
+        $builder = $this->createQueryBuilder('m');
+        $builder->andWhere('m.year = :year');
+        $builder->andWhere('m.for_employee = :employee');
+        $builder->setParameter(':year', $year);
+        $builder->setParameter(':employee', $employee);
+        $builder->select('SUM(m.weight) as total_weight');
+        
+        return $builder->getQuery()->getSingleScalarResult();
+    }
 }
