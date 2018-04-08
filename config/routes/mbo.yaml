@@ -1,3 +1,6 @@
 people:
     path: /people/{id}
     controller: App\Controller\MBOController::index
+people_root:
+    path: /people
+    controller: App\Controller\MBOController:root
