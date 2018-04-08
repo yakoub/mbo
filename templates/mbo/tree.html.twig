@@ -4,32 +4,31 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <!-- a href="{{ asset('css/mbo.css') }}" rel="stylesheet" type="text/css" / -->
+    <link href="{{ asset('css/mbo.css') }}" rel="stylesheet" type="text/css" />
 {% endblock %}
 
 {% block body %}
     {% if head %}
-        <h1> 
+        <h1 class="title head">
             <a href="{{ path('person_show', {'id': head.id}) }}">
                 {{ head.name }} 
             </a>
+            <span> go up:
+                {% if head.manager %}
+                    <a href="{{ path('people', {'id': head.manager.getId()}) }}">
+                        {{ head.manager.name }} 
+                    </a>
+                {% else %}
+                    <a href="{{ path('people_root') }}">
+                        Root 
+                    </a>
+                {% endif %}
+            </span>
         </h1>
-        <h2> 
-            go up:
-            {% if head.manager %}
-                <a href="{{ path('people', {'id': head.manager.getId()}) }}">
-                    {{ head.manager.name }} 
-                </a>
-            {% else %}
-                <a href="{{ path('people_root') }}">
-                    Root 
-                </a>
-            {% endif %}
-        </h2>
     {% endif %}
 
     {% for person in people %}
-        <div class="card">
+        <div class="card mb-3">
             <div class="card-header">
                 <h3 class="card-title">
                     <a class="card-link" href="{{ path('people', {'id': person.id}) }}">

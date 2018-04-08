@@ -9,6 +9,9 @@
     </head>
     <body>
         <div class="container">
+        {% block menu %}
+            {{ include('main-menu.html.twig') }}
+        {% endblock %}
         {% block body %}{% endblock %}
         </div>
         {% block javascripts %}{% endblock %}

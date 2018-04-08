@@ -1,0 +1,58 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ year }} {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <!-- a href="{{ asset('css/mbo.css') }}" rel="stylesheet" type="text/css" / -->
+{% endblock %}
+
+{% block body %}
+
+    <header>
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
+    </header>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Year</th>
+                <th>Type</th>
+                <th>Subject</th>
+                <th>Description</th>
+                <th>Weight</th>
+                <th>Status</th>
+                <th>Score</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for mbo_yearly in mbo_yearlies %}
+            <tr>
+                <td>{{ mbo_yearly.id }}</td>
+                <td>{{ mbo_yearly.year }}</td>
+                <td>{{ mbo_yearly.Type }}</td>
+                <td>{{ mbo_yearly.subject }}</td>
+                <td>{{ mbo_yearly.description }}</td>
+                <td>{{ mbo_yearly.weight }}</td>
+                <td>{{ mbo_yearly.status }}</td>
+                <td>{{ mbo_yearly.score }}</td>
+                <td>
+                    <a href="{{ path('mbo_yearly_show', {'id': mbo_yearly.id}) }}">show</a>
+                    <a href="{{ path('mbo_yearly_edit', {'id': mbo_yearly.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
+{% block javascripts %}{% endblock %}
