@@ -29,4 +29,14 @@ class MBOYearlyRepository extends ServiceEntityRepository
         
         return $builder->getQuery()->getSingleScalarResult();
     }
+
+    public function getMyYear($year) {
+        $builder = $this->createQueryBuilder('m');
+        $builder->andWhere('m.year = :year');
+        $builder->setParameter(':year', $year);
+        $builder->innerJoin('m.for_employee', 'e');
+        $builder->addSelect('e');
+
+        return $builder->getQuery()->getResult();
+    }
 }

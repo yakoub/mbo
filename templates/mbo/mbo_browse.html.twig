@@ -19,7 +19,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
+                <th> Employee </th>
                 <th>Year</th>
                 <th>Type</th>
                 <th>Subject</th>
@@ -33,7 +33,7 @@
         <tbody>
         {% for mbo_yearly in mbo_yearlies %}
             <tr>
-                <td>{{ mbo_yearly.id }}</td>
+                <td>{{ mbo_yearly.getForEmployee().name }} </td>
                 <td>{{ mbo_yearly.year }}</td>
                 <td>{{ mbo_yearly.Type }}</td>
                 <td>{{ mbo_yearly.subject }}</td>

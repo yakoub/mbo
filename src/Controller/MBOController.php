@@ -40,7 +40,7 @@ class MBOController extends Controller
         if ($form->isSubmitted() and $form->isValid()) {
             $set_cookie = $year = $form->get('year')->getData();
         }
-        $mbo_yearlies = $mbo_repository->findBy(['year' => $year]);
+        $mbo_yearlies = $mbo_repository->getMyYear($year);
         $context = array(
             'form' => $form->createView(),
             'year' => 2018,
