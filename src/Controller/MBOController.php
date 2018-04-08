@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Cookie;
 
 use App\Entity\Person;
 use App\Repository\PersonRepository;
@@ -27,11 +28,17 @@ class MBOController extends Controller
 
     public function by_year(MBOYearlyRepository $mbo_repository, Request $request): Response
     {
-        $year = 2018;
+        if ($request->cookies->has('mbo_year')) {
+            $year = $request->cookies->get('mbo_year');
+        }
+        else {
+            $year = intval(date('Y'));
+        }
         $form = $this->createForm(YearType::class, ['year' => $year]);
         $form->handleRequest($request);
+        $set_cookie = false;
         if ($form->isSubmitted() and $form->isValid()) {
-            $year = $form->get('year')->getData();
+            $set_cookie = $year = $form->get('year')->getData();
         }
         $mbo_yearlies = $mbo_repository->findBy(['year' => $year]);
         $context = array(
@@ -39,6 +46,12 @@ class MBOController extends Controller
             'year' => 2018,
             'mbo_yearlies' => $mbo_yearlies,
         );
-        return $this->render('mbo/mbo_browse.html.twig', $context);
+        $response = $this->render('mbo/mbo_browse.html.twig', $context);
+        if ($set_cookie) {
+            $expire = new \DateTime();
+            $expire->add(new \DateInterval('P1Y'));
+            $response->headers->setCookie(new Cookie('mbo_year', $set_cookie, $expire, '/'));
+        }
+        return $response;
     }
 }
