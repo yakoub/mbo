@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} {{ person.name }} {% endblock %}
+{% block title %} {{ person ? person.name : 'People' }} {% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -8,13 +8,16 @@
 {% endblock %}
 
 {% block body %}
-    <h1> {{ person.name }} </h1>
-    {% if person.manager %}
-    <h2> 
-        go up:
-        <a href="{{ path('people', {'id': person.manager.getId()}) }}"> {{ person.manager.name }} 
-        </a>
-    </h2>
+    {% if person %}
+        <h1> {{ person.name }} </h1>
+        {% if person.manager %}
+        <h2> 
+            go up:
+            <a href="{{ path('people', {'id': person.manager.getId()}) }}">
+                {{ person.manager.name }} 
+            </a>
+        </h2>
+        {% endif %}
     {% endif %}
 
     {% for person in people %}

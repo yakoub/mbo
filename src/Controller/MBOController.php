@@ -16,4 +16,10 @@ class MBOController extends Controller
         $people = $personRepository->getTree($person);
         return $this->render('mbo/tree.html.twig', ['people' => $people, 'person' => $person]);
     }
+
+    public function root(PersonRepository $personRepository): Response
+    {
+        $people = $personRepository->getRoot();
+        return $this->render('mbo/tree.html.twig', ['people' => $people, 'person' => false]);
+    }
 }

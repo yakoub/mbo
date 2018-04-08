@@ -6,7 +6,11 @@
                 {{ person.name }} 
             </a>
         </td>
-        <td> {{ person.email }} </td>
+        <td> 
+            <a href="{{ path('person_show', {'id': person.id}) }}">
+                show 
+            </a>
+        </td>
         <td> 
     </tr>
 {% endfor %}
