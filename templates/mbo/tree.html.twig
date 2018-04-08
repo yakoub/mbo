@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} {{ person ? person.name : 'People' }} {% endblock %}
+{% block title %} {{ head ? head.name : 'People' }} {% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -8,16 +8,24 @@
 {% endblock %}
 
 {% block body %}
-    {% if person %}
-        <h1> {{ person.name }} </h1>
-        {% if person.manager %}
+    {% if head %}
+        <h1> 
+            <a href="{{ path('person_show', {'id': head.id}) }}">
+                {{ head.name }} 
+            </a>
+        </h1>
         <h2> 
             go up:
-            <a href="{{ path('people', {'id': person.manager.getId()}) }}">
-                {{ person.manager.name }} 
-            </a>
+            {% if head.manager %}
+                <a href="{{ path('people', {'id': head.manager.getId()}) }}">
+                    {{ head.manager.name }} 
+                </a>
+            {% else %}
+                <a href="{{ path('people_root') }}">
+                    Root 
+                </a>
+            {% endif %}
         </h2>
-        {% endif %}
     {% endif %}
 
     {% for person in people %}
@@ -32,8 +40,8 @@
                     </a>
                 </h3>
             </div>
-            {% if person.employees %}
-            {{ include('mbo/employees.html.twig', {people: person.employees}, with_context = false) }}
+            {% if not person.employees.isEmpty() %}
+                {{ include('mbo/employees.html.twig', {people: person.employees}, with_context = false) }}
             {% endif %}
         </div>
     {% else %}

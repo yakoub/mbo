@@ -14,12 +14,12 @@ class MBOController extends Controller
     public function index(PersonRepository $personRepository, Person $person): Response
     {
         $people = $personRepository->getTree($person);
-        return $this->render('mbo/tree.html.twig', ['people' => $people, 'person' => $person]);
+        return $this->render('mbo/tree.html.twig', ['people' => $people, 'head' => $person]);
     }
 
     public function root(PersonRepository $personRepository): Response
     {
         $people = $personRepository->getRoot();
-        return $this->render('mbo/tree.html.twig', ['people' => $people, 'person' => false]);
+        return $this->render('mbo/tree.html.twig', ['people' => $people, 'head' => false]);
     }
 }
