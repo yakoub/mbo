@@ -19,7 +19,7 @@ class MBOWeightValidator extends ConstraintValidator
     {
         $year = $mbo_yearly->getYear();
         $employee = $mbo_yearly->getForEmployee();
-        $total_weight = $this->repository->aggregateYearForEmployee($year, $employee);
+        $total_weight = $this->repository->aggregateYearForEmployee($year, $employee, $mbo_yearly);
 
         $weight = $mbo_yearly->getWeight();
 

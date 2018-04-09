@@ -49,9 +49,13 @@ class MBOYearlyController extends Controller
     /**
      * @Route("/{id}", name="mbo_yearly_show", methods="GET")
      */
-    public function show(MBOYearly $mBOYearly): Response
+    public function show(MBOYearly $mBOYearly, MBOYearlyRepository $repository): Response
     {
-        return $this->render('mbo_yearly/show.html.twig', ['mbo_yearly' => $mBOYearly]);
+        $year = $mBOYearly->getYear();
+        $employee = $mBOYearly->getForEmployee();
+        $context['total_weight'] = $repository->aggregateYearForEmployee($year, $employee);
+        $context['mbo_yearly'] = $mBOYearly;
+        return $this->render('mbo_yearly/show.html.twig', $context);
     }
 
     /**
