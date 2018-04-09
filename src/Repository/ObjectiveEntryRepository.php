@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\ObjectiveEntry;
+use App\Repository\PersonRepository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -14,8 +15,9 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class ObjectiveEntryRepository extends ServiceEntityRepository
 {
-    public function __construct(RegistryInterface $registry)
+    public function __construct(RegistryInterface $registry, PersonRepository $p_repository)
     {
+        $this->person_repository = $p_repository;
         parent::__construct($registry, ObjectiveEntry::class);
     }
 
@@ -39,9 +41,20 @@ class ObjectiveEntryRepository extends ServiceEntityRepository
         $builder = $this->createQueryBuilder('m');
         $builder->andWhere('m.year = :year');
         $builder->setParameter(':year', $year);
-        $builder->innerJoin('m.for_employee', 'e');
-        $builder->addSelect('e');
+        $builder->groupBy('m.for_employee');
+        $builder->select('sum(m.weight) as total_weight');
+        $builder->addSelect('identity(m.for_employee) as employee');
+        $groups = $builder->getQuery()->getResult();
+        
+        $weights = [];
+        foreach ($groups as $mbo) {
+            $weights[$mbo['employee']] = $mbo['total_weight'];
+        }
+        $employees = $this->person_repository->findBy(['id' => array_keys($weights)]);
+        foreach ($employees as $employee) {
+            $employee->total_weight = $weights[$employee->getId()];
+        }
 
-        return $builder->getQuery()->getResult();
+        return $employees;
     }
 }

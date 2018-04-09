@@ -40,11 +40,11 @@ class MBOController extends Controller
         if ($form->isSubmitted() and $form->isValid()) {
             $set_cookie = $year = $form->get('year')->getData();
         }
-        $objective_entries = $oe_repository->getMyYear($year);
+        $employees = $oe_repository->getMyYear($year);
         $context = array(
             'form' => $form->createView(),
             'year' => 2018,
-            'objective_entries' => $objective_entries,
+            'employees' => $employees,
         );
         $response = $this->render('mbo/mbo_browse.html.twig', $context);
         if ($set_cookie) {
