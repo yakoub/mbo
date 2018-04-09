@@ -5,13 +5,13 @@ namespace App\Validator;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
-use App\Repository\MBOYearlyRepository;
+use App\Repository\ObjectiveEntryRepository;
 
 class MBOWeightValidator extends ConstraintValidator
 {
     private $repository;
 
-    public function __construct(MBOYearlyRepository $repository) {
+    public function __construct(ObjectiveEntryRepository $repository) {
         $this->repository = $repository;
     }
 

@@ -6,11 +6,11 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Validator as MBOValidator;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\MBOYearlyRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\ObjectiveEntryRepository")
  * @MBOValidator\MBOWeight
  */
 
-class MBOYearly
+class ObjectiveEntry
 {
     /**
      * @ORM\Id()
@@ -20,7 +20,7 @@ class MBOYearly
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Person", inversedBy="mbo_yearlies")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Person", inversedBy="objective_entries")
      * @ORM\JoinColumn(nullable=false)
      */
     private $by_manager;

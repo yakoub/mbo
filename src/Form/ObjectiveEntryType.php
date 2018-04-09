@@ -2,12 +2,12 @@
 
 namespace App\Form;
 
-use App\Entity\MBOYearly;
+use App\Entity\ObjectiveEntry;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class MBOYearlyType extends AbstractType
+class ObjectiveEntryType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -27,7 +27,7 @@ class MBOYearlyType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => MBOYearly::class,
+            'data_class' => ObjectiveEntry::class,
         ]);
     }
 }

@@ -1,25 +1,14 @@
-
 {% extends 'base.html.twig' %}
 
-{% block title %} {{ year }} {% endblock %}
-
-{% block stylesheets %}
-    {{ parent() }}
-    <!-- a href="{{ asset('css/mbo.css') }}" rel="stylesheet" type="text/css" / -->
-{% endblock %}
+{% block title %}Objective index{% endblock %}
 
 {% block body %}
-
-    <header>
-        {{ form_start(form) }}
-        {{ form_widget(form) }}
-        {{ form_end(form) }}
-    </header>
+    <h1>Objective index</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Employee</th>
+                <th>Id</th>
                 <th>Year</th>
                 <th>Type</th>
                 <th>Subject</th>
@@ -33,7 +22,7 @@
         <tbody>
         {% for objective_entry in objective_entries %}
             <tr>
-                <td>{{ objective_entry.getForEmployee().name }} </td>
+                <td>{{ objective_entry.id }}</td>
                 <td>{{ objective_entry.year }}</td>
                 <td>{{ objective_entry.Type }}</td>
                 <td>{{ objective_entry.subject }}</td>
@@ -54,5 +43,5 @@
         </tbody>
     </table>
 
+    <a href="{{ path('objective_entry_new') }}">Create new</a>
 {% endblock %}
-{% block javascripts %}{% endblock %}

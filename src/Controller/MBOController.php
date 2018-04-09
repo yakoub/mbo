@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Cookie;
 
 use App\Entity\Person;
 use App\Repository\PersonRepository;
-use App\Repository\MBOYearlyRepository;
+use App\Repository\ObjectiveEntryRepository;
 use App\Form\YearType;
 
 class MBOController extends Controller
@@ -26,7 +26,7 @@ class MBOController extends Controller
         return $this->render('mbo/tree.html.twig', ['people' => $people, 'head' => false]);
     }
 
-    public function by_year(MBOYearlyRepository $mbo_repository, Request $request): Response
+    public function by_year(ObjectiveEntryRepository $oe_repository, Request $request): Response
     {
         if ($request->cookies->has('mbo_year')) {
             $year = $request->cookies->get('mbo_year');
@@ -40,11 +40,11 @@ class MBOController extends Controller
         if ($form->isSubmitted() and $form->isValid()) {
             $set_cookie = $year = $form->get('year')->getData();
         }
-        $mbo_yearlies = $mbo_repository->getMyYear($year);
+        $objective_entries = $oe_repository->getMyYear($year);
         $context = array(
             'form' => $form->createView(),
             'year' => 2018,
-            'mbo_yearlies' => $mbo_yearlies,
+            'objective_entries' => $objective_entries,
         );
         $response = $this->render('mbo/mbo_browse.html.twig', $context);
         if ($set_cookie) {
