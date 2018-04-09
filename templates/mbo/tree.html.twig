@@ -34,6 +34,10 @@
                     <a class="card-link" href="{{ path('people', {'id': person.id}) }}">
                         {{ person.name }}
                     </a>
+                    <a class="card-link" 
+                        href="{{ path('objective_entry_new', {'employee': person.id}) }}">
+                        Add Objective
+                    </a>
                     <a class="card-link" href="{{ path('person_show', {'id': person.id}) }}">
                         show
                     </a>
