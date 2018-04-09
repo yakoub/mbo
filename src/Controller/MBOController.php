@@ -54,4 +54,9 @@ class MBOController extends Controller
         }
         return $response;
     }
+
+    public function mbo($year, Person $employee, ObjectiveEntryRepository $or_repository) {
+        $objectives = $or_repository->findBy(['for_employee' => $employee, 'year' => $year]);
+        return $this->render('mbo/mbo_report.html.twig', ['objective_entries' => $objectives]);
+    }
 }

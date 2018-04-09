@@ -32,7 +32,7 @@
                 <td>{{ employee.total_weight }}</td>
                 <td>{{ employee.objective_count }}</td>
                 <td>
-                    <a href="{{ path('person_show', {'id': employee.id}) }}">show</a>
+                    <a href="{{ path('mbo', {'employee': employee.id, 'year': year}) }}">show</a>
                     <a href="{{ path('objective_entry_new', {'employee': employee.id}) }}">add</a>
                 </td>
             </tr>

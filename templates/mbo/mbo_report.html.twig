@@ -1,0 +1,21 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %} MBO {% endblock %}
+
+{% block body %}
+<table class="table table-striped"><tbody>
+{% for objective_entry in objective_entries %}
+    <tr>
+        <td>{{ objective_entry.id }}</td>
+        <td>{{ objective_entry.year }}</td>
+        <td>{{ objective_entry.Type }}</td>
+        <td>{{ objective_entry.subject }}</td>
+        <td>{{ objective_entry.description }}</td>
+        <td>{{ objective_entry.weight }}</td>
+        <td>{{ objective_entry.status }}</td>
+        <td>{{ objective_entry.score }}</td>
+    </tr>
+{% endfor %}
+</tbody></table>
+{% endblock %}

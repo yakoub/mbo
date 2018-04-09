@@ -7,3 +7,6 @@ people:
 year:
     path: /year
     controller: App\Controller\MBOController::by_year
+mbo:
+    path: /mbo/{year}/{employee}
+    controller: App\Controller\MBOController::mbo
