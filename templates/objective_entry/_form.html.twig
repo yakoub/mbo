@@ -1,3 +1,11 @@
+<table class="table"><tbody>
+<tr> 
+    <th> Employee </th> <td> {{ objective_entry.getForEmployee().name }} </td>
+</tr>
+<tr>
+    <th> Manager </th> <td> {{ objective_entry.getByManager().name }} </td>
+</tr>
+</tbody></table>
 {{ form_start(form) }}
     {{ form_widget(form) }}
     <button class="btn">{{ button_label|default('Save') }}</button>

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\ObjectiveEntry;
+use App\Entity\Person;
 use App\Form\ObjectiveEntryType;
 use App\Repository\ObjectiveEntryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -24,11 +25,13 @@ class ObjectiveEntryController extends Controller
     }
 
     /**
-     * @Route("/new", name="objective_entry_new", methods="GET|POST")
+     * @Route("/new/{employee}", name="objective_entry_new", methods="GET|POST")
      */
-    public function new(Request $request): Response
+    public function new(Request $request, Person $employee): Response
     {
         $ObjectiveEntry = new ObjectiveEntry();
+        $ObjectiveEntry->setForEmployee($employee);
+        $ObjectiveEntry->setByManager($employee->getManager());
         $form = $this->createForm(ObjectiveEntryType::class, $ObjectiveEntry);
         $form->handleRequest($request);
 
@@ -36,8 +39,8 @@ class ObjectiveEntryController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($ObjectiveEntry);
             $em->flush();
-
-            return $this->redirectToRoute('objective_entry_index');
+            $param = ['id' => $ObjectiveEntry->getId()];
+            return $this->redirectToRoute('objective_entry_show', $param);
         }
 
         return $this->render('objective_entry/new.html.twig', [

@@ -19,8 +19,6 @@ class ObjectiveEntryType extends AbstractType
             ->add('weight')
             ->add('status')
             ->add('score')
-            ->add('by_manager')
-            ->add('for_employee')
         ;
     }
 
