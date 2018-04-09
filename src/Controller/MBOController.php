@@ -43,7 +43,7 @@ class MBOController extends Controller
         $employees = $oe_repository->getMyYear($year);
         $context = array(
             'form' => $form->createView(),
-            'year' => 2018,
+            'year' => $year,
             'employees' => $employees,
         );
         $response = $this->render('mbo/mbo_browse.html.twig', $context);

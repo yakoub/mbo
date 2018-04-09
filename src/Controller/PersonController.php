@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Person;
 use App\Form\PersonType;
 use App\Repository\PersonRepository;
+use App\Repository\ObjectiveEntryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -50,9 +51,10 @@ class PersonController extends Controller
     /**
      * @Route("/{id}", name="person_show", methods="GET")
      */
-    public function show(Person $person, PersonRepository $personRepository): Response
+    public function show(Person $person, ObjectiveEntryRepository $objectiveRepository): Response
     {
-        return $this->render('person/show.html.twig', ['person' => $person]);
+        $years = $objectiveRepository->employeeYears($person);
+        return $this->render('person/show.html.twig', ['person' => $person, 'years' => $years]);
     }
 
     /**

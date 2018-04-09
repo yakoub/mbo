@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\ObjectiveEntry;
+use App\Entity\Person;
 use App\Repository\PersonRepository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -56,5 +57,19 @@ class ObjectiveEntryRepository extends ServiceEntityRepository
         }
 
         return $employees;
+    }
+
+    public function employeeYears(Person $employee) {
+        $builder = $this->createQueryBuilder('m');
+        $builder->andWhere('m.for_employee = :employee');
+        $builder->setParameter(':employee', $employee);
+        $builder->groupBy('m.year');
+        $builder->select('m.year');
+        $results = $builder->getQuery()->getResult();
+        $years = [];
+        foreach ($results as $result) {
+            $years[] = $result['year'];
+        }
+        return $years;
     }
 }
