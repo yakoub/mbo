@@ -27,11 +27,16 @@ class ObjectiveEntryController extends Controller
     /**
      * @Route("/new/{employee}", name="objective_entry_new", methods="GET|POST")
      */
-    public function new(Request $request, Person $employee): Response
+    public function new(
+        Request $request, 
+        Person $employee, 
+        ObjectiveEntryRepository $oe_repository
+        ): Response
     {
         $ObjectiveEntry = new ObjectiveEntry();
         $ObjectiveEntry->setForEmployee($employee);
         $ObjectiveEntry->setByManager($employee->getManager());
+        $other_years = $oe_repository->employeeYears($employee);
         $form = $this->createForm(ObjectiveEntryType::class, $ObjectiveEntry);
         $form->handleRequest($request);
 
@@ -46,6 +51,7 @@ class ObjectiveEntryController extends Controller
         return $this->render('objective_entry/new.html.twig', [
             'objective_entry' => $ObjectiveEntry,
             'form' => $form->createView(),
+            'other_years' => $other_years,
         ]);
     }
 

@@ -44,16 +44,18 @@ class ObjectiveEntryRepository extends ServiceEntityRepository
         $builder->setParameter(':year', $year);
         $builder->groupBy('m.for_employee');
         $builder->select('sum(m.weight) as total_weight');
+        $builder->addSelect('count(m.weight) as objective_count');
         $builder->addSelect('identity(m.for_employee) as employee');
         $groups = $builder->getQuery()->getResult();
         
         $weights = [];
         foreach ($groups as $mbo) {
-            $weights[$mbo['employee']] = $mbo['total_weight'];
+            $weights[$mbo['employee']] = $mbo;
         }
         $employees = $this->person_repository->findBy(['id' => array_keys($weights)]);
         foreach ($employees as $employee) {
-            $employee->total_weight = $weights[$employee->getId()];
+            $employee->total_weight = $weights[$employee->getId()]['total_weight'];
+            $employee->objective_count = $weights[$employee->getId()]['objective_count'];
         }
 
         return $employees;
