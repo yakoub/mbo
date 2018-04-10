@@ -12,7 +12,9 @@ class ObjectiveManagementType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $options = ['entry_type' => ObjectiveWeightType::class];
-        $builder->add('objectives', CollectionType::class, $options);
+        $builder->add('objectivesDirect', CollectionType::class, $options);
+        $builder->add('objectivesIndirect', CollectionType::class, $options);
+        $builder->add('objectivesInfrastructure', CollectionType::class, $options);
     }
 
     public function configureOptions(OptionsResolver $resolver)

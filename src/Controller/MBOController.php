@@ -63,7 +63,17 @@ class MBOController extends Controller
         Request $request
     ) {
         $objectives = $or_repository->findBy(['for_employee' => $employee, 'year' => $year]);
-        $form = $this->createForm(ObjectiveManagementType::class, ['objectives' => $objectives]);
+        
+        $defautls = [];
+        foreach ($objectives as $objective) {
+            $variable = 'objectives' . $objective->getType();
+            if (!isset($defautls[$variable])) {
+                $defaults[$variable] = [];
+            }
+            $defaults[$variable][] = $objective;
+        }
+
+        $form = $this->createForm(ObjectiveManagementType::class, $defaults);
         $form->handleRequest($request);
         if ($form->isSubmitted() and $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();

@@ -1,0 +1,13 @@
+<tr> 
+    <td>
+    <a href="{{ path('objective_entry_edit', {'id': objective.id}) }}">
+        {{ objective.subject }}
+    </a>
+    </td>
+    <td>
+    {{ form_widget(objective_form.weight) }}
+    </td> 
+    <td>
+    {{ form_widget(objective_form.achieve) }}
+    </td> 
+</tr>
