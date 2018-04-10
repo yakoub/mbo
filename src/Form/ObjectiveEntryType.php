@@ -17,7 +17,7 @@ class ObjectiveEntryType extends AbstractType
             ->add('subject')
             ->add('description')
             ->add('weight')
-            ->add('score')
+            ->add('achieve')
         ;
     }
 

@@ -16,7 +16,7 @@
         <thead>
             <th> Subject </th>
             <th> Weight </th>
-            <th> Score </th>
+            <th> Achieve </th>
         </thead>
         <tbody>
         {% for objective in form.objectives %}
@@ -28,7 +28,7 @@
                 {{ form_widget(objective.weight) }}
                 </td> 
                 <td>
-                {{ form_widget(objective.score) }}
+                {{ form_widget(objective.achieve) }}
                 </td> 
             </tr>
         {% endfor %}

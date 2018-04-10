@@ -13,7 +13,7 @@ class ObjectiveWeightType extends AbstractType
     {
         $builder
             ->add('weight')
-            ->add('score')
+            ->add('achieve')
         ;
     }
 

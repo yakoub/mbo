@@ -59,7 +59,7 @@ class ObjectiveEntry
     /**
      * @ORM\Column(type="float", nullable=true)
      */
-    private $score;
+    private $achieve;
 
     public function getId()
     {
@@ -150,14 +150,14 @@ class ObjectiveEntry
         return $this;
     }
 
-    public function getScore(): ?float
+    public function getAchieve(): ?float
     {
-        return $this->score;
+        return $this->achieve;
     }
 
-    public function setScore(?float $score): self
+    public function setAchieve(?float $achieve): self
     {
-        $this->score = $score;
+        $this->achieve = $achieve;
 
         return $this;
     }
