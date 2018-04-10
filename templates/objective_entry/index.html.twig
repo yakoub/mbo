@@ -14,7 +14,6 @@
                 <th>Subject</th>
                 <th>Description</th>
                 <th>Weight</th>
-                <th>Status</th>
                 <th>Score</th>
                 <th>actions</th>
             </tr>
@@ -28,7 +27,6 @@
                 <td>{{ objective_entry.subject }}</td>
                 <td>{{ objective_entry.description }}</td>
                 <td>{{ objective_entry.weight }}</td>
-                <td>{{ objective_entry.status }}</td>
                 <td>{{ objective_entry.score }}</td>
                 <td>
                     <a href="{{ path('objective_entry_show', {'id': objective_entry.id}) }}">show</a>

@@ -57,11 +57,6 @@ class ObjectiveEntry
     private $weight;
 
     /**
-     * @ORM\Column(type="string", length=64)
-     */
-    private $status;
-
-    /**
      * @ORM\Column(type="float", nullable=true)
      */
     private $score;
@@ -151,18 +146,6 @@ class ObjectiveEntry
     public function setWeight(?float $weight): self
     {
         $this->weight = $weight;
-
-        return $this;
-    }
-
-    public function getStatus(): ?string
-    {
-        return $this->status;
-    }
-
-    public function setStatus(string $status): self
-    {
-        $this->status = $status;
 
         return $this;
     }
