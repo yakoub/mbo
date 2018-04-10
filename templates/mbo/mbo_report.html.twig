@@ -12,7 +12,27 @@
     </tr>
     </tbody></table>
     {{ form_start(form) }}
-        {{ form_widget(form) }}
+        <table>
+        <thead>
+            <th> Subject </th>
+            <th> Weight </th>
+            <th> Score </th>
+        </thead>
+        <tbody>
+        {% for objective in form.objectives %}
+            <tr> 
+                <td>
+                {{ objective.vars.value.subject }}
+                </td>
+                <td>
+                {{ form_widget(objective.weight) }}
+                </td> 
+                <td>
+                {{ form_widget(objective.score) }}
+                </td> 
+            </tr>
+        {% endfor %}
+        </tbody></table>
         <button class="btn">{{ button_label|default('Save') }}</button>
     {{ form_end(form) }}
 {% endblock %}
