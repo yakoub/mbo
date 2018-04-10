@@ -1,20 +1,18 @@
-
 {% extends 'base.html.twig' %}
 
-{% block title %} MBO {% endblock %}
+{% block title %} {{ employee.name }}, {{ year }} {% endblock %}
 
 {% block body %}
-<table class="table table-striped"><tbody>
-{% for objective_entry in objective_entries %}
-    <tr>
-        <td>{{ objective_entry.id }}</td>
-        <td>{{ objective_entry.year }}</td>
-        <td>{{ objective_entry.Type }}</td>
-        <td>{{ objective_entry.subject }}</td>
-        <td>{{ objective_entry.description }}</td>
-        <td>{{ objective_entry.weight }}</td>
-        <td>{{ objective_entry.score }}</td>
+    <table class="table"><tbody>
+    <tr> 
+        <th> Employee </th> <td> {{ employee.name }}, {{ year }} </td>
     </tr>
-{% endfor %}
-</tbody></table>
+    <tr>
+        <th> Manager </th> <td> {{ employee.getManager().name }} </td>
+    </tr>
+    </tbody></table>
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button class="btn">{{ button_label|default('Save') }}</button>
+    {{ form_end(form) }}
 {% endblock %}

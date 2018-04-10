@@ -11,6 +11,7 @@ use App\Entity\Person;
 use App\Repository\PersonRepository;
 use App\Repository\ObjectiveEntryRepository;
 use App\Form\YearType;
+use App\Form\ObjectiveManagementType;
 
 class MBOController extends Controller
 {
@@ -55,8 +56,24 @@ class MBOController extends Controller
         return $response;
     }
 
-    public function mbo($year, Person $employee, ObjectiveEntryRepository $or_repository) {
+    public function mbo(
+        $year, 
+        Person $employee, 
+        ObjectiveEntryRepository $or_repository,
+        Request $request
+    ) {
         $objectives = $or_repository->findBy(['for_employee' => $employee, 'year' => $year]);
-        return $this->render('mbo/mbo_report.html.twig', ['objective_entries' => $objectives]);
+        $form = $this->createForm(ObjectiveManagementType::class, ['objectives' => $objectives]);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() and $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+        }
+        $context = array(
+            'form' => $form->createView(),
+            'employee' => $employee,
+            'year' => $year,
+        );
+
+        return $this->render('mbo/mbo_report.html.twig', $context);
     }
 }
