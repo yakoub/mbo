@@ -36,11 +36,10 @@ class ObjectiveEntryFixture extends Fixture implements DependentFixtureInterface
         $objective->setByManager($by_manager);
         $objective->setForEmployee($for_employee);
         $objective->setYear($year);
-        $objective->setType('type');
+        $objective->setType('Direct');
         $objective->setSubject("subject-$f-$f-$t");
         $objective->setWeight(0.2);
-        $objective->setStatus('good');
-        $objective->setScore(0.3);
+        $objective->setAchieve(0.3);
         return $objective;
     }
 }
