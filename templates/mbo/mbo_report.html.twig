@@ -14,25 +14,32 @@
     {{ form_start(form) }}
         <table class="table table-bordered">
         <thead>
+            <th> </th>
             <th> Subject </th>
             <th> Weight </th>
             <th> Achieve </th>
         </thead>
         <tbody>
-        <tr><td colspan="3"> Direct </td></tr>
+        <tr><td> Direct </td><td colspan="3"></td></tr>
         {% for objective_form in form.objectivesDirect %}
             {% set objective = objective_form.vars.value %}
             {{ include('mbo/mbo_tr.html.twig') }}
+        {% else %}
+            {{ form_widget(form.objectivesDirect) }}
         {% endfor %}
-        <tr><td colspan="3"> Indirect </td></tr>
+        <tr><td> Indirect </td><td colspan="3"></td></tr>
         {% for objective_form in form.objectivesIndirect %}
             {% set objective = objective_form.vars.value %}
             {{ include('mbo/mbo_tr.html.twig') }}
+        {% else %}
+            {{ form_widget(form.objectivesIndirect) }}
         {% endfor %}
-        <tr><td colspan="3"> Infrastructure </td></tr>
+        <tr><td> Infrastructure </td><td colspan="3"></td></tr>
         {% for objective_form in form.objectivesInfrastructure %}
             {% set objective = objective_form.vars.value %}
             {{ include('mbo/mbo_tr.html.twig') }}
+        {% else %}
+            {{ form_widget(form.objectivesInfrastructure) }}
         {% endfor %}
         </tbody></table>
         <button class="btn">{{ button_label|default('Save') }}</button>
