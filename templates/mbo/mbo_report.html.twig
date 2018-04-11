@@ -2,6 +2,11 @@
 
 {% block title %} {{ employee.name }}, {{ year }} {% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('css/mbo.report.css') }}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
 {% block body %}
     <table class="table"><tbody>
     <tr> 
@@ -13,28 +18,39 @@
     </tbody></table>
     {{ form_start(form) }}
         <table class="table table-bordered">
+        <caption> Managment By Ojective: {{year}} </caption>
+        <colgroup>
+            <col span="1"></col>
+            <col span="1"></col>
+            <col class="weight" span="3"></col>
+            <col class="score" span="3"></col>
+        </colgroup>
         <thead>
             <th> </th>
             <th> Subject </th>
+            <th> Description </th>
             <th> Weight </th>
+            <th> Total </th>
             <th> Achieve </th>
+            <th> Score </th>
+            <th> Total </th>
         </thead>
         <tbody>
-        <tr><td> Direct </td><td colspan="3"></td></tr>
+        <tr><td> Direct </td><td colspan="3"></td><td></td></tr>
         {% for objective_form in form.objectivesDirect %}
             {% set objective = objective_form.vars.value %}
             {{ include('mbo/mbo_tr.html.twig') }}
         {% else %}
             {{ form_widget(form.objectivesDirect) }}
         {% endfor %}
-        <tr><td> Indirect </td><td colspan="3"></td></tr>
+        <tr><td> Indirect </td><td colspan="3"></td><td></td></tr>
         {% for objective_form in form.objectivesIndirect %}
             {% set objective = objective_form.vars.value %}
             {{ include('mbo/mbo_tr.html.twig') }}
         {% else %}
             {{ form_widget(form.objectivesIndirect) }}
         {% endfor %}
-        <tr><td> Infrastructure </td><td colspan="3"></td></tr>
+        <tr><td> Infrastructure </td><td colspan="3"></td><td></td></tr>
         {% for objective_form in form.objectivesInfrastructure %}
             {% set objective = objective_form.vars.value %}
             {{ include('mbo/mbo_tr.html.twig') }}
