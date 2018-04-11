@@ -34,7 +34,7 @@
             <th> Total </th>
         </thead>
         <tbody>
-        <tr><td> Direct </td><td></td><td colspan="3">55%</td><td colspan="3"></td></tr>
+        <tr><td> Direct </td><td></td><td colspan="3"></td><td colspan="3"></td></tr>
         {% for objective_form in form.objectivesDirect %}
             {% set objective = objective_form.vars.value %}
             {{ include('mbo/mbo_tr.html.twig') }}
