@@ -67,7 +67,7 @@ class MBOController extends Controller
         $defautls = [];
         foreach ($objectives as $objective) {
             $variable = 'objectives' . $objective->getType();
-            if (!isset($defautls[$variable])) {
+            if (!isset($defaults[$variable])) {
                 $defaults[$variable] = [];
             }
             $defaults[$variable][] = $objective;
