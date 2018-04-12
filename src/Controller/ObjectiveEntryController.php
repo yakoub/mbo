@@ -44,8 +44,8 @@ class ObjectiveEntryController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($ObjectiveEntry);
             $em->flush();
-            $param = ['id' => $ObjectiveEntry->getId()];
-            return $this->redirectToRoute('objective_entry_show', $param);
+            $param = ['year' => $ObjectiveEntry->getyear(),'employee' => $employee->getId()];
+            return $this->redirectToRoute('mbo', $param);
         }
 
         return $this->render('objective_entry/new.html.twig', [
@@ -78,7 +78,9 @@ class ObjectiveEntryController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('objective_entry_edit', ['id' => $ObjectiveEntry->getId()]);
+            $param = ['year' => $ObjectiveEntry->getyear(),'employee' => $ObjectiveEntry->getForEmployee()->getId()];
+
+            return $this->redirectToRoute('mbo', $param);
         }
 
         return $this->render('objective_entry/edit.html.twig', [

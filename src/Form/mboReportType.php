@@ -7,7 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
-class ObjectiveManagementType extends AbstractType
+class mboReportType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -15,6 +15,7 @@ class ObjectiveManagementType extends AbstractType
         $builder->add('objectivesDirect', CollectionType::class, $options);
         $builder->add('objectivesIndirect', CollectionType::class, $options);
         $builder->add('objectivesInfrastructure', CollectionType::class, $options);
+        $builder->add('jjj', ObjectiveWeightType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)
