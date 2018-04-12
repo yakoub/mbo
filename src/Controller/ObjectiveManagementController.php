@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/objective/management")
+ * @Route("/objective-management")
  */
 class ObjectiveManagementController extends Controller
 {
