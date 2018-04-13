@@ -39,14 +39,14 @@ class Person
     private $manager;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\MBOYearly", mappedBy="by_manager")
+     * @ORM\OneToMany(targetEntity="App\Entity\ObjectiveEntry", mappedBy="by_manager")
      */
-    private $mbo_yearlies;
+    private $objective_entries;
 
     public function __construct()
     {
         $this->employees = new ArrayCollection();
-        $this->mbo_yearlies = new ArrayCollection();
+        $this->objective_entries = new ArrayCollection();
     }
 
     public function getId()
@@ -121,30 +121,30 @@ class Person
     }
 
     /**
-     * @return Collection|MBOYearly[]
+     * @return Collection|ObjectiveEntry[]
      */
-    public function getMboYearlies(): Collection
+    public function getObjectiveEntries(): Collection
     {
-        return $this->mbo_yearlies;
+        return $this->objective_entries;
     }
 
-    public function addMboYearly(MBOYearly $mboYearly): self
+    public function addObjectiveEntry(ObjectiveEntry $objective): self
     {
-        if (!$this->mbo_yearlies->contains($mboYearly)) {
-            $this->mbo_yearlies[] = $mboYearly;
-            $mboYearly->setByManager($this);
+        if (!$this->objective_entries->contains($objective)) {
+            $this->objective_entries[] = $objective;
+            $objective->setByManager($this);
         }
 
         return $this;
     }
 
-    public function removeMboYearly(MBOYearly $mboYearly): self
+    public function removeObjectiveEntry(ObjectiveEntry $objective): self
     {
-        if ($this->mbo_yearlies->contains($mboYearly)) {
-            $this->mbo_yearlies->removeElement($mboYearly);
+        if ($this->objective_entries->contains($objective)) {
+            $this->objective_entries->removeElement($objective);
             // set the owning side to null (unless already changed)
-            if ($mboYearly->getByManager() === $this) {
-                $mboYearly->setByManager(null);
+            if ($objective->getByManager() === $this) {
+                $objective->setByManager(null);
             }
         }
 

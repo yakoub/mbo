@@ -1,36 +1,50 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} {{ person.name }} {% endblock %}
+{% block title %} {{ head ? head.name : 'People' }} {% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
-    <!-- a href="{{ asset('css/mbo.css') }}" rel="stylesheet" type="text/css" / -->
+    <link href="{{ asset('css/mbo-people.css') }}" rel="stylesheet" type="text/css" />
 {% endblock %}
 
 {% block body %}
-    <h1> {{ person.name }} </h1>
-    {% if person.manager %}
-    <h2> 
-        go up:
-        <a href="{{ path('people', {'id': person.manager.getId()}) }}"> {{ person.manager.name }} 
-        </a>
-    </h2>
+    {% if head %}
+        <h1 class="title head">
+            <a href="{{ path('person_show', {'id': head.id}) }}">
+                {{ head.name }} 
+            </a>
+            <span> go up:
+                {% if head.manager %}
+                    <a href="{{ path('people', {'id': head.manager.getId()}) }}">
+                        {{ head.manager.name }} 
+                    </a>
+                {% else %}
+                    <a href="{{ path('people_root') }}">
+                        Root 
+                    </a>
+                {% endif %}
+            </span>
+        </h1>
     {% endif %}
 
     {% for person in people %}
-        <div class="card">
+        <div class="card mb-3">
             <div class="card-header">
                 <h3 class="card-title">
                     <a class="card-link" href="{{ path('people', {'id': person.id}) }}">
                         {{ person.name }}
+                    </a>
+                    <a class="card-link" 
+                        href="{{ path('objective_entry_new', {'employee': person.id}) }}">
+                        Add Objective
                     </a>
                     <a class="card-link" href="{{ path('person_show', {'id': person.id}) }}">
                         show
                     </a>
                 </h3>
             </div>
-            {% if person.employees %}
-            {{ include('mbo/employees.html.twig', {people: person.employees}, with_context = false) }}
+            {% if not person.employees.isEmpty() %}
+                {{ include('mbo/employees.html.twig', {people: person.employees}, with_context = false) }}
             {% endif %}
         </div>
     {% else %}

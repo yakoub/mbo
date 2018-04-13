@@ -5,13 +5,13 @@ namespace App\Validator;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
-use App\Repository\MBOYearlyRepository;
+use App\Repository\ObjectiveEntryRepository;
 
 class MBOWeightValidator extends ConstraintValidator
 {
     private $repository;
 
-    public function __construct(MBOYearlyRepository $repository) {
+    public function __construct(ObjectiveEntryRepository $repository) {
         $this->repository = $repository;
     }
 
@@ -19,7 +19,7 @@ class MBOWeightValidator extends ConstraintValidator
     {
         $year = $mbo_yearly->getYear();
         $employee = $mbo_yearly->getForEmployee();
-        $total_weight = $this->repository->aggregateYearForEmployee($year, $employee);
+        $total_weight = $this->repository->aggregateYearForEmployee($year, $employee, $mbo_yearly);
 
         $weight = $mbo_yearly->getWeight();
 

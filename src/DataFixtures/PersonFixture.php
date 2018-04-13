@@ -22,6 +22,7 @@ class PersonFixture extends Fixture
             $second->setEmail($second->getName() . '@dd.d');
             $second->setManager($first);
             $manager->persist($second);
+            $this->addReference("manager-$f-$s", $second);
 
             foreach (range(1, 5) as $t) {
               $third = new Person();
@@ -29,9 +30,9 @@ class PersonFixture extends Fixture
               $third->setEmail($third->getName() . '@dd.d');
               $third->setManager($second);
               $manager->persist($third);
+              $this->addReference("employee-$f-$s-$t", $third);
             }
           }
-
           $manager->flush();
         }
     }

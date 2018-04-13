@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Objective{% endblock %}
+
+{% block body %}
+    <h1>Create new Objective</h1>
+    {% if other_years %}
+    <h3> Existing years </h3>
+    <ul class="nav">
+    {% for year in other_years %}
+        <li class="nav-item"> 
+            <a class="nav-link" href="{{ year }}"> {{year}} </a>
+        </li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+    {{ include('objective_entry/_form.html.twig') }}
+
+    <a href="{{ path('objective_entry_index') }}">back to list</a>
+{% endblock %}

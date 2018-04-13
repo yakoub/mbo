@@ -6,11 +6,11 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Validator as MBOValidator;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\MBOYearlyRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\ObjectiveEntryRepository")
  * @MBOValidator\MBOWeight
  */
 
-class MBOYearly
+class ObjectiveEntry
 {
     /**
      * @ORM\Id()
@@ -20,7 +20,7 @@ class MBOYearly
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Person", inversedBy="mbo_yearlies")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Person", inversedBy="objective_entries")
      * @ORM\JoinColumn(nullable=false)
      */
     private $by_manager;
@@ -57,14 +57,9 @@ class MBOYearly
     private $weight;
 
     /**
-     * @ORM\Column(type="string", length=64)
-     */
-    private $status;
-
-    /**
      * @ORM\Column(type="float", nullable=true)
      */
-    private $score;
+    private $achieve;
 
     public function getId()
     {
@@ -155,26 +150,14 @@ class MBOYearly
         return $this;
     }
 
-    public function getStatus(): ?string
+    public function getAchieve(): ?float
     {
-        return $this->status;
+        return $this->achieve;
     }
 
-    public function setStatus(string $status): self
+    public function setAchieve(?float $achieve): self
     {
-        $this->status = $status;
-
-        return $this;
-    }
-
-    public function getScore(): ?float
-    {
-        return $this->score;
-    }
-
-    public function setScore(?float $score): self
-    {
-        $this->score = $score;
+        $this->achieve = $achieve;
 
         return $this;
     }

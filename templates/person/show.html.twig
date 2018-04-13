@@ -3,7 +3,7 @@
 {% block title %}Person{% endblock %}
 
 {% block body %}
-    <h1>Person</h1>
+    <h1> Details </h1>
     <table class="table">
         <tbody>
             <tr>
@@ -18,20 +18,34 @@
                 <th>Email</th>
                 <td>{{ person.email }}</td>
             </tr>
+            {% if person.manager %}
+            <tr>
+                <th> Manager </th>
+                <td>
+                    <a href="{{ path('person_show', {'id': person.manager.id}) }}">
+                      {{ person.manager.name }}
+                    </a>
+                </td>
+            </tr>
+            {% endif %}
         </tbody>
     </table>
+    <h3> Employees </h3>
     {{ include('person/people_table.html.twig', {people: person.employees}, with_context = false) }}
 
+    {% if years %}
+    <h3> Objectives </h3>
+    <ul class="nav">
+    {% for year in years %}
+        <li class="nav-item"> 
+            <a class="nav-link" href="{{ year }}"> {{year}} </a>
+        </li>
+    {% endfor %}
+    </ul>
+    {% endif %}
     <ul>
         <li> <a href="{{ path('people', {id: person.id}) }}">back to list</a> </li>
         <li> <a href="{{ path('person_edit', {'id': person.id}) }}">edit</a> </li>
-        {% if person.manager %}
-        <li> 
-            <a href="{{ path('person_show', {'id': person.manager.id}) }}">
-              Manager: {{ person.manager.name }}
-            </a>
-        </li>
-        {% endif %}
     </ul>
 
 {% endblock %}

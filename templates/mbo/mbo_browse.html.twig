@@ -1,0 +1,48 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ year }} {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <!-- a href="{{ asset('css/mbo.css') }}" rel="stylesheet" type="text/css" / -->
+{% endblock %}
+
+{% block body %}
+
+    <header>
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
+    </header>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Employee</th>
+                <th>Total Weight</th>
+                <th>Count</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for employee in employees %}
+            <tr>
+                <td>{{ employee.name }} </td>
+                <td>{{ employee.total_weight }}</td>
+                <td>{{ employee.objective_count }}</td>
+                <td>
+                    <a href="{{ path('mbo', {'employee': employee.id, 'year': year}) }}">show</a>
+                    <a href="{{ path('objective_entry_new', {'employee': employee.id}) }}">add</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
+{% block javascripts %}{% endblock %}
