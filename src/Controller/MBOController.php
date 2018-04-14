@@ -11,7 +11,7 @@ use App\Entity\Person;
 use App\Repository\PersonRepository;
 use App\Repository\ObjectiveEntryRepository;
 use App\Form\YearType;
-use App\Form\mboReportType;
+use App\Form\ObjectiveReportType;
 
 class MBOController extends Controller
 {
@@ -73,7 +73,7 @@ class MBOController extends Controller
             $defaults[$variable][] = $objective;
         }
 
-        $form = $this->createForm(mboReportType::class, $defaults);
+        $form = $this->createForm(ObjectiveReportType::class, $defaults);
         $form->handleRequest($request);
         if ($form->isSubmitted() and $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
