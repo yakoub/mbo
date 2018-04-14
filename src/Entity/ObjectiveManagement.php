@@ -21,6 +21,16 @@ class ObjectiveManagement
      */
     private $status;
 
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $vp_weight;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $ceo_weight;
+
     public function getId()
     {
         return $this->id;
@@ -34,6 +44,30 @@ class ObjectiveManagement
     public function setStatus(string $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getVpWeight(): ?float
+    {
+        return $this->vp_weight;
+    }
+
+    public function setVpWeight(?float $vp_weight): self
+    {
+        $this->vp_weight = $vp_weight;
+
+        return $this;
+    }
+
+    public function getCeoWeight(): ?float
+    {
+        return $this->ceo_weight;
+    }
+
+    public function setCeoWeight(?float $ceo_weight): self
+    {
+        $this->ceo_weight = $ceo_weight;
 
         return $this;
     }

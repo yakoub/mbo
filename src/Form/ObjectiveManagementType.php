@@ -12,6 +12,9 @@ class ObjectiveManagementType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('status')
+            ->add('vp_weight')
+            ->add('ceo_weight')
         ;
     }
 
