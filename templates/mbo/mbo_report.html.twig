@@ -47,7 +47,6 @@
             <th> Score </th>
             <th> Total </th>
         </thead>
-        <tbody>
         {% set context = {partition: 'Direct', objectives: form.objectivesDirect} %}
         {{ include('mbo/mbo_partition.html.twig', context) }}
 
@@ -57,19 +56,27 @@
         {% set context = {partition: 'Infrastructure', objectives: form.objectivesInfrastructure} %}
         {{ include('mbo/mbo_partition.html.twig', context) }}
 
-        <tr>
-            <td colspan="3"> CEO </td>
-            <td> 20% </td> <td> </td>
-            <td> {{ form_widget(form.management.ceo_weight) }} </td> <td> </td>
-            <td> </td>
-        </tr>
-        <tr>
-            <td colspan="3"> VP </td>
-            <td> 20% </td> <td> </td>
-            <td> {{ form_widget(form.management.vp_weight) }} </td> <td> </td>
-            <td> </td>
-        </tr>
-        </tbody></table>
+        <tbody class="ceo">
+            <tr>
+                <td colspan="3"> CEO </td>
+                <td> 20% </td> <td> </td>
+                <td> {{ form_widget(form.management.ceo_weight) }} </td> <td> </td>
+                <td> </td>
+            </tr>
+        </tbody>
+        <tbody class="vp">
+            <tr>
+                <td colspan="3"> VP </td>
+                <td> 20% </td> <td> </td>
+                <td> {{ form_widget(form.management.vp_weight) }} </td> <td> </td>
+                <td> </td>
+            </tr>
+        </tbody>
+        </table>
         <button class="btn">{{ button_label|default('Save') }}</button>
     {{ form_end(form) }}
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/mbo.report.js') }}" type="text/javascript"> </script>
 {% endblock %}

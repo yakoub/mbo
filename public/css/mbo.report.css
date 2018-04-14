@@ -6,10 +6,11 @@ table.mbo colgroup {
     border: 2px solid black;
 }
 
-table.mbo tr.partition {
+table.mbo tbody.partition tr.header {
     background-color: #ddd;
 }
 
+table.mbo tbody.partition tr.header th,
 table.mbo.table-bordered td {
     padding: .35rem;
 }
