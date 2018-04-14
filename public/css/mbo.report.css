@@ -1,3 +1,7 @@
+table.mbo {
+    text-align: center;
+}
+
 table.mbo colgroup {
     border: 2px solid black;
 }
@@ -17,4 +21,8 @@ table.mbo input.form-control {
     padding: 0;
     display: inline;
     text-align: center;
+}
+
+table.mbo caption a {
+    margin: 0 2em;
 }

@@ -15,6 +15,8 @@ class ObjectiveReportType extends AbstractType
         $builder->add('objectivesDirect', CollectionType::class, $options);
         $builder->add('objectivesIndirect', CollectionType::class, $options);
         $builder->add('objectivesInfrastructure', CollectionType::class, $options);
+
+        $builder->add('management', ObjectiveManagementWeightType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)
