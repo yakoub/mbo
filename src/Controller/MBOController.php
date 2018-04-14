@@ -8,8 +8,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Cookie;
 
 use App\Entity\Person;
+use App\Entity\ObjectiveManagement;
 use App\Repository\PersonRepository;
 use App\Repository\ObjectiveEntryRepository;
+use App\Repository\ObjectiveManagementRepository;
 use App\Form\YearType;
 use App\Form\ObjectiveReportType;
 
@@ -59,10 +61,11 @@ class MBOController extends Controller
     public function mbo(
         $year, 
         Person $employee, 
-        ObjectiveEntryRepository $or_repository,
+        ObjectiveEntryRepository $oe_repository,
+        ObjectiveManagementRepository $om_repository,
         Request $request
     ) {
-        $objectives = $or_repository->findBy(['for_employee' => $employee, 'year' => $year]);
+        $objectives = $oe_repository->findBy(['for_employee' => $employee, 'year' => $year]);
         
         $defautls = [];
         foreach ($objectives as $objective) {
@@ -72,6 +75,7 @@ class MBOController extends Controller
             }
             $defaults[$variable][] = $objective;
         }
+        $defaults['management'] = $this->getManagement($employee, $year, $om_repository);
 
         $form = $this->createForm(ObjectiveReportType::class, $defaults);
         $form->handleRequest($request);
@@ -85,5 +89,17 @@ class MBOController extends Controller
         );
 
         return $this->render('mbo/mbo_report.html.twig', $context);
+    }
+
+    function getManagement($employee, $year, ObjectiveManagementRepository $repository) {
+        $management = $repository->findOneBy(['for_employee' => $employee, 'year' => $year]);
+        if (!$management) {
+            $management = new ObjectiveManagement();
+            $management->setStatus('work');
+            $management->setForEmployee($employee);
+            $management->setYear($year);
+            $this->getDoctrine()->getManager()->persist($management);
+        }
+        return $management;
     }
 }

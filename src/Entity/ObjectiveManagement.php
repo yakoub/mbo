@@ -31,6 +31,17 @@ class ObjectiveManagement
      */
     private $ceo_weight;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Person")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $for_employee;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    private $year;
+
     public function getId()
     {
         return $this->id;
@@ -68,6 +79,30 @@ class ObjectiveManagement
     public function setCeoWeight(?float $ceo_weight): self
     {
         $this->ceo_weight = $ceo_weight;
+
+        return $this;
+    }
+
+    public function getForEmployee(): ?Person
+    {
+        return $this->for_employee;
+    }
+
+    public function setForEmployee(?Person $for_employee): self
+    {
+        $this->for_employee = $for_employee;
+
+        return $this;
+    }
+
+    public function getYear(): ?int
+    {
+        return $this->year;
+    }
+
+    public function setYear(int $year): self
+    {
+        $this->year = $year;
 
         return $this;
     }

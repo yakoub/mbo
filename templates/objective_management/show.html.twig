@@ -11,6 +11,22 @@
                 <th>Id</th>
                 <td>{{ objective_management.id }}</td>
             </tr>
+            <tr>
+                <th> Year </th>
+                <td>{{ objective_management.year }} </td>
+            </tr>
+            <tr>
+                <th> Employee </th>
+                <td>{{ objective_management.getForEmployee().name }} </td>
+            </tr>
+            <tr>
+                <th> CEO weight </th>
+                <td>{{ objective_management.getCeoWeight() }} </td>
+            </tr>
+            <tr>
+                <th> VP weight </th>
+                <td>{{ objective_management.getVpWeight() }} </td>
+            </tr>
         </tbody>
     </table>
 
