@@ -6,3 +6,6 @@ h1.title.head span {
     font-size: 0.5em;
     padding: 0 2em;
 }
+top_border{
+    border-top: 1px solid black;
+}

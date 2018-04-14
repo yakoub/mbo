@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New ObjectiveManagement{% endblock %}
+
+{% block body %}
+    <h1>Create new ObjectiveManagement</h1>
+
+    {{ include('objective_management/_form.html.twig') }}
+
+    <a href="{{ path('objective_management_index') }}">back to list</a>
+{% endblock %}

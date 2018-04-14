@@ -6,7 +6,20 @@
     <th> Manager </th> <td> {{ objective_entry.getByManager().name }} </td>
 </tr>
 </tbody></table>
-{{ form_start(form) }}
-    {{ form_widget(form) }}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            {{ form_start(form) }}
+            {{ form_row(form.year) }}
+            {{ form_row(form.subject) }}
+            {{ form_row(form.description) }}
+            </div>
+        <div class="col">
+            {{ form_row(form.Type) }}
+            {{ form_row(form.weight) }}
+            {{ form_row(form.achieve) }}
+        </div>
+    </div>
     <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+        {{ form_end(form) }}
+</div>

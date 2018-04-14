@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ObjectiveManagement{% endblock %}
+
+{% block body %}
+    <h1>ObjectiveManagement</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ objective_management.id }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('objective_management_index') }}">back to list</a>
+
+    <a href="{{ path('objective_management_edit', {'id': objective_management.id}) }}">edit</a>
+
+    {{ include('objective_management/_delete_form.html.twig') }}
+{% endblock %}
