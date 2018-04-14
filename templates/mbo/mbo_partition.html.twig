@@ -1,0 +1,30 @@
+<tr class="parition">
+    <td> {{ partition }} </td>
+    <td></td>
+    <td colspan="3"></td>
+    <td colspan="3"></td>
+</tr>
+{% for objective_form in objectives %}
+    {% set objective = objective_form.vars.value %}
+    <tr>
+        <td></td>
+        <td>
+            <a href="{{ path('objective_entry_edit', {'id': objective.id}) }}">
+                {{ objective.subject }}
+            </a>
+        </td>
+        <td>{{ objective.description }}</td>
+        <td>
+        {{ form_widget(objective_form.weight) }}
+        </td> 
+        <td></td>
+        <td>
+        {{ form_widget(objective_form.achieve) }}
+        </td>
+        <td></td>
+        <td></td>
+    </tr>
+{% else %}
+    {{ form_widget(objectives) }}
+{% endfor %}
+

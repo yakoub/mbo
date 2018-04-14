@@ -34,27 +34,15 @@
             <th> Total </th>
         </thead>
         <tbody>
-        <tr><td> Direct </td><td></td><td colspan="3"></td><td colspan="3"></td></tr>
-        {% for objective_form in form.objectivesDirect %}
-            {% set objective = objective_form.vars.value %}
-            {{ include('mbo/mbo_tr.html.twig') }}
-        {% else %}
-            {{ form_widget(form.objectivesDirect) }}
-        {% endfor %}
-        <tr><td> Indirect </td><td></td><td colspan="3"></td><td colspan="3"></td></tr>
-        {% for objective_form in form.objectivesIndirect %}
-            {% set objective = objective_form.vars.value %}
-            {{ include('mbo/mbo_tr.html.twig') }}
-        {% else %}
-            {{ form_widget(form.objectivesIndirect) }}
-        {% endfor %}
-        <tr><td> Infrastructure </td><td></td><td colspan="3"></td><td colspan="3"></td></tr>
-        {% for objective_form in form.objectivesInfrastructure %}
-            {% set objective = objective_form.vars.value %}
-            {{ include('mbo/mbo_tr.html.twig') }}
-        {% else %}
-            {{ form_widget(form.objectivesInfrastructure) }}
-        {% endfor %}
+        {% set context = {partition: 'Direct', objectives: form.objectivesDirect} %}
+        {{ include('mbo/mbo_partition.html.twig', context) }}
+
+        {% set context = {partition: 'Indirect', objectives: form.objectivesIndirect} %}
+        {{ include('mbo/mbo_partition.html.twig', context) }}
+
+        {% set context = {partition: 'Infrastructure', objectives: form.objectivesInfrastructure} %}
+        {{ include('mbo/mbo_partition.html.twig', context) }}
+
         </tbody></table>
         <button class="btn">{{ button_label|default('Save') }}</button>
     {{ form_end(form) }}
