@@ -1,4 +1,20 @@
-colgroup.score,
-colgroup.weight {
+table.mbo colgroup {
     border: 2px solid black;
+}
+
+table.mbo tr.partition {
+    background-color: #ddd;
+}
+
+table.mbo.table-bordered td {
+    padding: .35rem;
+}
+table.mbo.table-bordered tr.partition td {
+    padding: 0;
+}
+
+table.mbo input.form-control {
+    padding: 0;
+    display: inline;
+    text-align: center;
 }

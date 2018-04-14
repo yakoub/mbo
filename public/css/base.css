@@ -5,3 +5,7 @@ nav.main-menu {
 caption {
     caption-side: top;
 }
+
+form span.alert-danger {
+    display: block;
+}

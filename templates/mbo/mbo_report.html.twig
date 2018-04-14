@@ -10,18 +10,29 @@
 {% block body %}
     <table class="table"><tbody>
     <tr> 
-        <th> Employee </th> <td> {{ employee.name }}, {{ year }} </td>
+        <th> Employee </th> 
+        <td> 
+            <a href="{{ path('person_show', {id: employee.id}) }}">
+                {{ employee.name }}
+            </a>
+        </td>
     </tr>
     <tr>
-        <th> Manager </th> <td> {{ employee.getManager().name }} </td>
+        <th> Manager </th> 
+        <td> 
+            <a href="{{ path('people', {id: employee.getManager().id}) }}">
+                {{ employee.getManager().name }} 
+            </a>
+        </td>
     </tr>
     </tbody></table>
+
     {{ form_start(form) }}
-        <table class="table table-bordered">
+        <table class=" mbo table table-bordered">
         <caption> Managment By Ojective: {{year}} </caption>
         <colgroup span="1"> </colgroup>
-        <colgroup span="1"> </colgroup>
-        <colgroup class="weight" span="3"> </colgroup>
+        <colgroup span="2"> </colgroup>
+        <colgroup class="weight" span="2"> </colgroup>
         <colgroup class="score" span="3"> </colgroup>
         <thead>
             <th> </th>
