@@ -29,7 +29,7 @@
         {% for employee in employees %}
             <tr>
                 <td>{{ employee.name }} </td>
-                <td>{{ employee.total_weight }}</td>
+                <td>{{ employee.total_weight|number_format(2) }}</td>
                 <td>{{ employee.objective_count }}</td>
                 <td>
                     <a href="{{ path('mbo', {'employee': employee.id, 'year': year}) }}">show</a>
