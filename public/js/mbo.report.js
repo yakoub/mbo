@@ -82,7 +82,18 @@ mbo_report.update_total_score = function(partition, score_diff) {
   var score_sum = partition.rows[0].cells[this.hs].textContent;
   score_sum = score_sum.length == 0 ? 0 : parseFloat(score_sum);
   score_sum += score_diff;
+
+  var total_diff = partition.rows[0].cells[this.hs].textContent;
+  total_diff = total_diff.length == 0 ? 0 : parseFloat(total_diff);
   partition.rows[0].cells[this.hs].textContent = score_sum.toFixed(2);
+  total_diff = score_sum - total_diff;
+
+  [3, 4].forEach(function(iter) {
+    var score_total = partition.parentNode.tBodies[iter].rows[0].cells[this.ft].textContent;
+    score_total = score_total.length == 0 ? 0 : parseFloat(score_total);
+    score_total += total_diff;
+    partition.parentNode.tBodies[iter].rows[0].cells[this.ft].textContent = score_total.toFixed(2);
+  }, this);
 }
 
 mbo_report.update_weight_sum = function (partition) {
