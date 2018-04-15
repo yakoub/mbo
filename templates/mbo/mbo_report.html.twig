@@ -57,19 +57,19 @@
         {{ include('mbo/mbo_partition.html.twig', context) }}
 
         <tbody class="ceo">
-            <tr>
+            <tr class="bg-secondary text-white">
                 <td colspan="3"> CEO </td>
                 <td> 10% </td> <td> </td>
                 <td> {{ form_widget(form.management.ceo_weight) }} </td> <td> </td>
-                <td class="bg-secondary text-white"> </td>
+                <td> </td>
             </tr>
         </tbody>
         <tbody class="vp">
-            <tr>
+            <tr class="bg-info text-white">
                 <td colspan="3"> VP </td>
                 <td> 10% </td> <td> </td>
                 <td> {{ form_widget(form.management.vp_weight) }} </td> <td> </td>
-                <td class="bg-info text-white"> </td>
+                <td> </td>
             </tr>
         </tbody>
         </table>
