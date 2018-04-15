@@ -36,6 +36,9 @@ class ObjectiveEntryController extends Controller
         $ObjectiveEntry = new ObjectiveEntry();
         $ObjectiveEntry->setForEmployee($employee);
         $ObjectiveEntry->setByManager($employee->getManager());
+        if ($request->query->has('year')) {
+          $ObjectiveEntry->setYear($request->query->get('year'));
+        }
         $other_years = $oe_repository->employeeYears($employee);
         $form = $this->createForm(ObjectiveEntryType::class, $ObjectiveEntry);
         $form->handleRequest($request);
