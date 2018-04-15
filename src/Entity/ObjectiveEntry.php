@@ -39,7 +39,7 @@ class ObjectiveEntry
 
     /**
      * @ORM\Column(type="string", length=64)
-     * @Assert\Choice({"Direct", "Indirect", "Infrastruture"})
+     * @Assert\Choice({"Direct", "Indirect", "Infrastructure"})
      */
     private $Type;
 
