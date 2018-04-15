@@ -15,13 +15,13 @@ class MBOWeightValidator extends ConstraintValidator
         $this->repository = $repository;
     }
 
-    public function validate($mbo_yearly, Constraint $constraint)
+    public function validate($objective_entry, Constraint $constraint)
     {
-        $year = $mbo_yearly->getYear();
-        $employee = $mbo_yearly->getForEmployee();
-        $total_weight = $this->repository->aggregateYearForEmployee($year, $employee, $mbo_yearly);
+        $year = $objective_entry->getYear();
+        $employee = $objective_entry->getForEmployee();
+        $total_weight = $this->repository->aggregateYearForEmployee($year, $employee, $objective_entry);
 
-        $weight = $mbo_yearly->getWeight();
+        $weight = $objective_entry->getWeight();
 
         if ($weight + $total_weight > 0.8) {
             $this->context->buildViolation($constraint->message)
