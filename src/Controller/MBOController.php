@@ -95,7 +95,7 @@ class MBOController extends Controller
         $management = $repository->findOneBy(['for_employee' => $employee, 'year' => $year]);
         if (!$management) {
             $management = new ObjectiveManagement();
-            $management->setStatus('work');
+            $management->setStatus('work_in_progress');
             $management->setForEmployee($employee);
             $management->setYear($year);
             $this->getDoctrine()->getManager()->persist($management);

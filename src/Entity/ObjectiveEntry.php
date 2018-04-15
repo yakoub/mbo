@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Validator as MBOValidator;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ObjectiveEntryRepository")
@@ -38,6 +39,7 @@ class ObjectiveEntry
 
     /**
      * @ORM\Column(type="string", length=64)
+     * @Assert\Choice({"Direct", "Indirect", "Infrastruture"})
      */
     private $Type;
 

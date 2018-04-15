@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ObjectiveManagementRepository")
@@ -18,6 +19,7 @@ class ObjectiveManagement
 
     /**
      * @ORM\Column(type="string", length=64)
+     * @Assert\Choice({"work_in_progress", "under_review", "require_approval"})
      */
     private $status;
 
