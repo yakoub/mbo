@@ -2,12 +2,23 @@ table.mbo {
     text-align: center;
 }
 
+table.mbo tbody.partition,
 table.mbo colgroup {
     border: 2px solid black;
 }
 
 table.mbo tbody.partition tr.header {
     background-color: #ddd;
+}
+
+table.mbo tbody.partition tr.header th {
+  text-align: right;
+}
+[dir=rtl] table.mbo tbody.partition tr.header th {
+  text-align: left;
+}
+table.mbo tbody.partition tr.header th:first-child {
+  text-align: center;
 }
 
 table.mbo tbody.partition tr.header th,
