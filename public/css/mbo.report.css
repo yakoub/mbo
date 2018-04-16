@@ -33,6 +33,7 @@ table.mbo input.form-control {
     padding: 0;
     display: inline;
     text-align: center;
+    width: 4em;
 }
 
 table.mbo caption a {
