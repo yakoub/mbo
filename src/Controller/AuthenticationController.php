@@ -12,9 +12,7 @@ class AuthenticationController extends Controller
     public function login(Request $request, AuthenticationUtils $util)
     {
         $error = $util->getLastAuthenticationError();
-        dump($error);
         $username = $util->getLastUsername();
-        dump($username);
 
         return $this->render('authentication.html.twig', [
             'error' => $error,

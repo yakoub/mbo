@@ -15,9 +15,10 @@ security:
         main:
             provider: in_memory
             anonymous: ~
-            form_login:
+            form_login_ldap:
                 login_path: login
                 check_path: login
+                service: Symfony\Component\Ldap\Ldap
             # https://symfony.com/doc/current/security/form_login_setup.html
             logout:
                 path: /logout
