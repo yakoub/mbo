@@ -81,6 +81,8 @@ class MBOController extends Controller
         $form->handleRequest($request);
         if ($form->isSubmitted() and $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
+            $param = ['year' => $year,'employee' => $employee->getId()];
+            return $this->redirectToRoute('mbo', $param);
         }
         $context = array(
             'form' => $form->createView(),
