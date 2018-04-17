@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ObjectiveEntryRepository")
- * @MBOValidator\MBOWeight
+ * @MBOValidator\MBOWeight(groups={"single_update"})
  */
 
 class ObjectiveEntry
@@ -55,6 +55,8 @@ class ObjectiveEntry
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @Assert\GreaterThanOrEqual(0)
+     * @Assert\LessThanOrEqual(100)
      */
     private $weight;
 

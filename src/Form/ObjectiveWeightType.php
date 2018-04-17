@@ -6,14 +6,15 @@ use App\Entity\ObjectiveEntry;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type;
 
 class ObjectiveWeightType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('weight')
-            ->add('achieve')
+            ->add('weight', Type\NumberType::class, ['required' => false])
+            ->add('achieve', Type\NumberType::class, ['required' => false])
         ;
     }
 

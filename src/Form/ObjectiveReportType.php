@@ -22,7 +22,7 @@ class ObjectiveReportType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'validation_groups' => false,
+            'validation_groups' => ['Default'],
         ]);
     }
 }

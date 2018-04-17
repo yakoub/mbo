@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type;
 
 class ObjectiveEntryType extends AbstractType
 {
@@ -23,8 +24,8 @@ class ObjectiveEntryType extends AbstractType
         $builder
             ->add('subject')
             ->add('description')
-            ->add('weight')
-            ->add('achieve')
+            ->add('weight', Type\NumberType::class, ['required' => false])
+            ->add('achieve', Type\NumberType::class, ['required' => false])
         ;
     }
 
@@ -32,6 +33,7 @@ class ObjectiveEntryType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => ObjectiveEntry::class,
+            'validation_groups' => ['Default', 'single_update'],
         ]);
     }
 }

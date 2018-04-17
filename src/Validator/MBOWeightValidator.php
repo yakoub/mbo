@@ -23,7 +23,7 @@ class MBOWeightValidator extends ConstraintValidator
 
         $weight = $objective_entry->getWeight();
 
-        if ($weight + $total_weight > 0.8) {
+        if ($weight + $total_weight > 80) {
             $this->context->buildViolation($constraint->message)
                 ->setParameter('{{ weight }}', $weight)
                 ->setParameter('{{ total }}', $total_weight)
