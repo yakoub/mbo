@@ -25,11 +25,15 @@ class ObjectiveManagement
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @Assert\GreaterThanOrEqual(0)
+     * @Assert\LessThanOrEqual(100)
      */
     private $vp_weight;
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @Assert\GreaterThanOrEqual(0)
+     * @Assert\LessThanOrEqual(100)
      */
     private $ceo_weight;
 

@@ -16,11 +16,13 @@
         </td>
         <td>{{ objective.description }}</td>
         <td>
-        {{ form_widget(objective_form.weight) }}
+            {{ form_errors(objective_form.weight) }}
+            {{ form_widget(objective_form.weight) }}
         </td> 
         <td></td>
         <td>
-        {{ form_widget(objective_form.achieve) }}
+            {{ form_errors(objective_form.achieve) }}
+            {{ form_widget(objective_form.achieve) }}
         </td>
         <td></td>
         <td></td>

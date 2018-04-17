@@ -28,6 +28,7 @@
     </tbody></table>
 
     {{ form_start(form) }}
+        {{ form_errors(form) }}
         <table class=" mbo table table-bordered">
         <caption> 
             Managment By Ojective: {{year}}
@@ -60,16 +61,22 @@
             <tr class="bg-secondary text-white">
                 <td colspan="3"> CEO </td>
                 <td> 10% </td> <td> </td>
-                <td> {{ form_widget(form.management.ceo_weight) }} </td> <td> </td>
-                <td> </td>
+                <td> 
+                    {{ form_errors(form.management.ceo_weight) }} 
+                    {{ form_widget(form.management.ceo_weight) }} 
+                </td>
+                <td> </td> <td> </td>
             </tr>
         </tbody>
         <tbody class="vp">
             <tr class="bg-info text-white">
                 <td colspan="3"> VP </td>
                 <td> 10% </td> <td> </td>
-                <td> {{ form_widget(form.management.vp_weight) }} </td> <td> </td>
-                <td> </td>
+                <td> 
+                    {{ form_errors(form.management.vp_weight) }} 
+                    {{ form_widget(form.management.vp_weight) }} 
+                </td> 
+                <td> </td> <td> </td>
             </tr>
         </tbody>
         </table>
