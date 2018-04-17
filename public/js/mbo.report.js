@@ -39,7 +39,7 @@ mbo_report.scan = function() {
                 weight_sum += weight;
                 var achieve = partition.rows[row_iter].cells[this.a].children[0].value;
                 achieve = achieve.length == 0 ? 0 : parseFloat(achieve);
-                var score = weight * achieve;
+                var score = weight * (achieve/100);
                 partition.rows[row_iter].cells[this.s].textContent = score.toFixed(2);
                 score_sum += score;
             }
@@ -50,7 +50,7 @@ mbo_report.scan = function() {
         else {
           var achieve = partition.rows[0].cells[this.fa].children[0].value;
           achieve = achieve.length == 0 ? 0 : parseFloat(achieve);
-          var score = achieve * 0.1;
+          var score = (achieve/100) * 10;
           partition.rows[0].cells[this.fs].textContent = score.toFixed(2);
           total_score += score;
           partition.rows[0].cells[this.ft].textContent = total_score.toFixed(2);
@@ -60,7 +60,39 @@ mbo_report.scan = function() {
 
 mbo_report.update = function(row) {
   var partition = row.parentNode;
+  if (partition.classList.contains('partition')) {
+    this.update_partition(row, partition);
+  }
+  else {
+    this.update_final(row, partition);
+  }
+};
 
+mbo_report.update_final = function(row, partition) {
+  var achieve = row.cells[this.fa].children[0].value;
+  achieve = achieve.length == 0 ? 0 : parseFloat(achieve);
+  
+  var score_diff = row.cells[this.fs].textContent;
+  score_diff = score_diff.length == 0 ? 0 : parseFloat(score_diff);
+  var score = (achieve/100) * 10;
+  row.cells[this.fs].textContent = score.toFixed(2);
+
+  score_diff = score - score_diff;
+  var score_total = row.cells[this.ft].textContent;
+  score_total = score_total.length == 0 ? 0 : parseFloat(score_total);
+  score_total += score_diff;
+  row.cells[this.ft].textContent = score_total.toFixed(2);
+
+  if (partition.classList.contains('ceo')) {
+    var vp = partition.parentNode.querySelector('tbody.vp');
+    score_total = vp.rows[0].cells[this.ft].textContent;
+    score_total = score_total.length == 0 ? 0 : parseFloat(score_total);
+    score_total += score_diff;
+    vp.rows[0].cells[this.ft].textContent = score_total.toFixed(2);
+  }
+};
+
+mbo_report.update_partition = function(row, partition) {
   var weight = row.cells[this.w].children[0].value;
   weight = weight.length == 0 ? 0 : parseFloat(weight);
   var achieve = row.cells[this.a].children[0].value;
@@ -68,15 +100,14 @@ mbo_report.update = function(row) {
 
   this.update_weight_sum(partition);
 
-  var score = weight * achieve;
+  var score = weight * (achieve/100);
   
   var score_diff = row.cells[this.s].textContent;
   row.cells[6].textContent = score.toFixed(2);
   score_diff = score_diff.length == 0 ? 0 : parseFloat(score_diff);
   score_diff = score - score_diff;
-
   this.update_total_score(partition, score_diff);
-};
+}
 
 mbo_report.update_total_score = function(partition, score_diff) {
   var score_sum = partition.rows[0].cells[this.hs].textContent;
