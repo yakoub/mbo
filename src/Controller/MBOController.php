@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Cookie;
 
 use App\Entity\Person;
 use App\Entity\ObjectiveManagement;
+use App\Entity\ObjectiveReport;
 use App\Repository\PersonRepository;
 use App\Repository\ObjectiveEntryRepository;
 use App\Repository\ObjectiveManagementRepository;
@@ -67,17 +68,14 @@ class MBOController extends Controller
     ) {
         $objectives = $oe_repository->findBy(['for_employee' => $employee, 'year' => $year]);
         
-        $defautls = [];
+        $report = new ObjectiveReport();
         foreach ($objectives as $objective) {
-            $variable = 'objectives' . $objective->getType();
-            if (!isset($defaults[$variable])) {
-                $defaults[$variable] = [];
-            }
-            $defaults[$variable][] = $objective;
+            $property = 'objectives' . $objective->getType();
+            $report->{$property}[] = $objective;
         }
-        $defaults['management'] = $this->getManagement($employee, $year, $om_repository);
+        $report->management = $this->getManagement($employee, $year, $om_repository);
 
-        $form = $this->createForm(ObjectiveReportType::class, $defaults);
+        $form = $this->createForm(ObjectiveReportType::class, $report);
         $form->handleRequest($request);
         if ($form->isSubmitted() and $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();

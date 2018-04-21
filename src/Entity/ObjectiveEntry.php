@@ -62,6 +62,8 @@ class ObjectiveEntry
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @Assert\GreaterThanOrEqual(0)
+     * @Assert\LessThanOrEqual(100)
      */
     private $achieve;
 
