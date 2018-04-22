@@ -26,12 +26,17 @@ class MBOController extends Controller
 
     public function root(PersonRepository $personRepository): Response
     {
-        $people = $personRepository->getRoot();
-        return $this->render('mbo/tree.html.twig', ['people' => $people, 'head' => false]);
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $person = $this->getUser();
+        $people = $personRepository->getTree($person);
+        return $this->render('mbo/tree.html.twig', ['people' => $people, 'head' => $person]);
     }
 
     public function by_year(ObjectiveEntryRepository $oe_repository, Request $request): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $person = $this->getUser();
+
         if ($request->cookies->has('mbo_year')) {
             $year = $request->cookies->get('mbo_year');
         }
@@ -44,7 +49,7 @@ class MBOController extends Controller
         if ($form->isSubmitted() and $form->isValid()) {
             $set_cookie = $year = $form->get('year')->getData();
         }
-        $employees = $oe_repository->getMyYear($year);
+        $employees = $oe_repository->getMyYear($year, $person);
         $context = array(
             'form' => $form->createView(),
             'year' => $year,
