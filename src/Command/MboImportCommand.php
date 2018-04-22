@@ -11,6 +11,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use App\Entity\Person;
+use App\Repository\PersonRepository;
 
 class MboImportCommand extends Command
 {
