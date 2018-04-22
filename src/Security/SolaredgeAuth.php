@@ -24,16 +24,28 @@ class SolaredgeAuth implements SimpleFormAuthenticatorInterface {
     public function authenticateToken(TokenInterface $token, UserProviderInterface $userProvider, $providerKey) {
         try {
             $user = $userProvider->loadUserByUsername($token->getUsername());
+            $auth = $this->ldap_auth($token->getUsername(), $token->getCredentials());
+            if ($auth) {
+                return new UsernamePasswordToken(
+                    $user,
+                    'empty',
+                    $providerKey,
+                    $user->getRoles()
+                );
+            }
         }
-        catch (UsernameNotFoundException $exception) {
-            throw new CustomUserMessageAuthenticationException('Invalid username or password');
-        }
+        catch (UsernameNotFoundException $exception) {}
+        throw new CustomUserMessageAuthenticationException('Invalid username or password');
+    }
 
-        return new UsernamePasswordToken(
-            $user,
-            'empty',
-            $providerKey,
-            $user->getRoles()
-        );
+    function ldap_auth($username, $password) {
+        $conn = ldap_connect('ldaps://sedc01.solaredge.local', 636);
+        if ($conn) {
+            $auth = @ldap_bind($conn, 'SOLAREDGE\\' . $username, $password); 
+            if ($auth) {
+                return true;
+            }
+        }
+        return false;
     }
 }
