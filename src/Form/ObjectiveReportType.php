@@ -19,13 +19,12 @@ class ObjectiveReportType extends AbstractType
         $builder->add('objectivesInfrastructure', CollectionType::class, $options);
 
         $builder->add('management', ObjectiveManagementWeightType::class);
-
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'validation_groups' => ['Default', 'report'],
+            'validation_groups' => ['report'],
         ]);
     }
 }
