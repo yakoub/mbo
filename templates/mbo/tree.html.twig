@@ -16,7 +16,7 @@
             <span> go up:
                 {% if head.manager %}
                     <a href="{{ path('people', {'id': head.manager.getId()}) }}">
-                        {{ head.manager.name }} 
+                        {{ head.manager.FullName }} 
                     </a>
                 {% else %}
                     <a href="{{ path('people_root') }}">
@@ -32,7 +32,7 @@
             <div class="card-header">
                 <h3 class="card-title">
                     <a class="card-link" href="{{ path('people', {'id': person.id}) }}">
-                        {{ person.name }}
+                        {{ person.FullName }}
                     </a>
                     {% if person.manager %}
                     <a class="card-link" 

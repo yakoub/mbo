@@ -28,7 +28,7 @@
         <tbody>
         {% for employee in employees %}
             <tr>
-                <td>{{ employee.name }} </td>
+                <td>{{ employee.FullName }} </td>
                 <td>{{ employee.total_weight|number_format(2) }}</td>
                 <td>{{ employee.objective_count }}</td>
                 <td>

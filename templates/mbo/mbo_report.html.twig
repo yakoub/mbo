@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} {{ employee.name }}, {{ year }} {% endblock %}
+{% block title %} {{ employee.FullName }}, {{ year }} {% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -13,7 +13,7 @@
         <th> Employee </th> 
         <td> 
             <a href="{{ path('person_show', {id: employee.id}) }}">
-                {{ employee.name }}
+                {{ employee.FullName }}
             </a>
         </td>
     </tr>
@@ -21,7 +21,7 @@
         <th> Manager </th> 
         <td> 
             <a href="{{ path('people', {id: employee.getManager().id}) }}">
-                {{ employee.getManager().name }} 
+                {{ employee.getManager().FullName }} 
             </a>
         </td>
     </tr>
