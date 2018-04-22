@@ -10,7 +10,7 @@
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
         <ul class="nav">
             <li class="nav-item">
-                <span class="nav-link text-info"> Welcome {{ app.user.username }} </span>
+                <span class="nav-link text-info"> Welcome {{ app.user.getFullName() }} </span>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ path('logout') }}"> Logout </a>
