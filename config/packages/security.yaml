@@ -8,17 +8,23 @@ security:
                     manager-1-1:
                         password: enter
                         roles: 'ROLE_USER'
+        person_provider:
+            entity:
+                class: App\Entity\Person
+                property: name
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            provider: in_memory
+            provider: person_provider
             anonymous: ~
-            form_login_ldap:
+            #form_login_ldap:
+            simple_form:
+                authenticator: App\Security\SolaredgeAuth
                 login_path: login
                 check_path: login
-                service: Symfony\Component\Ldap\Ldap
+                #service: Symfony\Component\Ldap\Ldap
             # https://symfony.com/doc/current/security/form_login_setup.html
             logout:
                 path: /logout

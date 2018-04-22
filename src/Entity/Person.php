@@ -5,11 +5,12 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PersonRepository")
  */
-class Person
+class Person implements UserInterface, \Serializable
 {
     /**
      * @ORM\Id()
@@ -64,6 +65,33 @@ class Person
         $this->name = $name;
 
         return $this;
+    }
+
+    public function getUsername(): ?string {
+        return $this->name;
+    }
+
+    public function getPassword() {}
+    public function getSalt() {}
+    public function getRoles() {
+        return ['ROLE_USER'];
+    }
+    public function eraseCredentials() {}
+
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->name,
+        ));
+    }
+
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->name,
+        ) = unserialize($serialized, ['allowed_classes' => false]);
     }
 
     public function getEmail(): ?string
