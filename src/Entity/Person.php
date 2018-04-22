@@ -49,6 +49,11 @@ class Person implements UserInterface, \Serializable
      */
     private $full_name;
 
+    /**
+     * @ORM\Column(type="string", length=64)
+     */
+    private $ldap_name;
+
     public function __construct()
     {
         $this->employees = new ArrayCollection();
@@ -196,6 +201,18 @@ class Person implements UserInterface, \Serializable
     public function setFullName(?string $full_name): self
     {
         $this->full_name = $full_name;
+
+        return $this;
+    }
+
+    public function getLdapName(): ?string
+    {
+        return $this->ldap_name;
+    }
+
+    public function setLdapName(string $ldap_name): self
+    {
+        $this->ldap_name = $ldap_name;
 
         return $this;
     }

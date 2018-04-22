@@ -13,11 +13,11 @@ use Doctrine\Common\Persistence\ObjectManager;
 use App\Entity\Person;
 use App\Repository\PersonRepository;
 
-class MboImportCommand extends Command
+class UserImportCommand extends Command
 {
-    use UserImportTrait;
+    use LdapImportTrait;
 
-    protected static $defaultName = 'mbo:import';
+    protected static $defaultName = 'mbo:import:user';
 
     protected function configure()
     {
