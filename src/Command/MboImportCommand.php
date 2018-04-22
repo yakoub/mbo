@@ -14,6 +14,8 @@ use App\Entity\Person;
 
 class MboImportCommand extends Command
 {
+    use UserImportTrait;
+
     protected static $defaultName = 'mbo:import';
 
     protected function configure()
@@ -24,20 +26,53 @@ class MboImportCommand extends Command
     }
 
     protected $manager;
+    protected $repository;
+    protected $output;
 
-    public function __construct(ObjectManager $manager) {
+    public function __construct(ObjectManager $manager, PersonRepository $repository) {
         $this->manager = $manager;
+        $this->repository = $repository;
         parent::__construct();
+    }
+
+    protected function getManager() {
+        return $this->manager;
+    }
+    protected function getRepository() {
+        return $this->repository;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $p = new Person();
-        $p->setName("console person");
-        $p->setEmail("cp@dd.d");
-        $this->manager->persist($p);
-        $this->manager->flush();
-
-        $output->writeln('p id is=' . $p->getId());
+        $conn = $this->ldap();
+        if (!$conn) {
+            throw new \Exception('Connection failed');
+        }
+        $this->output = $output;
+        list($base_dn, $attr, $filter) = $this->search_parameters();
+        $cookie = '';
+        $page_size = 500;
+        $total = 0;
+        do {
+            ldap_control_paged_result($conn, $page_size, true, $cookie);
+            $resource = ldap_search($conn, $base_dn, $filter, $attr);
+            if ($resource) {
+              $entries = ldap_get_entries($conn, $resource);
+              unset($entries['count']);
+              foreach ($entries as $entry) {
+                try {
+                  $this->saveUser($entry);
+                }
+                catch (\PDOException $e) { // doens't work
+                }
+              }
+              $output->writeln('new page');
+              $this->getManager()->flush();
+              ldap_control_paged_result_response($conn, $resource, $cookie);
+            }
+            else {
+              $cookie = null;
+            }
+        } while ($cookie !== null and $cookie != '');
     }
 }
