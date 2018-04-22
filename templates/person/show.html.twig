@@ -18,6 +18,10 @@
                 <th>Email</th>
                 <td>{{ person.email }}</td>
             </tr>
+            <tr>
+                <th>Full Name</th>
+                <td>{{ person.getFullName() }}</td>
+            </tr>
             {% if person.manager %}
             <tr>
                 <th> Manager </th>
