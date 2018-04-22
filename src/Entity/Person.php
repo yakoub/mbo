@@ -50,7 +50,7 @@ class Person implements UserInterface, \Serializable
     private $full_name;
 
     /**
-     * @ORM\Column(type="string", length=64)
+     * @ORM\Column(type="string", length=64, nullable=true)
      */
     private $ldap_name;
 
