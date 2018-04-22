@@ -29,7 +29,7 @@ class ObjectiveEntryFixture extends Fixture implements DependentFixtureInterface
     }
 
     function createObjective($f, $s, $t, $year) {
-        $by_manager = $this->getReference("manager-$f-$f");
+        $by_manager = $this->getReference("manager-$f");
         $for_employee = $this->getReference("employee-$f-$f-$t");
 
         $objective = new ObjectiveEntry();
@@ -38,8 +38,8 @@ class ObjectiveEntryFixture extends Fixture implements DependentFixtureInterface
         $objective->setYear($year);
         $objective->setType('Direct');
         $objective->setSubject("subject-$f-$f-$t");
-        $objective->setWeight(0.2);
-        $objective->setAchieve(0.3);
+        $objective->setWeight(20);
+        $objective->setAchieve(30);
         return $objective;
     }
 }

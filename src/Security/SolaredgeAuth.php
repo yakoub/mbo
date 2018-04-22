@@ -24,7 +24,7 @@ class SolaredgeAuth implements SimpleFormAuthenticatorInterface {
     public function authenticateToken(TokenInterface $token, UserProviderInterface $userProvider, $providerKey) {
         try {
             $user = $userProvider->loadUserByUsername($token->getUsername());
-            if ($user->getName() == 'manager-2') {
+            if (preg_match('/manager-[12](-[12])?/', $user->getName())) {
                 $auth = true;
             }
             else {
