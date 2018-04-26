@@ -2,12 +2,6 @@ security:
     encoders:
         Symfony\Component\Security\Core\User\User: plaintext
     providers:
-        in_memory: 
-            memory:
-                users:
-                    manager-1-1:
-                        password: enter
-                        roles: 'ROLE_USER'
         person_provider:
             entity:
                 class: App\Entity\Person
@@ -19,12 +13,10 @@ security:
         main:
             provider: person_provider
             anonymous: ~
-            #form_login_ldap:
             simple_form:
                 authenticator: App\Security\SolaredgeAuth
                 login_path: login
                 check_path: login
-                #service: Symfony\Component\Ldap\Ldap
             # https://symfony.com/doc/current/security/form_login_setup.html
             logout:
                 path: /logout
