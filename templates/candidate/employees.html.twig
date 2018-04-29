@@ -2,7 +2,7 @@
 {% for person in people %}
     <tr>
         <td> 
-            <a href="{{ path('people', {'id': person.id}) }}">
+            <a href="{{ path('candidate', {'id': person.id}) }}">
                 {{ person.FullName }} 
             </a>
         </td>

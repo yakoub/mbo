@@ -16,7 +16,7 @@
             <span> title: {{ head.title }} </span>
             <span> go up:
                 {% if head.manager %}
-                    <a href="{{ path('people', {'id': head.manager.getId()}) }}">
+                    <a href="{{ path('candidate', {'id': head.manager.getId()}) }}">
                         {{ head.manager.FullName }} 
                     </a>
                 {% else %}
@@ -32,7 +32,7 @@
         <div class="card mb-3">
             <div class="card-body">
                 <h3 class="card-title">
-                    <a class="card-link" href="{{ path('people', {'id': person.id}) }}">
+                    <a class="card-link" href="{{ path('candidate', {'id': person.id}) }}">
                         {{ person.FullName }}
                     </a>
                 </h3>
@@ -50,7 +50,7 @@
             </div>
             <div class="card-body">
             {% if not person.employees.isEmpty() %}
-                {{ include('mbo/employees.html.twig', {people: person.employees}, with_context = false) }}
+                {{ include('candidate/employees.html.twig', {people: person.employees}, with_context = false) }}
             {% endif %}
             </div>
         </div>

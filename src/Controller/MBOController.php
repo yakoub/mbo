@@ -18,26 +18,6 @@ use App\Form\ObjectiveReportType;
 
 class MBOController extends Controller
 {
-    public function person_tree(PersonRepository $personRepository, Person $person): Response
-    {
-        $people = $personRepository->getTree($person);
-        return $this->render('mbo/tree.html.twig', ['people' => $people, 'head' => $person]);
-    }
-
-    public function candidates(PersonRepository $personRepository): Response
-    {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        $person = $this->getUser();
-        $people = $personRepository->getTree($person);
-        return $this->render('mbo/tree.html.twig', ['people' => $people, 'head' => $person]);
-    }
-
-    public function people_admin(PersonRepository $personRepository): Response
-    {
-        $people = $personRepository->getRoot();
-        return $this->render('mbo/tree.html.twig', ['people' => $people, 'head' => false]);
-    }
-
     public function by_year(ObjectiveEntryRepository $oe_repository, Request $request): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');

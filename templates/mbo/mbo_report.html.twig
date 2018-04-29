@@ -20,7 +20,7 @@
     <tr>
         <th> Manager </th> 
         <td> 
-            <a href="{{ path('people', {id: employee.getManager().id}) }}">
+            <a href="{{ path('candidate', {id: employee.getManager().id}) }}">
                 {{ employee.getManager().FullName }} 
             </a>
         </td>

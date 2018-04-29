@@ -1,0 +1,9 @@
+candidates:
+    path: /candidates
+    controller: App\Controller\CandidateController:candidates
+candidate:
+    path: /candidate/{id}
+    controller: App\Controller\CandidateController::candidate_tree
+people_admin:
+    path: /people_admin
+    controller: App\Controller\CandidateController:people_admin
