@@ -11,15 +11,16 @@
     {% if head %}
         <h1 class="title head">
             <a href="{{ path('person_show', {'id': head.id}) }}">
-                {{ head.name }} 
+                {{ head.FullName }} 
             </a>
+            <span> title: {{ head.title }} </span>
             <span> go up:
                 {% if head.manager %}
                     <a href="{{ path('people', {'id': head.manager.getId()}) }}">
                         {{ head.manager.FullName }} 
                     </a>
                 {% else %}
-                    <a href="{{ path('people_root') }}">
+                    <a href="{{ path('people_admin') }}">
                         Root 
                     </a>
                 {% endif %}
@@ -29,25 +30,29 @@
 
     {% for person in people %}
         <div class="card mb-3">
-            <div class="card-header">
+            <div class="card-body">
                 <h3 class="card-title">
                     <a class="card-link" href="{{ path('people', {'id': person.id}) }}">
                         {{ person.FullName }}
                     </a>
-                    {% if person.manager %}
-                    <a class="card-link" 
-                        href="{{ path('objective_entry_new', {'employee': person.id}) }}">
-                        Add Objective
-                    </a>
-                    {% endif %}
-                    <a class="card-link" href="{{ path('person_show', {'id': person.id}) }}">
-                        show
-                    </a>
                 </h3>
+                {% if person.title %}
+                <h4 class="card-subtitle">
+                    {{ person.title }}
+                </h4>
+                {% endif %}
+                {% if person.manager %}
+                <a class="card-link badge badge-success" 
+                    href="{{ path('objective_entry_new', {'employee': person.id}) }}">
+                    Add Objective
+                </a>
+                {% endif %}
             </div>
+            <div class="card-body">
             {% if not person.employees.isEmpty() %}
                 {{ include('mbo/employees.html.twig', {people: person.employees}, with_context = false) }}
             {% endif %}
+            </div>
         </div>
     {% else %}
         <p> no records found </p>

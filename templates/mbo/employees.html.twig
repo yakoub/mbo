@@ -7,16 +7,11 @@
             </a>
         </td>
         <td> 
-            <a href="{{ path('objective_entry_new', {'employee': person.id}) }}">
+            <a class="badge badge-success" 
+                href="{{ path('objective_entry_new', {'employee': person.id}) }}">
                 Add Objective
             </a>
         </td>
-        <td> 
-            <a href="{{ path('person_show', {'id': person.id}) }}">
-                show 
-            </a>
-        </td>
-        <td> 
     </tr>
 {% endfor %}
 </tbody></table>

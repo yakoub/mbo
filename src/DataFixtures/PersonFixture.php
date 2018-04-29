@@ -10,7 +10,7 @@ class PersonFixture extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-        foreach (range(1, 10) as $f) {
+        foreach ([1, 2] as $f) {
           $first = new Person();
           $first->setName('manager-' . $f);
           $first->setFullName('manager-' . $f);

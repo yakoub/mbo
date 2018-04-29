@@ -54,6 +54,11 @@ class Person implements UserInterface, \Serializable
      */
     private $ldap_name;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $title;
+
     public function __construct()
     {
         $this->employees = new ArrayCollection();
@@ -213,6 +218,18 @@ class Person implements UserInterface, \Serializable
     public function setLdapName(string $ldap_name): self
     {
         $this->ldap_name = $ldap_name;
+
+        return $this;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(?string $title): self
+    {
+        $this->title = $title;
 
         return $this;
     }

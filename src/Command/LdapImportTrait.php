@@ -10,9 +10,9 @@ trait LdapImportTrait {
     if (!$conn) {
       return false;
     }
-
     $username = 'Solaredge';
     $password = '';
+
     if (empty($username) or empty($password)) {
       throw new \Exception('missing ldap settings');
     }
@@ -32,7 +32,7 @@ trait LdapImportTrait {
     $base_dn = 'ou=Users, ou=Solaredge, dc=solaredge, dc=local';
     $attr = array(
       'mailNickname', 'department', 'c', 'manager', 'extensionAttribute1', 'telephoneNumber',
-      'mail', 'mobile', 'name', 'whenChanged', 'objectCategory', 'cn', 'objectClass',
+      'mail', 'mobile', 'name', 'title', 'whenChanged', 'objectCategory', 'cn', 'objectClass',
     );
 
     $filter = '';
@@ -71,8 +71,9 @@ trait LdapImportTrait {
   }
 
   function extractFields($user, $entry, $values) {
-    if ($values['name'] != 'danielle.vn') {  // unresolved sql bug
-      $user->setFullName($entry['name'][0]);
+    $user->setFullName(iconv('WINDOWS-1252', 'UTF-8', $entry['name'][0]));
+    if (isset($entry['title'])) {
+      $user->setTitle(iconv('WINDOWS-1252', 'UTF-8', $entry['title'][0]));
     }
     $this->saveOrg($entry, $user);
   }

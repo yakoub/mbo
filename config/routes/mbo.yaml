@@ -1,9 +1,12 @@
-people_root:
-    path: /people
-    controller: App\Controller\MBOController:root
+candidates:
+    path: /candidates
+    controller: App\Controller\MBOController:candidates
 people:
     path: /people/{id}
-    controller: App\Controller\MBOController::index
+    controller: App\Controller\MBOController::person_tree
+people_admin:
+    path: /people_admin
+    controller: App\Controller\MBOController:people_admin
 year:
     path: /year
     controller: App\Controller\MBOController::by_year

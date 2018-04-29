@@ -1,6 +1,6 @@
 index:
     path: /
-    controller: App\Controller\MBOController::root
+    controller: App\Controller\MBOController::by_year
 login:
     path: /login
     controller: App\Controller\AuthenticationController::login
