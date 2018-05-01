@@ -57,19 +57,8 @@
         {% set context = {partition: 'Infrastructure', objectives: form.objectivesInfrastructure} %}
         {{ include('mbo/mbo_partition.html.twig', context) }}
 
-        <tbody class="ceo">
-            <tr class="bg-secondary text-white">
-                <td colspan="3"> CEO </td>
-                <td> 10% </td> <td> </td>
-                <td> 
-                    {{ form_errors(form.management.ceo_weight) }} 
-                    {{ form_widget(form.management.ceo_weight) }} 
-                </td>
-                <td> </td> <td> </td>
-            </tr>
-        </tbody>
         <tbody class="vp">
-            <tr class="bg-info text-white">
+            <tr class="bg-secondary text-white">
                 <td colspan="3"> VP </td>
                 <td> 10% </td> <td> </td>
                 <td> 
@@ -79,8 +68,24 @@
                 <td> </td> <td> </td>
             </tr>
         </tbody>
+
+        <tbody class="ceo">
+            <tr class="bg-info text-white">
+                <td colspan="3"> CEO </td>
+                <td> 10% </td> <td> </td>
+                <td> 
+                    {{ form_errors(form.management.ceo_weight) }} 
+                    {{ form_widget(form.management.ceo_weight) }} 
+                </td>
+                <td> </td> <td> </td>
+            </tr>
+        </tbody>
+
         </table>
-        <button class="btn">{{ button_label|default('Save') }}</button>
+        <div class="d-flex justify-content-end">
+            <button class="btn">{{ button_label|default('Save') }}</button>
+            <var class="table-total p-2 mx-3 bg-info text-white rounded"></var>
+        </div>
     {{ form_end(form) }}
 {% endblock %}
 
