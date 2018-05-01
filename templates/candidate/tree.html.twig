@@ -14,38 +14,45 @@
                 {{ head.FullName }} 
             </a>
             <span> title: {{ head.title }} </span>
+            {% if head.manager %}
             <span> go up:
-                {% if head.manager %}
-                    <a href="{{ path('candidate', {'id': head.manager.getId()}) }}">
-                        {{ head.manager.FullName }} 
-                    </a>
-                {% else %}
-                    <a href="{{ path('candidates') }}">
-                        Root 
-                    </a>
-                {% endif %}
+                <a href="{{ path('candidate', {'id': head.manager.getId()}) }}">
+                    {{ head.manager.FullName }} 
+                </a>
             </span>
+            {% endif %}
         </h1>
     {% endif %}
 
     {% for person in people %}
         <div class="card mb-3">
-            <div class="card-body">
-                <h3 class="card-title">
-                    <a class="card-link" href="{{ path('person_admin', {'id': person.id}) }}">
-                        {{ person.FullName }}
-                    </a>
-                </h3>
+            <div class="card-header">
+                <a class="card-title card-link" href="{{ path('candidate', {'id': person.id}) }}">
+                    {{ person.FullName }}
+                </a>
                 {% if person.title %}
-                <h4 class="card-subtitle">
-                    {{ person.title }}
-                </h4>
+                <span class="card-subtitle">
+                    Title : {{ person.title }}
+                </span>
                 {% endif %}
             </div>
             <div class="card-body">
-            {% if not person.employees.isEmpty() %}
-                {{ include('candidate/employees.html.twig', {people: person.employees}, with_context = false) }}
-            {% endif %}
+                {% if person.years %}
+                <ul class="nav">
+                {% for year in person.years %}
+                    <li class="nav-item"> 
+                        <a class="nav-link" 
+                            href="{{ path('mbo', {employee: person.id, year:year}) }}">
+                            {{year}} 
+                        </a>
+                    </li>
+                {% endfor %}
+                </ul>
+                {% endif %}
+                <a class="card-link badge badge-success"
+                    href="{{ path('objective_entry_new', {'employee': person.id}) }}">
+                    Add Objective
+                </a>
             </div>
         </div>
     {% else %}
