@@ -1,4 +1,4 @@
-<table class="table table-striped"><tbody>
+<table class="table table-striped children-for-{{ parent.id }}"><tbody>
 {% for person in people %}
     <tr>
         <td> 
@@ -6,7 +6,7 @@
                 {{ person.FullName }} 
             </a>
         </td>
-        <td> 
+        <td class="status"> 
             {% if person.active %}
                 <span class="badge badge-success"> 
                     Active

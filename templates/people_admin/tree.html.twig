@@ -28,20 +28,20 @@
         </h1>
     {% endif %}
 
-    {% for person in people %}
+    {% for person_item in people %}
         <div class="card mb-3">
             <div class="card-body">
                 <h3 class="card-title">
-                    <a class="card-link" href="{{ path('person_admin', {'id': person.id}) }}">
-                        {{ person.FullName }}
+                    <a class="card-link" href="{{ path('person_admin', {'id': person_item.id}) }}">
+                        {{ person_item.FullName }}
                     </a>
                 </h3>
-                {% if person.title %}
+                {% if person_item.title %}
                 <h4 class="card-subtitle">
-                    {{ person.title }}
+                    {{ person_item.title }}
                 </h4>
                 {% endif %}
-                {% if person.active %}
+                {% if person_item.active %}
                     <span class="badge badge-success"> 
                         Active
                     </span>
@@ -50,10 +50,16 @@
                         Inactive
                     </span>
                 {% endif %}
+                {% if not person_item.employees.isEmpty() %}
+                    <button 
+                        type="button" data-id="{{ person_item.id }}"
+                        class="activate-children btn btn-sm btn-outline-success"
+                    >Activate children </button>
+                {% endif %}
             </div>
             <div class="card-body">
-            {% if not person.employees.isEmpty() %}
-                {{ include('people_admin/employees.html.twig', {people: person.employees}, with_context = false) }}
+            {% if not person_item.employees.isEmpty() %}
+                {{ include('people_admin/employees.html.twig', {people: person_item.employees, parent: person_item}, with_context = false) }}
             {% endif %}
             </div>
         </div>
@@ -61,4 +67,8 @@
         <p> no records found </p>
     {% endfor %}
 {% endblock %}
-{% block javascripts %}{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/people.admin.js') }}" type="text/javascript"></script>
+{% endblock %}

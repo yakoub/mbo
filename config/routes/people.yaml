@@ -7,3 +7,4 @@ person_admin:
 activate_children:
     path: /activate-children/{id}
     controller: App\Controller\PeopleController:activate_children
+    methods: [POST]

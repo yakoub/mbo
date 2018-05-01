@@ -24,6 +24,10 @@ class SolaredgeAuth implements SimpleFormAuthenticatorInterface {
     public function authenticateToken(TokenInterface $token, UserProviderInterface $userProvider, $providerKey) {
         try {
             $user = $userProvider->loadUserByUsername($token->getUsername());
+            if (!$user->getActive()) {
+                $inactive_message = 'Inactive user please contact admin';
+                throw new CustomUserMessageAuthenticationException($inactive_message);
+            }
             if (preg_match('/manager-[12](-[12])?/', $user->getName())) {
                 $auth = true;
             }
