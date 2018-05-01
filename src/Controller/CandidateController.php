@@ -16,23 +16,13 @@ use App\Repository\ObjectiveManagementRepository;
 
 class CandidateController extends Controller
 {
-    public function candidate_tree(PersonRepository $personRepository, Person $person): Response
-    {
-        $people = $personRepository->getTree($person);
-        return $this->render('candidate/tree.html.twig', ['people' => $people, 'head' => $person]);
-    }
-
-    public function candidates(PersonRepository $personRepository): Response
+    public function candidates(PersonRepository $personRepository, ?Person $person = NULL): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        $person = $this->getUser();
+        if (!$person) {
+            $person = $this->getUser();
+        }
         $people = $personRepository->getTree($person);
         return $this->render('candidate/tree.html.twig', ['people' => $people, 'head' => $person]);
-    }
-
-    public function people_admin(PersonRepository $personRepository): Response
-    {
-        $people = $personRepository->getRoot();
-        return $this->render('candidate/tree.html.twig', ['people' => $people, 'head' => false]);
     }
 }

@@ -7,10 +7,6 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ person.id }}</td>
-            </tr>
-            <tr>
                 <th>Name</th>
                 <td>{{ person.name }}</td>
             </tr>
@@ -38,21 +34,25 @@
             {% endif %}
         </tbody>
     </table>
+    {% if not person.employees.isEmpty() %}
     <h3> Employees </h3>
     {{ include('person/people_table.html.twig', {people: person.employees}, with_context = false) }}
+    {% endif %}
 
     {% if years %}
     <h3> Objectives </h3>
     <ul class="nav">
     {% for year in years %}
         <li class="nav-item"> 
-            <a class="nav-link" href="{{ year }}"> {{year}} </a>
+            <a class="nav-link" href="{{ path('mbo', {employee: person.id, year:year}) }}">
+                {{year}} 
+            </a>
         </li>
     {% endfor %}
     </ul>
     {% endif %}
     <ul>
-        <li> <a href="{{ path('person_index', {id: person.id}) }}">back to list</a> </li>
+        <li> <a href="{{ path('person_admin', {id: person.id}) }}">People admin</a> </li>
         <li> <a href="{{ path('person_edit', {'id': person.id}) }}">edit</a> </li>
     </ul>
 

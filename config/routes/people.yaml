@@ -1,0 +1,9 @@
+people_admin:
+    path: /people_admin
+    controller: App\Controller\PeopleController:people_admin
+person_admin:
+    path: /people_admin/{id}
+    controller: App\Controller\PeopleController:people_admin
+activate_children:
+    path: /activate-children/{id}
+    controller: App\Controller\PeopleController:activate_children

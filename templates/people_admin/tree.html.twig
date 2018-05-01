@@ -16,11 +16,11 @@
             <span> title: {{ head.title }} </span>
             <span> go up:
                 {% if head.manager %}
-                    <a href="{{ path('candidate', {'id': head.manager.getId()}) }}">
+                    <a href="{{ path('person_admin', {'id': head.manager.getId()}) }}">
                         {{ head.manager.FullName }} 
                     </a>
                 {% else %}
-                    <a href="{{ path('candidates') }}">
+                    <a href="{{ path('people_admin') }}">
                         Root 
                     </a>
                 {% endif %}
@@ -41,10 +41,19 @@
                     {{ person.title }}
                 </h4>
                 {% endif %}
+                {% if person.active %}
+                    <span class="badge badge-success"> 
+                        Active
+                    </span>
+                {% else %}
+                    <span class="badge badge-secondary"> 
+                        Inactive
+                    </span>
+                {% endif %}
             </div>
             <div class="card-body">
             {% if not person.employees.isEmpty() %}
-                {{ include('candidate/employees.html.twig', {people: person.employees}, with_context = false) }}
+                {{ include('people_admin/employees.html.twig', {people: person.employees}, with_context = false) }}
             {% endif %}
             </div>
         </div>

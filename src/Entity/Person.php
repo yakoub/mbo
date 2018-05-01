@@ -59,6 +59,11 @@ class Person implements UserInterface, \Serializable
      */
     private $title;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $active = false;
+
     public function __construct()
     {
         $this->employees = new ArrayCollection();
@@ -230,6 +235,18 @@ class Person implements UserInterface, \Serializable
     public function setTitle(?string $title): self
     {
         $this->title = $title;
+
+        return $this;
+    }
+
+    public function getActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(bool $active): self
+    {
+        $this->active = $active;
 
         return $this;
     }
