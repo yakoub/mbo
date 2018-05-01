@@ -117,7 +117,7 @@ mbo_report.update_partition = function(row, partition) {
   var score_sum = this.update_total_score(partition, score_diff);
 
   if (score_diff != 0 && score_sum != 0) {
-    this.update_total_table(_diff);
+    this.update_total_table(score_diff);
     return;
   }
   if (weight_diff != 0 && score == 0) {
