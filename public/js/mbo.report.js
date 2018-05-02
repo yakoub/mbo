@@ -10,6 +10,7 @@ var mbo_report = {
   fs: 4, // final score
   ft: 5, // final total
 }; 
+
 document.addEventListener('DOMContentLoaded', function() {
     mbo_report.table = document.querySelector('table.mbo');
     mbo_report.form = document.querySelector('form[name="objective_report"]');
@@ -35,27 +36,27 @@ mbo_report.scan = function() {
             var weight_sum = 0;
             var score_sum = 0;
             for (var row_iter = 1; row_iter < partition.rows.length; row_iter++) {
-                var weight = partition.rows[row_iter].cells[this.w].children[0].value;
-                weight = weight.length == 0 ? 0 : parseFloat(weight);
+                var row = partition.rows[row_iter];
+                var weight = this.getPartitionWeight(row);
                 weight_sum += weight;
-                var achieve = partition.rows[row_iter].cells[this.a].children[0].value;
-                achieve = achieve.length == 0 ? 0 : parseFloat(achieve);
+                var achieve = this.getPartitionAchieve(row);
                 var score = weight * (achieve/100);
-                partition.rows[row_iter].cells[this.s].textContent = score.toFixed(2);
+
+                this.setPartitionScore(row, score);
                 score_sum += score;
             }
-            partition.rows[0].cells[this.hw].textContent = weight_sum.toFixed(2);
-            partition.rows[0].cells[this.hs].textContent = score_sum.toFixed(2);
+            this.setPartitionTotalWeight(partition, weight_sum);
+            this.setPartitionTotalScore(partition, score_sum);
             total_score += score_sum;
             table_total += (score_sum ? score_sum : weight_sum);
         }
         else {
-          var achieve = partition.rows[0].cells[this.fa].children[0].value;
-          achieve = achieve.length == 0 ? 0 : parseFloat(achieve);
+
+          var achieve = this.getReviewerAchieve(partition);
           var score = (achieve/100) * 10;
-          partition.rows[0].cells[this.fs].textContent = score.toFixed(2);
+          this.setReviewerScore(partition, score);
           total_score += score;
-          partition.rows[0].cells[this.ft].textContent = total_score.toFixed(2);
+          this.setReviewerTotal(partition, total_score);
           table_total += score;
         }
     }
@@ -68,52 +69,45 @@ mbo_report.update = function(row) {
     this.update_partition(row, partition);
   }
   else {
-    this.update_final(row, partition);
+    this.update_reviewer(partition);
   }
 };
 
-mbo_report.update_final = function(row, partition) {
-  var achieve = row.cells[this.fa].children[0].value;
-  achieve = achieve.length == 0 ? 0 : parseFloat(achieve);
+mbo_report.update_reviewer = function(partition) {
+  var achieve = this.getReviewerAchieve(partition);
   
-  var score_diff = row.cells[this.fs].textContent;
-  score_diff = score_diff.length == 0 ? 0 : parseFloat(score_diff);
+  var score_diff = this.getReviewerScore(partition);
   var score = (achieve/100) * 10;
-  row.cells[this.fs].textContent = score.toFixed(2);
+  this.setReviewerScore(partition, score);
 
   score_diff = score - score_diff;
-  var score_total = row.cells[this.ft].textContent;
-  score_total = score_total.length == 0 ? 0 : parseFloat(score_total);
+  var score_total = this.getReviewerTotal(partition);
   score_total += score_diff;
-  row.cells[this.ft].textContent = score_total.toFixed(2);
+  this.setReviewerTotal(partition, score_total);
 
   var table_total = score_total;
 
   if (partition.classList.contains('vp')) {
     var vp = partition.parentNode.querySelector('tbody.ceo');
-    score_total = vp.rows[0].cells[this.ft].textContent;
-    score_total = score_total.length == 0 ? 0 : parseFloat(score_total);
+    score_total = this.getReviewerTotal(vp);
     score_total += score_diff;
-    vp.rows[0].cells[this.ft].textContent = score_total.toFixed(2);
+    this.setReviewerTotal(vp, score_total);
     table_total = score_total;
   }
   document.querySelector('var.table-total').textContent = table_total.toFixed(2);
 };
 
 mbo_report.update_partition = function(row, partition) {
-  var weight = row.cells[this.w].children[0].value;
-  weight = weight.length == 0 ? 0 : parseFloat(weight);
-  var achieve = row.cells[this.a].children[0].value;
-  achieve = achieve.length == 0 ? 0 : parseFloat(achieve);
+  var weight = this.getPartitionWeight(row);
+  var achieve = this.getPartitionAchieve(row);
 
   var weight_diff = this.update_weight_sum(partition);
 
   var score = weight * (achieve/100);
   
-  var score_diff = row.cells[this.s].textContent;
-  row.cells[6].textContent = score.toFixed(2);
-  score_diff = score_diff.length == 0 ? 0 : parseFloat(score_diff);
+  var score_diff = this.getPartitionScore(row);
   score_diff = score - score_diff;
+  this.setPartitionScore(row, score);
   var score_sum = this.update_total_score(partition, score_diff);
 
   if (score_diff != 0 && score_sum != 0) {
@@ -126,20 +120,15 @@ mbo_report.update_partition = function(row, partition) {
 };
 
 mbo_report.update_total_score = function(partition, score_diff) {
-  var score_sum = partition.rows[0].cells[this.hs].textContent;
-  score_sum = score_sum.length == 0 ? 0 : parseFloat(score_sum);
+  var score_sum = this.getPartitionTotalScore(partition);
   score_sum += score_diff;
+  this.setPartitionTotalScore(partition, score_sum);
 
-  var total_diff = partition.rows[0].cells[this.hs].textContent;
-  total_diff = total_diff.length == 0 ? 0 : parseFloat(total_diff);
-  partition.rows[0].cells[this.hs].textContent = score_sum.toFixed(2);
-  total_diff = score_sum - total_diff;
-
+  var partitions = partition.parentNode.tBodies;
   [3, 4].forEach(function(iter) {
-    var score_total = partition.parentNode.tBodies[iter].rows[0].cells[this.ft].textContent;
-    score_total = score_total.length == 0 ? 0 : parseFloat(score_total);
-    score_total += total_diff;
-    partition.parentNode.tBodies[iter].rows[0].cells[this.ft].textContent = score_total.toFixed(2);
+    var score_total = this.getReviewerTotal(partitions[iter]);
+    score_total += score_diff;
+    this.setReviewerTotal(partitions[iter], score_total);
   }, this);
 
   return score_sum;
@@ -159,14 +148,68 @@ mbo_report.update_weight_sum = function (partition) {
 
   var weight_sum = 0;
   for (var row_iter = 1; row_iter < partition.rows.length; row_iter++) {
-      var weight = partition.rows[row_iter].cells[3].children[0].value;
-      weight = weight.length == 0 ? 0 : parseFloat(weight);
+      var row = partition.rows[row_iter];
+      var weight = this.getPartitionWeight(row);
       weight_sum += weight;
   }
-  var weight_diff = partition.rows[0].cells[2].textContent;
-  partition.rows[0].cells[2].textContent = weight_sum.toFixed(2);
-  weight_diff = weight_diff.length == 0 ? 0 : parseFloat(weight_diff);
+  var weight_diff = this.getPartitionTotalWeight(partition);
+  this.setPartitionTotalWeight(partition, weight_sum);
   weight_diff = weight_sum - weight_diff;
   return weight_diff;
 };
 
+mbo_report.getPartitionWeight = function(row) {
+  var weight = row.cells[this.w].children[0].value;
+  return weight.length == 0 ? 0 : parseFloat(weight);
+};
+
+mbo_report.getPartitionAchieve = function(row) {
+  var achieve = row.cells[this.a].children[0].value;
+  return achieve.length == 0 ? 0 : parseFloat(achieve);
+};
+
+mbo_report.getPartitionScore = function(row) {
+  var score = row.cells[this.s].textContent;
+  return score.length == 0 ? 0 : parseFloat(score);
+};
+
+mbo_report.setPartitionScore = function(row, score) {
+  row.cells[this.s].textContent = score.toFixed(2);
+};
+
+mbo_report.setPartitionTotalWeight = function(partition, weight) {
+  partition.rows[0].cells[this.hw].textContent = weight.toFixed(2);
+};
+
+mbo_report.setPartitionTotalScore = function(partition, score) {
+  partition.rows[0].cells[this.hs].textContent = score.toFixed(2);
+};
+
+mbo_report.getPartitionTotalWeight = function(partition) {
+  var weight = partition.rows[0].cells[this.hw].textContent;
+  return weight.length == 0 ? 0 : parseFloat(weight);
+};
+
+mbo_report.getPartitionTotalScore = function(partition) {
+  var score = partition.rows[0].cells[this.hs].textContent;
+  return score.length == 0 ? 0 : parseFloat(score);
+};
+
+mbo_report.getReviewerAchieve = function(partition) {
+  var achieve = partition.rows[0].cells[this.fa].children[0].value;
+  return achieve.length == 0 ? 0 : parseFloat(achieve);
+};
+mbo_report.setReviewerScore = function(partition, score) {
+  partition.rows[0].cells[this.fs].textContent = score.toFixed(2);
+};
+mbo_report.setReviewerTotal = function(partition, score) {
+  partition.rows[0].cells[this.ft].textContent = score.toFixed(2);
+};
+mbo_report.getReviewerScore = function(partition) {
+  var score = partition.rows[0].cells[this.fs].textContent;
+  return score.length == 0 ? 0 : parseFloat(score);
+};
+mbo_report.getReviewerTotal = function(partition) {
+  var score = partition.rows[0].cells[this.ft].textContent;
+  return score.length == 0 ? 0 : parseFloat(score);
+};

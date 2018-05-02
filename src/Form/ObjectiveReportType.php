@@ -13,10 +13,10 @@ class ObjectiveReportType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $options = ['entry_type' => ObjectiveWeightType::class];
-        $builder->add('objectivesDirect', CollectionType::class, $options);
-        $builder->add('objectivesIndirect', CollectionType::class, $options);
-        $builder->add('objectivesInfrastructure', CollectionType::class, $options);
+        $collection_options = ['entry_type' => ObjectiveWeightType::class];
+        $builder->add('objectivesDirect', CollectionType::class, $collection_options);
+        $builder->add('objectivesIndirect', CollectionType::class, $collection_options);
+        $builder->add('objectivesInfrastructure', CollectionType::class, $collection_options);
 
         $builder->add('management', ObjectiveManagementWeightType::class);
     }
