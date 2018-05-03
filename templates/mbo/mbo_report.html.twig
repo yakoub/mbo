@@ -32,7 +32,7 @@
         <table class=" mbo table table-bordered">
         <caption> 
             Managment By Ojective: {{year}}
-            <a href="{{ path('objective_entry_new', {'employee': employee.id, 'year': year}) }}"> New entry </a>
+            <a href="{{ path('objective_entry_new', {'employee': employee.id, 'year': year}) }}"> New entry </a> 
         </caption>
         <colgroup span="1"> </colgroup>
         <colgroup span="2"> </colgroup>
@@ -82,9 +82,16 @@
         </tbody>
 
         </table>
-        <div class="d-flex justify-content-end">
-            <button class="btn">{{ button_label|default('Save') }}</button>
-            <var class="table-total p-2 mx-3 bg-info text-white rounded"></var>
+        <div class="d-flex justify-content-between"> 
+            <div>
+                <button class="btn"> &lt </button>
+                <em> {{ status }} <em/>
+                <button class="btn"> &gt </button>
+            </div>
+            <div>
+                <button class="btn"> Save </button>
+                <var class="table-total p-2 mx-3 bg-info text-white rounded"></var>
+            </div>
         </div>
     {{ form_end(form) }}
 {% endblock %}

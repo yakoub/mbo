@@ -24,7 +24,7 @@ class ObjectiveEntryType extends AbstractType
             ->add('subject', Type\TextType::class, ['required' => true])
             ->add('description')
             ->add('weight', Type\NumberType::class, ['required' => false])
-            ->add('achieve', Type\NumberType::class, ['required' => false])
+            ->add('achieve', Type\NumberType::class, ['required' => false, 'disabled' => true])
         ;
     }
 

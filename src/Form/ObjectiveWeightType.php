@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type;
+use App\EventSubscriber\MBOReportSubscriber;
 
 class ObjectiveWeightType extends AbstractType
 {
@@ -14,8 +15,10 @@ class ObjectiveWeightType extends AbstractType
     {
         $builder
             ->add('weight', Type\NumberType::class, ['required' => false])
-            ->add('achieve', Type\NumberType::class, ['required' => false])
+            ->add('achieve', Type\NumberType::class, ['required' => false, 'disabled' => TRUE])
         ;
+
+        $builder->addEventSubscriber(new MBOReportSubscriber());
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -60,11 +60,12 @@ class MBOController extends Controller
         $objectives = $oe_repository->findBy(['for_employee' => $employee, 'year' => $year]);
         
         $report = new ObjectiveReport();
+        $report->management = $this->getManagement($employee, $year, $om_repository);
         foreach ($objectives as $objective) {
             $property = 'objectives' . $objective->getType();
+            $objective->status = $report->management->getStatus();
             $report->{$property}[] = $objective;
         }
-        $report->management = $this->getManagement($employee, $year, $om_repository);
 
         $form = $this->createForm(ObjectiveReportType::class, $report);
         $form->handleRequest($request);
@@ -77,6 +78,7 @@ class MBOController extends Controller
             'form' => $form->createView(),
             'employee' => $employee,
             'year' => $year,
+            'status' => $report->management->getStatus(),
         );
 
         return $this->render('mbo/mbo_report.html.twig', $context);
