@@ -19,7 +19,7 @@ class ObjectiveManagement
 
     /**
      * @ORM\Column(type="string", length=64)
-     * @Assert\Choice({"work_in_progress", "under_review", "require_approval"})
+     * @Assert\Choice({"work_in_progress", "under_review", "require_approval", "approved"})
      */
     private $status;
 
@@ -69,7 +69,8 @@ class ObjectiveManagement
         $config = array(
             'work_in_progress' => ['Work in progress', 'bg-secondary text-white'],
             'under_review' => ['Under review', 'bg-info text-white'],
-            'require_approval' => ['Require approval', 'bg-primary text-white']
+            'require_approval' => ['Require approval', 'bg-primary text-white'],
+            'approved' => ['Approved', 'bg-success text-white'],
         );
         return (object) array(
             'label' => $config[$this->status][0],
@@ -130,7 +131,8 @@ class ObjectiveManagement
         self::$transition = array(
             'work_in_progress' => [NULL, 'under_review'],
             'under_review' => ['work_in_progress', 'require_approval'],
-            'require_approval' => ['under_review', NULL],
+            'require_approval' => ['under_review', 'approved'],
+            'approved' => ['require_approval', NULL]
         );
     }
     public function statusNext() {
