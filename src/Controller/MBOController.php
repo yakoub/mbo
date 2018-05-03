@@ -70,15 +70,22 @@ class MBOController extends Controller
         $form = $this->createForm(ObjectiveReportType::class, $report);
         $form->handleRequest($request);
         if ($form->isSubmitted() and $form->isValid()) {
+            if ($form->get('status_next')->isClicked()) {
+                $report->management->statusNext();
+            }
+            elseif ($form->get('status_prev')->isClicked()) {
+                $report->management->statusPrev();
+            }
             $this->getDoctrine()->getManager()->flush();
             $param = ['year' => $year,'employee' => $employee->getId()];
             return $this->redirectToRoute('mbo', $param);
         }
+
         $context = array(
             'form' => $form->createView(),
             'employee' => $employee,
             'year' => $year,
-            'status' => $report->management->getStatus(),
+            'status' => $report->management->getStatusWithLabel(),
         );
 
         return $this->render('mbo/mbo_report.html.twig', $context);

@@ -58,7 +58,7 @@
         {{ include('mbo/mbo_partition.html.twig', context) }}
 
         <tbody class="vp">
-            <tr class="bg-secondary text-white">
+            <tr class="bg-info text-white">
                 <td colspan="3"> VP </td>
                 <td> 10% </td> <td> </td>
                 <td> 
@@ -70,7 +70,7 @@
         </tbody>
 
         <tbody class="ceo">
-            <tr class="bg-info text-white">
+            <tr class="bg-primary text-white">
                 <td colspan="3"> CEO </td>
                 <td> 10% </td> <td> </td>
                 <td> 
@@ -84,12 +84,14 @@
         </table>
         <div class="d-flex justify-content-between"> 
             <div>
-                <button class="btn"> &lt </button>
-                <em> {{ status }} <em/>
-                <button class="btn"> &gt </button>
+                {{ form_widget(form.status_prev) }}
+                <mark class="p-2 mx-3 {{ status.class }} rounded">
+                    {{ status.label }}
+                </mark>
+                {{ form_widget(form.status_next) }}
             </div>
             <div>
-                <button class="btn"> Save </button>
+                {{ form_widget(form.save) }}
                 <var class="table-total p-2 mx-3 bg-info text-white rounded"></var>
             </div>
         </div>

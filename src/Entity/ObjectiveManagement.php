@@ -65,6 +65,18 @@ class ObjectiveManagement
         return $this;
     }
 
+    public function getStatusWithLabel() {
+        $config = array(
+            'work_in_progress' => ['Work in progress', 'bg-secondary text-white'],
+            'under_review' => ['Under review', 'bg-info text-white'],
+            'require_approval' => ['Require approval', 'bg-primary text-white']
+        );
+        return (object) array(
+            'label' => $config[$this->status][0],
+            'class' => $config[$this->status][1]
+        );
+    }
+
     public function getVpWeight(): ?float
     {
         return $this->vp_weight;
@@ -111,5 +123,29 @@ class ObjectiveManagement
         $this->year = $year;
 
         return $this;
+    }
+
+    static $transition = NULL; 
+    static function setTransition() {
+        self::$transition = array(
+            'work_in_progress' => [NULL, 'under_review'],
+            'under_review' => ['work_in_progress', 'require_approval'],
+            'require_approval' => ['under_review', NULL],
+        );
+    }
+    public function statusNext() {
+        $this->statusTransition(1);
+    }
+    public function statusPrev() {
+        $this->statusTransition(0);
+    }
+    function statusTransition($op) {
+        if (!self::$transition) {
+            self::setTransition();
+        }
+        $status_new = self::$transition[$this->status][$op];
+        if ($status_new) {
+            $this->status = $status_new;
+        }
     }
 }

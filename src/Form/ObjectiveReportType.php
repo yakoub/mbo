@@ -8,6 +8,7 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class ObjectiveReportType extends AbstractType
 {
@@ -19,6 +20,10 @@ class ObjectiveReportType extends AbstractType
         $builder->add('objectivesInfrastructure', CollectionType::class, $collection_options);
 
         $builder->add('management', ObjectiveManagementWeightType::class);
+
+        $builder->add('save', SubmitType::class, ['label' => 'Save']);
+        $builder->add('status_prev', SubmitType::class, ['label' => '<']);
+        $builder->add('status_next', SubmitType::class, ['label' => '>']);
     }
 
     public function configureOptions(OptionsResolver $resolver)
