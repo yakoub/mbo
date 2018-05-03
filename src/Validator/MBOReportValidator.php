@@ -14,7 +14,8 @@ class MBOReportValidator extends ConstraintValidator
         foreach (['Direct', 'Indirect', 'Infrastructure'] as $partition) {
             $property = 'objectives' . $partition;
             foreach ($report->{$property} as $entry) {
-                $total_weight += $entry->getWeight() * ((float)$entry->getAchieve()/100);
+                $achieve = $entry->getAchieve() ?: 100;
+                $total_weight += $entry->getWeight() * ((float)$achieve/100);
             }
         }
 
