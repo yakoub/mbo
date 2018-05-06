@@ -44,6 +44,12 @@ class ObjectiveManagement
     private $for_employee;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Person", inversedBy="objective_entries")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $by_manager;
+
+    /**
      * @ORM\Column(type="smallint")
      */
     private $year;
@@ -110,6 +116,18 @@ class ObjectiveManagement
     public function setForEmployee(?Person $for_employee): self
     {
         $this->for_employee = $for_employee;
+
+        return $this;
+    }
+
+    public function getByManager(): ?Person
+    {
+        return $this->by_manager;
+    }
+
+    public function setByManager(?Person $by_manager): self
+    {
+        $this->by_manager = $by_manager;
 
         return $this;
     }

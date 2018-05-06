@@ -15,6 +15,7 @@ class PersonFixture extends Fixture
           $first->setName('manager-' . $f);
           $first->setFullName('manager-' . $f);
           $first->setEmail($first->getName() . '@dd.d');
+          $first->setActive(true);
           $manager->persist($first);
           $this->addReference("manager-$f", $first);
 

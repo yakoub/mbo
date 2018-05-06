@@ -97,6 +97,7 @@ class MBOController extends Controller
             $management = new ObjectiveManagement();
             $management->setStatus('work_in_progress');
             $management->setForEmployee($employee);
+            $management->setByManager($this->getUser());
             $management->setYear($year);
             $this->getDoctrine()->getManager()->persist($management);
         }
