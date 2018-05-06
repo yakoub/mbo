@@ -96,8 +96,8 @@ class MBOController extends Controller
     }
 
     function notify($management, PersonRepository $p_repository, $mailer) {
-        $manager_mail = $this->by_manager->email;
-        $reviewer_mail = $this->by_manager->reviewer->email;
+        $manager_mail = $management->getByManager()->getEmail();
+        $reviewer_mail = $management->getByManager()->getReviewer()->getEmail();
         $ceo = $p_repository->findOneBy(['name' => 'guy_s']);
         $ceo_mail = $ceo ? $ceo->email : $reviewer_mail;
         $config = [];
