@@ -64,6 +64,11 @@ class Person implements UserInterface, \Serializable
      */
     private $active = false;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Person")
+     */
+    private $reviewer;
+
     public function __construct()
     {
         $this->employees = new ArrayCollection();
@@ -247,6 +252,18 @@ class Person implements UserInterface, \Serializable
     public function setActive(bool $active): self
     {
         $this->active = $active;
+
+        return $this;
+    }
+
+    public function getReviewer(): ?self
+    {
+        return $this->reviewer;
+    }
+
+    public function setReviewer(?self $reviewer): self
+    {
+        $this->reviewer = $reviewer;
 
         return $this;
     }

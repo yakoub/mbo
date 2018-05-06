@@ -24,6 +24,7 @@ class PersonFixture extends Fixture
             $second->setFullName("manager-$f-$s");
             $second->setEmail($second->getName() . '@dd.d');
             $second->setManager($first);
+            $second->setReviewer($first);
             $manager->persist($second);
 
             foreach (range(1, 5) as $t) {
