@@ -126,6 +126,7 @@ trait LdapImportTrait {
         return;
       }
       $updated_user->setManager($manager_user);
+      $updated_user->setReviewer($manager_user);
     }
   }
 }
