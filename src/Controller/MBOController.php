@@ -99,7 +99,7 @@ class MBOController extends Controller
         $manager_mail = $management->getByManager()->getEmail();
         $reviewer_mail = $management->getByManager()->getReviewer()->getEmail();
         $ceo = $p_repository->findOneBy(['name' => 'guy_s']);
-        $ceo_mail = $ceo ? $ceo->email : $reviewer_mail;
+        $ceo_mail = $ceo ? $ceo->getEmail() : $reviewer_mail;
         $config = [];
         switch($management->getStatus()) {
             case 'work_in_progress':
