@@ -53,8 +53,10 @@ class MBOController extends Controller
     public function mbo(
         $year, 
         Person $employee, 
+        PersonRepository $p_repository,
         ObjectiveEntryRepository $oe_repository,
         ObjectiveManagementRepository $om_repository,
+        \Swift_Mailer $mailer,
         Request $request
     ) {
         $objectives = $oe_repository->findBy(['for_employee' => $employee, 'year' => $year]);
@@ -72,9 +74,11 @@ class MBOController extends Controller
         if ($form->isSubmitted() and $form->isValid()) {
             if ($form->get('status_next')->isClicked()) {
                 $report->management->statusNext();
+                $this->notify($report->management, $p_repository, $mailer);
             }
             elseif ($form->get('status_prev')->isClicked()) {
                 $report->management->statusPrev();
+                $this->notify($report->management, $p_repository, $mailer);
             }
             $this->getDoctrine()->getManager()->flush();
             $param = ['year' => $year,'employee' => $employee->getId()];
@@ -89,6 +93,50 @@ class MBOController extends Controller
         );
 
         return $this->render('mbo/mbo_report.html.twig', $context);
+    }
+
+    function notify($management, PersonRepository $p_repository, $mailer) {
+        $manager_mail = $this->by_manager->email;
+        $reviewer_mail = $this->by_manager->reviewer->email;
+        $ceo = $p_repository->findOneBy(['name' => 'guy_s']);
+        $ceo_mail = $ceo ? $ceo->email : $reviewer_mail;
+        $config = [];
+        switch($management->getStatus()) {
+            case 'work_in_progress':
+                $config['subject'] = 'mbo requires more work';
+                $config['template'] = 'emails/mbo-in-progress';
+                $config['to'] = $manager_mail; 
+                break;
+            case 'under_review':
+                $config['subject'] = 'mbo requires review';
+                $config['template'] ='emails/mbo-review';
+                $config['to'] = $reviewer_mail;
+                break;
+            case 'require_approval':
+                $config['subject'] = 'mbo ready for approval';
+                $config['template'] ='emails/mbo-require-approval';
+                $config['to'] = $ceo_mail;
+                $config['cc'] = [$manager_mail, $reviewer_mail];
+                break;
+            case 'approved':
+                $config['subject'] = 'mbo approved';
+                $config['template'] ='emails/mbo-approved';
+                $config['to'] = $manager_mail;
+                $config['cc'] = $reviewer_mail;
+                break;
+        }
+        $this->swift($management, $config, $mailer);
+    }
+
+    function swift($management, $config, $mailer) {
+        $message = new \Swift_Message($config['subject']);
+        $message->setFrom($config['from']);
+        $message->setTo($config['to']);
+        $message->setCc($config['cc']);
+        $content = $this->renderView($config['template'] . '.html.twig', ['management' => $management]);
+        $message->setBody($content, 'text/html');
+
+        $mailer->send($message);
     }
 
     function getManagement($employee, $year, ObjectiveManagementRepository $repository) {

@@ -166,29 +166,6 @@ class ObjectiveManagement
         $status_new = self::$transition[$this->status][$op];
         if ($status_new) {
             $this->status = $status_new;
-            $this->notify();
-        }
-    }
-
-    function notify() {
-        switch($this->status) {
-            case 'work_in_progress':
-                $subject = 'mbo requires more work';
-                $template = 'emails/mbo-in-progress';
-                //$to = $this->  ?
-                break;
-            case 'under_review':
-                $subject = '';
-                $template ='emails/mbo-';
-                break;
-            case 'require_approval':
-                $subject = '';
-                $template ='emails/mbo-';
-                break;
-            case 'approved':
-                $subject = '';
-                $template ='emails/mbo-';
-                break;
         }
     }
 }
