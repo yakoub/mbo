@@ -105,22 +105,26 @@ class MBOController extends Controller
             case 'work_in_progress':
                 $config['subject'] = 'mbo requires more work';
                 $config['template'] = 'emails/mbo-in-progress';
+                $config['from'] = $reviewer_mail;
                 $config['to'] = $manager_mail; 
                 break;
             case 'under_review':
                 $config['subject'] = 'mbo requires review';
                 $config['template'] ='emails/mbo-review';
+                $config['from'] = $manager_mail;
                 $config['to'] = $reviewer_mail;
                 break;
             case 'require_approval':
                 $config['subject'] = 'mbo ready for approval';
                 $config['template'] ='emails/mbo-require-approval';
+                $config['from'] = $reviewer_mail;
                 $config['to'] = $ceo_mail;
                 $config['cc'] = [$manager_mail, $reviewer_mail];
                 break;
             case 'approved':
                 $config['subject'] = 'mbo approved';
                 $config['template'] ='emails/mbo-approved';
+                $config['from'] = $ceo_mail;
                 $config['to'] = $manager_mail;
                 $config['cc'] = $reviewer_mail;
                 break;
@@ -132,7 +136,9 @@ class MBOController extends Controller
         $message = new \Swift_Message($config['subject']);
         $message->setFrom($config['from']);
         $message->setTo($config['to']);
-        $message->setCc($config['cc']);
+        if (isset($config['cc'])) {
+            $message->setCc($config['cc']);
+        }
         $content = $this->renderView($config['template'] . '.html.twig', ['management' => $management]);
         $message->setBody($content, 'text/html');
 

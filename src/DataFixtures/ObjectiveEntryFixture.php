@@ -29,7 +29,7 @@ class ObjectiveEntryFixture extends Fixture implements DependentFixtureInterface
     }
 
     function createObjective($f, $s, $t, $year) {
-        $by_manager = $this->getReference("manager-$f");
+        $by_manager = $this->getReference("manager-$f-$f");
         $for_employee = $this->getReference("employee-$f-$f-$t");
 
         $objective = new ObjectiveEntry();

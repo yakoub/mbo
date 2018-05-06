@@ -17,7 +17,6 @@ class PersonFixture extends Fixture
           $first->setEmail($first->getName() . '@dd.d');
           $first->setActive(true);
           $manager->persist($first);
-          $this->addReference("manager-$f", $first);
 
           foreach (range(1, 10) as $s) {
             $second = new Person();
@@ -27,6 +26,7 @@ class PersonFixture extends Fixture
             $second->setManager($first);
             $second->setReviewer($first);
             $manager->persist($second);
+            $this->addReference("manager-$f-$s", $second);
 
             foreach (range(1, 5) as $t) {
               $third = new Person();
