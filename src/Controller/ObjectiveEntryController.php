@@ -33,9 +33,13 @@ class ObjectiveEntryController extends Controller
         ObjectiveEntryRepository $oe_repository
         ): Response
     {
+
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         $ObjectiveEntry = new ObjectiveEntry();
         $ObjectiveEntry->setForEmployee($employee);
-        $ObjectiveEntry->setByManager($employee->getManager());
+
+        $ObjectiveEntry->setByManager($this->getUser());
         if ($request->query->has('year')) {
           $ObjectiveEntry->setYear($request->query->get('year'));
         }
