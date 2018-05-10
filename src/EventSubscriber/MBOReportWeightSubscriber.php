@@ -7,7 +7,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\Extension\Core\Type;
 
-class MBOReportSubscriber implements EventSubscriberInterface
+class MBOReportWeightSubscriber implements EventSubscriberInterface
 {
     public function onFormEventsPRESETDATA(FormEvent $event)
     {
