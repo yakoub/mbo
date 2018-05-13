@@ -13,18 +13,22 @@ class MBOReportSubscriber implements EventSubscriberInterface
     {
         $form = $event->getForm(); 
         $report = $event->getData();
-        switch ($report->status) {
+        $role = $report->getUserRole();
+        switch ($report->management->getStatus()) {
             case 'work_in_progress':
+                $disabled = ($role != 'manager');
                 break;
             case 'under_review':
+                $disabled = ($role != 'reviewer');
                 break;
             case 'require_approval':
             case 'approved':
+                $disabled = ($role != 'ceo');
                 break;
         }
-        $form->add('save', SubmitType::class, ['label' => 'Save']);
-        $form->add('status_prev', SubmitType::class, ['label' => '<']);
-        $form->add('status_next', SubmitType::class, ['label' => '>']);
+        $form->add('save', Type\SubmitType::class, ['label' => 'Save', 'disabled' => $disabled]);
+        $form->add('status_prev', Type\SubmitType::class, ['label' => '<', 'disabled' => $disabled]);
+        $form->add('status_next', Type\SubmitType::class, ['label' => '>', 'disabled' => $disabled]);
     }
 
     public static function getSubscribedEvents()

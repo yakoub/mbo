@@ -26,7 +26,7 @@ class ObjectiveReportType extends AbstractType
         $builder->add('status_prev', SubmitType::class, ['label' => '<']);
         $builder->add('status_next', SubmitType::class, ['label' => '>']);
 
-        //$builder->addEventSubscriber(new MBOReportSubscriber());
+        $builder->addEventSubscriber(new MBOReportSubscriber());
     }
 
     public function configureOptions(OptionsResolver $resolver)

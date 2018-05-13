@@ -61,9 +61,8 @@ class MBOController extends Controller
     ) {
         $objectives = $oe_repository->findBy(['for_employee' => $employee, 'year' => $year]);
         
-        $report = new ObjectiveReport();
+        $report = new ObjectiveReport($this->getUser());
         $report->management = $this->getManagement($employee, $year, $om_repository);
-        $report->user_role = $this->getUserRole();
         foreach ($objectives as $objective) {
             $property = 'objectives' . $objective->getType();
             $objective->status = $report->management->getStatus();
@@ -157,9 +156,5 @@ class MBOController extends Controller
             $this->getDoctrine()->getManager()->persist($management);
         }
         return $management;
-    }
-
-    function getUserRole() {
-
     }
 }
