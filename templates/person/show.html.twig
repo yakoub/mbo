@@ -32,6 +32,16 @@
                 </td>
             </tr>
             {% endif %}
+            {% if person.reviewer %}
+            <tr>
+                <th> Reviewer </th>
+                <td>
+                    <a href="{{ path('person_show', {'id': person.reviewer.id}) }}">
+                      {{ person.reviewer.name }}
+                    </a>
+                </td>
+            </tr>
+            {% endif %}
         </tbody>
     </table>
     {% if not person.employees.isEmpty() %}
