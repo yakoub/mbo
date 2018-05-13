@@ -1,0 +1,3 @@
+form[name="year"] input[name="year[year]"] {
+    width: 8em;
+}
