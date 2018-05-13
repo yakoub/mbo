@@ -1,1 +1,2 @@
-require approval
+{% set mbo_params = {year: management.getYear(), employee: management.getForEmployee().getId() } %}
+<a href="{{ absolute_url(path('mbo', mbo_params)) }}"> require approval </a>
