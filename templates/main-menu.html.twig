@@ -1,8 +1,10 @@
 <nav class="main-menu navbar bd-navbar bg-dark">
     <ul class="nav">
+        {% if is_granted('ROLE_ADMIN') %}
         <li class="nav-item">
             <a class="nav-link" href="{{ path('people_admin') }}"> People admin </a>
         </li>
+        {% endif %}
         <li class="nav-item">
             <a class="nav-link" href="{{ path('candidates') }}"> Add Objective </a> 
         </li>

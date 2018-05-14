@@ -99,7 +99,15 @@ class Person implements UserInterface, \Serializable
     public function getPassword() {}
     public function getSalt() {}
     public function getRoles() {
-        return ['ROLE_USER'];
+        static $admins = [];
+        if (!$admins) {
+            $admins = ['yakoub.a', 'manager-1'];
+        }
+        $roles = ['ROLE_USER'];
+        if (in_array($this->name, $admins)) {
+            $roles[] = 'ROLE_ADMIN';
+        }
+        return $roles;
     }
     public function eraseCredentials() {}
 
