@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} One {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <!-- link href="{{ asset('css/test.css') }}" rel="stylesheet" type="text/css" / -->
+{% endblock %}
+
+{% block body %}
+        <header style="background-color: gray">
+            <ul>
+                <li> first line
+                <li> second line
+                <li> third line
+            </ul>
+        </header>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8" style="background-color: gray">
+                    <ul>
+                        <li> right first
+                        <li> right second
+                        <li> right third
+                    </ul>
+                </div>
+                <div class="col-md-4" style="background-color: gray">
+                    <ul>
+                        <li> left first
+                        <li> left second
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+{% endblock %}
+{% block javascripts %}{% endblock %}

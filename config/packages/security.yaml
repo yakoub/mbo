@@ -17,6 +17,10 @@ security:
                 authenticator: App\Security\SolaredgeAuth
                 login_path: login
                 check_path: login
+            remember_me:
+              secret: '%kernel.secret%'
+              lifetime: 604800
+              path: /
             # https://symfony.com/doc/current/security/form_login_setup.html
             logout:
                 path: /logout

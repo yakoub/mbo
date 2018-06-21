@@ -16,6 +16,10 @@ class LoginType extends AbstractType
         $builder
             ->add('_username')
             ->add('_password', Type\PasswordType::class)
+            ->add('_remember_me', Type\CheckboxType::class, array(
+                'label' => 'Stay logged in for one week',
+                'data' => true,
+            ))
             ->add('login', Type\SubmitType::class, array(
                 'label' => 'Login',
             ))
