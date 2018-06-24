@@ -2,6 +2,7 @@
 
 namespace App\EventSubscriber;
 
+use App\Form\QuadWeightType;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -20,6 +21,9 @@ class MBOReportWeightSubscriber implements EventSubscriberInterface
         if ($objective_report->status == 'under_review') {
             $options = ['required' => false, 'disabled' => FALSE];
             $form->add('achieve', Type\NumberType::class, $options);
+        }
+        if ($objective_report->getQuadWeight()) {
+            $form->add('quad_weight', QuadWeightType::class);
         }
     }
 

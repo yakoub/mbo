@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\ObjectiveEntry;
+// use App\Form\QuadWeightType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -24,6 +25,7 @@ class ObjectiveEntryType extends AbstractType
             ->add('subject', Type\TextType::class, ['required' => true])
             ->add('description')
             ->add('weight', Type\NumberType::class, ['required' => false])
+            ->add('quad_weight', QuadWeightType::class)
             ->add('achieve', Type\NumberType::class, ['required' => false, 'disabled' => true])
         ;
     }

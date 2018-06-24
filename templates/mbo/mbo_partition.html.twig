@@ -15,6 +15,11 @@
             </a>
         </td>
         <td>{{ objective.description }}</td>
+        {% if objective.getQuadWeight() %}
+        <td> 
+            {{ form_widget(objective_form.quad_weight.first) }}
+        </td>
+        {% endif %}
         <td>
             {{ form_errors(objective_form.weight) }}
             {{ form_widget(objective_form.weight) }}

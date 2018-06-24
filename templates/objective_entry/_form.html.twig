@@ -17,10 +17,26 @@
             </div>
         <div class="col">
             {{ form_row(form.Type) }}
-            {{ form_row(form.weight) }}
             {{ form_row(form.achieve) }}
+            {{ form_row(form.weight) }}
+        </div>
+    </div>
+    {{ form_label(form.quad_weight, 'Quadratic weight') }}
+    <div class="row">
+        <div class="col-3">
+            {{ form_row(form.quad_weight.first) }}
+        </div>
+        <div class="col-3">
+            {{ form_row(form.quad_weight.second) }}
+        </div>
+        <div class="col-3">
+            {{ form_row(form.quad_weight.third) }}
+        </div>
+        <div class="col-3">
+            {{ form_row(form.quad_weight.fourth) }}
         </div>
     </div>
     <button class="btn">{{ button_label|default('Save') }}</button>
+    {{ form_rest(form) }}
 {{ form_end(form) }}
 </div>

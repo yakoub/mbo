@@ -3,11 +3,13 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Event\PreFlushEventArgs;
 use App\Validator as MBOValidator;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ObjectiveEntryRepository")
+ * @ORM\HasLifecycleCallbacks()
  * @MBOValidator\MBOWeight(groups={"single_update"})
  */
 
@@ -66,6 +68,28 @@ class ObjectiveEntry
      * @Assert\LessThanOrEqual(100)
      */
     private $achieve;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\QuadWeight", cascade={"persist", "remove"})
+     */
+    private $quad_weight;
+
+    /**
+     * @ORM\PreFlush
+     */
+    public function removeEmptyQuadWeight(PreFlushEventArgs $event) {
+        if (!$this->quad_weight) {
+            return;
+        }
+        $quad = $this->quad_weight->getArray();
+        foreach ($quad as $weight) {
+            if ($weight) {
+                return;
+            }
+        }
+        $event->getEntityManager()->remove($this->quad_weight);
+        $this->quad_weight = NULL;
+    }
 
     public function getId()
     {
@@ -164,6 +188,18 @@ class ObjectiveEntry
     public function setAchieve(?float $achieve): self
     {
         $this->achieve = $achieve;
+
+        return $this;
+    }
+
+    public function getQuadWeight(): ?QuadWeight
+    {
+        return $this->quad_weight;
+    }
+
+    public function setQuadWeight(?QuadWeight $quad_weight): self
+    {
+        $this->quad_weight = $quad_weight;
 
         return $this;
     }
