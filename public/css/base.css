@@ -1,5 +1,7 @@
 nav.main-menu {
     margin-bottom: 1%;
+    justify-content: space-between;
+    font-weight: bold;
 }
 
 caption {
