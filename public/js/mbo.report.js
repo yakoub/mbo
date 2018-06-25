@@ -1,14 +1,21 @@
 'use strict';
 
 var mbo_report = {
-  w: 3, // weight
-  a: 5, // acheive
-  s: 6, // score
-  hw: 2, //header weight
-  hs: 3, // header score
-  fa: 3, // final achieve
-  fs: 4, // final score
-  ft: 5, // final total
+    single_weight: {
+        w: 3, // weight
+        a: 5, // acheive
+        s: 6 // score
+    },
+    quad_weight: {
+        w: 4, // weight
+        a: 6, // acheive
+        s: 7 // score
+    },
+    hw: 2, // header weight
+    hs: 3, // header score
+    fa: 3, // final achieve
+    fs: 4, // final score
+    ft: 5 // final total
 }; 
 
 document.addEventListener('DOMContentLoaded', function() {
