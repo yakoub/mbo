@@ -39,3 +39,8 @@ table.mbo input.form-control {
 table.mbo caption a {
     margin: 0 2em;
 }
+
+/*quad weight*/
+table.mbo td table td {
+    border: none;
+}

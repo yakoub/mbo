@@ -164,23 +164,31 @@ mbo_report.update_weight_sum = function (partition) {
     return weight_diff;
 };
 
+mbo_report.getWeightIndexes = function(row) {
+    return row.cells.length == 8 ? this.single_weight : this.quad_weight;
+}
+
 mbo_report.getPartitionWeight = function(row) {
-    var weight = row.cells[this.w].children[0].value;
+    var wdx = this.getWeightIndexes(row);
+    var weight = row.cells[wdx.w].children[0].value;
     return weight.length == 0 ? 0 : parseFloat(weight);
 };
 
 mbo_report.getPartitionAchieve = function(row) {
-    var achieve = row.cells[this.a].children[0].value;
+    var wdx = this.getWeightIndexes(row);
+    var achieve = row.cells[wdx.a].children[0].value;
     return achieve.length == 0 ? 0 : parseFloat(achieve);
 };
 
 mbo_report.getPartitionScore = function(row) {
-    var score = row.cells[this.s].textContent;
+    var wdx = this.getWeightIndexes(row);
+    var score = row.cells[wdx.s].textContent;
     return score.length == 0 ? 0 : parseFloat(score);
 };
 
 mbo_report.setPartitionScore = function(row, score) {
-    row.cells[this.s].textContent = score.toFixed(2);
+    var wdx = this.getWeightIndexes(row);
+    row.cells[wdx.s].textContent = score.toFixed(2);
 };
 
 mbo_report.setPartitionTotalWeight = function(partition, weight) {

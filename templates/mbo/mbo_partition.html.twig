@@ -2,7 +2,7 @@
 <tr class="header">
     <th> {{ partition }} </td>
     <th colspan="2"></td>
-    <th colspan="2"></td>
+    <th colspan="3"></td>
     <th colspan="3"></td>
 </tr>
 {% for objective_form in objectives %}
@@ -16,11 +16,18 @@
         </td>
         <td>{{ objective.description }}</td>
         {% if objective.getQuadWeight() %}
-        <td> 
-            {{ form_widget(objective_form.quad_weight.first) }}
-        </td>
-        {% endif %}
         <td>
+            <table><tbody><tr>
+                <td> {{ form_widget(objective_form.quad_weight.first) }} </td>
+                <td> {{ form_widget(objective_form.quad_weight.second) }} </td>
+                <td> {{ form_widget(objective_form.quad_weight.third) }} </td>
+                <td> {{ form_widget(objective_form.quad_weight.fourth) }} </td>
+            </tr></tbody></table>
+        </td>
+        <td>
+        {% else %}
+        <td colspan="2" style="text-align: right">
+        {% endif %}
             {{ form_errors(objective_form.weight) }}
             {{ form_widget(objective_form.weight) }}
         </td> 
