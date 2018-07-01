@@ -11,13 +11,9 @@ class YearType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('year', Type\IntegerType::class, array(
-                'required' => true,
-            ))
-            ->add('select', Type\SubmitType::class, array(
-                'label' => 'select',
-            ));
-        ;
+        $builder->add('year', Type\IntegerType::class, ['required' => true]);
+        $roles = ['As manager' => 'manager', 'As reviewer' => 'reviewer'];
+        $builder->add('role', Type\ChoiceType::class, ['choices' => $roles]);
+        $builder->add('select', Type\SubmitType::class, ['label' => 'select']);
     }
 }

@@ -12,7 +12,17 @@
 
     <header>
         {{ form_start(form) }}
-        {{ form_widget(form) }}
+        <div class="form-row my-4">
+            <div class="col-3">
+            {{ form_widget(form.year) }}
+            </div>
+            <div class="col-4">
+            {{ form_widget(form.role) }}
+            </div>
+            <div class="col-3">
+            {{ form_widget(form.select) }}
+            </div>
+        </div>
         {{ form_end(form) }}
     </header>
 
