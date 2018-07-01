@@ -38,13 +38,18 @@ class ObjectiveEntryRepository extends ServiceEntityRepository
         return $builder->getQuery()->getSingleScalarResult();
     }
 
-    public function getMyYear($year, Person $manager = NULL) {
+    public function getMyYear($year, Person $manager, $role) {
         $builder = $this->createQueryBuilder('m');
         $builder->andWhere('m.year = :year');
         $builder->setParameter(':year', $year);
-        if ($manager) {
+        if ($role == 'manager') {
             $builder->andwhere('m.by_manager = :manager');
             $builder->setParameter(':manager', $manager);
+        }
+        else {
+            $builder->innerJoin('m.by_manager', 'b');
+            $builder->andwhere('b.reviewer = :reviewer');
+            $builder->setParameter(':reviewer', $manager);
         }
         $builder->groupBy('m.for_employee');
         $builder->select('sum(m.weight) as total_weight');

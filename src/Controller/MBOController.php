@@ -32,10 +32,12 @@ class MBOController extends Controller
         $form = $this->createForm(YearType::class, ['year' => $year]);
         $form->handleRequest($request);
         $set_cookie = false;
+        $role = 'manager';
         if ($form->isSubmitted() and $form->isValid()) {
             $set_cookie = $year = $form->get('year')->getData();
+            $role = $form->get('role')->getData();
         }
-        $employees = $oe_repository->getMyYear($year, $person);
+        $employees = $oe_repository->getMyYear($year, $person, $role);
         $context = array(
             'form' => $form->createView(),
             'year' => $year,
