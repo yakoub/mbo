@@ -21,6 +21,7 @@
         "symfony/security-bundle": "^4.0",
         "symfony/serializer-pack": "*",
         "symfony/swiftmailer-bundle": "^3.2",
+        "symfony/translation": "^4.0",
         "symfony/twig-bundle": "^4.0",
         "symfony/validator": "^4.0",
         "symfony/var-dumper": "^4.0",
@@ -64,7 +65,8 @@
     "scripts": {
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
-            "assets:install --symlink --relative %PUBLIC_DIR%": "symfony-cmd"
+            "assets:install --symlink --relative %PUBLIC_DIR%": "symfony-cmd",
+            "assets:install %PUBLIC_DIR%": "symfony-cmd"
         },
         "post-install-cmd": [
             "@auto-scripts"
