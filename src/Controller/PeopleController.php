@@ -2,13 +2,13 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Person;
 use App\Repository\PersonRepository;
 
-class PeopleController extends Controller
+class PeopleController extends AbstractController
 {
     public function people_admin(PersonRepository $personRepository, ?Person $person = NULL)
         : Response

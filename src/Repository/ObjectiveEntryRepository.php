@@ -6,7 +6,7 @@ use App\Entity\ObjectiveEntry;
 use App\Entity\Person;
 use App\Repository\PersonRepository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method ObjectiveEntry|null find($id, $lockMode = null, $lockVersion = null)
@@ -16,7 +16,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class ObjectiveEntryRepository extends ServiceEntityRepository
 {
-    public function __construct(RegistryInterface $registry, PersonRepository $p_repository)
+    public function __construct(ManagerRegistry $registry, PersonRepository $p_repository)
     {
         $this->person_repository = $p_repository;
         parent::__construct($registry, ObjectiveEntry::class);

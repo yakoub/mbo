@@ -9,7 +9,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Person;
 use App\Repository\PersonRepository;
 
@@ -30,7 +30,7 @@ class UserImportCommand extends Command
     protected $repository;
     protected $output;
 
-    public function __construct(ObjectManager $manager, PersonRepository $repository) {
+    public function __construct(EntityManagerInterface $manager, PersonRepository $repository) {
         $this->manager = $manager;
         $this->repository = $repository;
         parent::__construct();

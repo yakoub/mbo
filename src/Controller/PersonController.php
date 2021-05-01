@@ -6,7 +6,7 @@ use App\Entity\Person;
 use App\Form\PersonType;
 use App\Repository\PersonRepository;
 use App\Repository\ObjectiveEntryRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/person")
  */
-class PersonController extends Controller
+class PersonController extends AbstractController
 {
     /**
      * @Route("/", name="person_index", methods="GET")

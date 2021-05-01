@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Cookie;
@@ -14,7 +14,7 @@ use App\Repository\PersonRepository;
 use App\Repository\ObjectiveEntryRepository;
 use App\Repository\ObjectiveManagementRepository;
 
-class CandidateController extends Controller
+class CandidateController extends AbstractController
 {
     public function candidates(
         PersonRepository $personRepository,

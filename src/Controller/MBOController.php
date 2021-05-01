@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Cookie;
@@ -16,7 +16,7 @@ use App\Repository\ObjectiveManagementRepository;
 use App\Form\YearType;
 use App\Form\ObjectiveReportType;
 
-class MBOController extends Controller
+class MBOController extends AbstractController
 {
     public function by_year(ObjectiveEntryRepository $oe_repository, Request $request): Response
     {
@@ -58,7 +58,6 @@ class MBOController extends Controller
         PersonRepository $p_repository,
         ObjectiveEntryRepository $oe_repository,
         ObjectiveManagementRepository $om_repository,
-        \Swift_Mailer $mailer,
         Request $request
     ) {
         $objectives = $oe_repository->findBy(['for_employee' => $employee, 'year' => $year]);
@@ -76,11 +75,11 @@ class MBOController extends Controller
         if ($form->isSubmitted() and $form->isValid()) {
             if ($form->get('status_next')->isClicked()) {
                 $report->management->statusNext();
-                $this->notify($report->management, $p_repository, $mailer);
+                //$this->notify($report->management, $p_repository, $mailer);
             }
             elseif ($form->get('status_prev')->isClicked()) {
                 $report->management->statusPrev();
-                $this->notify($report->management, $p_repository, $mailer);
+                //$this->notify($report->management, $p_repository, $mailer);
             }
             $this->getDoctrine()->getManager()->flush();
             $param = ['year' => $year,'employee' => $employee->getId()];

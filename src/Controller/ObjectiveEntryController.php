@@ -6,7 +6,7 @@ use App\Entity\ObjectiveEntry;
 use App\Entity\Person;
 use App\Form\ObjectiveEntryType;
 use App\Repository\ObjectiveEntryRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/objective")
  */
-class ObjectiveEntryController extends Controller
+class ObjectiveEntryController extends AbstractController
 {
     /**
      * @Route("/", name="objective_entry_index", methods="GET")
