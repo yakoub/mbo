@@ -10,7 +10,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PersonRepository")
  */
-class Person implements UserInterface, \Serializable
+class Person implements UserInterface
 {
     /**
      * @ORM\Id()
@@ -28,6 +28,13 @@ class Person implements UserInterface, \Serializable
      * @ORM\Column(type="string", length=255)
      */
     private $email;
+
+
+    /**
+     * @var string The hashed password
+     * @ORM\Column(type="string")
+     */
+    private $password;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Person", mappedBy="manager")
@@ -96,7 +103,15 @@ class Person implements UserInterface, \Serializable
         return $this->name;
     }
 
-    public function getPassword() {}
+    public function getPassword() : string 
+    {
+      return (string) $this->password;
+    }
+    public function setPassword(string $password) : self 
+    {
+      $this->password = $password;
+      return $this;
+    }
     public function getSalt() {}
     public function getRoles() {
         static $admins = [];
@@ -110,22 +125,6 @@ class Person implements UserInterface, \Serializable
         return $roles;
     }
     public function eraseCredentials() {}
-
-    public function serialize()
-    {
-        return serialize(array(
-            $this->id,
-            $this->name,
-        ));
-    }
-
-    public function unserialize($serialized)
-    {
-        list (
-            $this->id,
-            $this->name,
-        ) = unserialize($serialized, ['allowed_classes' => false]);
-    }
 
     public function getEmail(): ?string
     {
