@@ -1,6 +1,8 @@
 security:
     encoders:
-        Symfony\Component\Security\Core\User\User: plaintext
+        #Symfony\Component\Security\Core\User\User: plaintext
+        App\Entity\Person:
+          algorithm: auto
     providers:
         person_provider:
             entity:
@@ -13,10 +15,13 @@ security:
         main:
             provider: person_provider
             anonymous: ~
-            simple_form:
-                authenticator: App\Security\SolaredgeAuth
+            guard:
+                authenticators:
+                    - App\Security\MboAuthenticator
+            form_login:
                 login_path: login
                 check_path: login
+                csrf_token_generator: security.csrf.token_manager
             remember_me:
               secret: '%kernel.secret%'
               lifetime: 604800
