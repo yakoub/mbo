@@ -19,7 +19,7 @@ class ObjectiveEntryFixture extends Fixture implements DependentFixtureInterface
         foreach ([1, 2] as $f) {
             foreach ([1, 2, 3] as $t) {
 
-                foreach ([2015, 2016, 2017] as $year) {
+                foreach ([2024, 2025, 2026] as $year) {
                     $objective = $this->createObjective($f, $f, $t, $year);
                     $object_manager->persist($objective);
                 }

@@ -131,10 +131,11 @@ class MBOController extends AbstractController
                 $config['cc'] = $reviewer_mail;
                 break;
         }
-        $this->swift($management, $config, $mailer);
+        $this->email($management, $config, $mailer);
     }
 
-    function swift($management, $config, $mailer) {
+    function email($management, $config, $mailer) {
+      /* deprecate swiftmailer
         $message = new \Swift_Message($config['subject']);
         $message->setFrom($config['from']);
         $message->setTo($config['to']);
@@ -145,6 +146,7 @@ class MBOController extends AbstractController
         $message->setBody($content, 'text/html');
 
         $mailer->send($message);
+      */
     }
 
     function getManagement($employee, $year, ObjectiveManagementRepository $repository) {

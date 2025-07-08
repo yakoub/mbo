@@ -26,8 +26,9 @@ class ObjectiveReport
             return 'manager';
         }
         $reviewer = $by_manager->getReviewer();
-        if ($this->current_user->getId() == $reviewer->getId()) {
+        if ( $reviewer && ($this->current_user->getId() == $reviewer->getId())) {
             return 'reviewer';
         }
+        return 'undefined';
     }
 }
