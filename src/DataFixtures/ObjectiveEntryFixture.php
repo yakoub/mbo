@@ -6,15 +6,16 @@ use App\Entity\ObjectiveEntry;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+use App\Entity\Person;
 
 class ObjectiveEntryFixture extends Fixture implements DependentFixtureInterface
 {
-    public function getDependencies() 
+    public function getDependencies(): array 
     {
         return [PersonFixture::class];
     }
 
-    public function load(ObjectManager $object_manager)
+    public function load(ObjectManager $object_manager): void
     {
         foreach ([1, 2] as $f) {
             foreach ([1, 2, 3] as $t) {
@@ -29,8 +30,8 @@ class ObjectiveEntryFixture extends Fixture implements DependentFixtureInterface
     }
 
     function createObjective($f, $s, $t, $year) {
-        $by_manager = $this->getReference("manager-$f-$f");
-        $for_employee = $this->getReference("employee-$f-$f-$t");
+        $by_manager = $this->getReference("manager-$f-$f", Person::class);
+        $for_employee = $this->getReference("employee-$f-$f-$t", Person::class);
 
         $objective = new ObjectiveEntry();
         $objective->setByManager($by_manager);

@@ -6,31 +6,27 @@ use App\Entity\ObjectiveEntry;
 use App\Entity\Person;
 use App\Form\ObjectiveEntryType;
 use App\Repository\ObjectiveEntryRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
-/**
- * @Route("/objective")
- */
+#[Route("/objective")]
 class ObjectiveEntryController extends AbstractController
 {
-    /**
-     * @Route("/", name="objective_entry_index", methods="GET")
-     */
+    #[Route("/", name: "objective_entry_index", methods: "GET")]
     public function index(ObjectiveEntryRepository $ObjectiveEntryRepository): Response
     {
         return $this->render('objective_entry/index.html.twig', ['objective_entries' => $ObjectiveEntryRepository->findAll()]);
     }
 
-    /**
-     * @Route("/new/{employee}", name="objective_entry_new", methods="GET|POST")
-     */
+    #[Route("/new/{employee}", name: "objective_entry_new", methods: "GET|POST")]
     public function new(
         Request $request, 
         Person $employee, 
-        ObjectiveEntryRepository $oe_repository
+        ObjectiveEntryRepository $oe_repository,
+        EntityManagerInterface $entityManager
         ): Response
     {
 
@@ -48,9 +44,8 @@ class ObjectiveEntryController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($ObjectiveEntry);
-            $em->flush();
+            $entityManager->persist($ObjectiveEntry);
+            $entityManager->flush();
             $param = ['year' => $ObjectiveEntry->getyear(),'employee' => $employee->getId()];
             return $this->redirectToRoute('mbo', $param);
         }
@@ -62,9 +57,7 @@ class ObjectiveEntryController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="objective_entry_show", methods="GET")
-     */
+    #[Route("/{id}", name: "objective_entry_show", methods: "GET")]
     public function show(ObjectiveEntry $ObjectiveEntry, ObjectiveEntryRepository $repository): Response
     {
         $year = $ObjectiveEntry->getYear();
@@ -74,16 +67,18 @@ class ObjectiveEntryController extends AbstractController
         return $this->render('objective_entry/show.html.twig', $context);
     }
 
-    /**
-     * @Route("/{id}/edit", name="objective_entry_edit", methods="GET|POST")
-     */
-    public function edit(Request $request, ObjectiveEntry $ObjectiveEntry): Response
+    #[Route("/{id}/edit", name: "objective_entry_edit", methods: "GET|POST")]
+    public function edit(
+      Request $request, 
+      ObjectiveEntry $ObjectiveEntry,
+      EntityManagerInterface $entityManager
+    ): Response
     {
         $form = $this->createForm(ObjectiveEntryType::class, $ObjectiveEntry);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $entityManager->flush();
 
             $param = ['year' => $ObjectiveEntry->getyear(),'employee' => $ObjectiveEntry->getForEmployee()->getId()];
 
@@ -96,15 +91,16 @@ class ObjectiveEntryController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="objective_entry_delete", methods="DELETE")
-     */
-    public function delete(Request $request, ObjectiveEntry $ObjectiveEntry): Response
+    #[Route("/{id}", name: "objective_entry_delete", methods: "DELETE")]
+    public function delete(
+      Request $request, 
+      ObjectiveEntry $ObjectiveEntry,
+      EntityManagerInterface $entityManager
+    ): Response
     {
         if ($this->isCsrfTokenValid('delete'.$ObjectiveEntry->getId(), $request->request->get('_token'))) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($ObjectiveEntry);
-            $em->flush();
+            $entityManager->remove($ObjectiveEntry);
+            $entityManager->flush();
         }
 
         return $this->redirectToRoute('objective_entry_index');

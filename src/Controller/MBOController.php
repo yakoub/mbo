@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Cookie;
+use Doctrine\ORM\EntityManagerInterface;
 
 use App\Entity\Person;
 use App\Entity\ObjectiveManagement;
@@ -58,12 +59,13 @@ class MBOController extends AbstractController
         PersonRepository $p_repository,
         ObjectiveEntryRepository $oe_repository,
         ObjectiveManagementRepository $om_repository,
+        EntityManagerInterface $entityManager,
         Request $request
     ) {
         $objectives = $oe_repository->findBy(['for_employee' => $employee, 'year' => $year]);
         
         $report = new ObjectiveReport($this->getUser());
-        $report->management = $this->getManagement($employee, $year, $om_repository);
+        $report->management = $this->getManagement($employee, $year, $om_repository, $entityManager);
         foreach ($objectives as $objective) {
             $property = 'objectives' . $objective->getType();
             $objective->status = $report->management->getStatus();
@@ -81,7 +83,7 @@ class MBOController extends AbstractController
                 $report->management->statusPrev();
                 //$this->notify($report->management, $p_repository, $mailer);
             }
-            $this->getDoctrine()->getManager()->flush();
+            $entityManager->flush();
             $param = ['year' => $year,'employee' => $employee->getId()];
             return $this->redirectToRoute('mbo', $param);
         }
@@ -149,7 +151,12 @@ class MBOController extends AbstractController
       */
     }
 
-    function getManagement($employee, $year, ObjectiveManagementRepository $repository) {
+    function getManagement(
+        $employee, 
+        $year, 
+        ObjectiveManagementRepository $repository,
+        EntityManagerInterface $entityManager
+    ) {
         $management = $repository->findOneBy(['for_employee' => $employee, 'year' => $year]);
         if (!$management) {
             $management = new ObjectiveManagement();
@@ -157,7 +164,7 @@ class MBOController extends AbstractController
             $management->setForEmployee($employee);
             $management->setByManager($this->getUser());
             $management->setYear($year);
-            $this->getDoctrine()->getManager()->persist($management);
+            $entityManager->persist($management);
         }
         return $management;
     }

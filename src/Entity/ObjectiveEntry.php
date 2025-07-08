@@ -6,77 +6,55 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Event\PreFlushEventArgs;
 use App\Validator as MBOValidator;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Repository\ObjectiveEntryRepository;
+use App\Entity\Person;
+use App\Entity\QuadWeight;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\ObjectiveEntryRepository")
- * @ORM\HasLifecycleCallbacks()
- * @MBOValidator\MBOWeight(groups={"single_update"})
- */
-
+#[MBOValidator\MBOWeight(groups: array("single_update"))]
+#[ORM\HasLifecycleCallbacks()]
+#[ORM\Entity(repositoryClass: ObjectiveEntryRepository::class)]
 class ObjectiveEntry
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id()]
+    #[ORM\GeneratedValue()]
+    #[ORM\Column(type: "integer")]
     private $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Person", inversedBy="objective_entries")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\ManyToOne(targetEntity: Person::class, inversedBy: "objective_entries")]
+    #[ORM\JoinColumn(nullable: false)]
     private $by_manager;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Person")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\ManyToOne(targetEntity: Person::class)]
+    #[ORM\JoinColumn(nullable: false)]
     private $for_employee;
 
-    /**
-     * @ORM\Column(type="smallint")
-     */
+    #[ORM\Column(type: "smallint")]
     private $year;
 
-    /**
-     * @ORM\Column(type="string", length=64)
-     * @Assert\Choice({"Direct", "Indirect", "Infrastructure"})
-     */
+    #[ORM\Column(type: "string", length: 64)]
+    #[Assert\Choice(array("Direct", "Indirect", "Infrastructure"))]
     private $Type;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=false)
-     */
+    #[ORM\Column(type: "string", length: 255, nullable: false)]
     private $subject;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: "text", nullable: true)]
     private $description;
 
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     * @Assert\GreaterThanOrEqual(0)
-     * @Assert\LessThanOrEqual(100)
-     */
+    #[ORM\Column(type: "float", nullable: true)]
+    #[Assert\GreaterThanOrEqual(0)]
+    #[Assert\LessThanOrEqual(100)]
     private $weight;
 
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     * @Assert\GreaterThanOrEqual(0)
-     * @Assert\LessThanOrEqual(100)
-     */
+    #[ORM\Column(type: "float", nullable: true)]
+    #[Assert\GreaterThanOrEqual(0)]
+    #[Assert\LessThanOrEqual(100)]
     private $achieve;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\QuadWeight", cascade={"persist", "remove"})
-     */
+    #[ORM\ManyToOne(targetEntity: QuadWeight::class, cascade: array("persist", "remove"))]
     private $quad_weight;
 
-    /**
-     * @ORM\PreFlush
-     */
+    #[ORM\PreFlush]
     public function removeEmptyQuadWeight(PreFlushEventArgs $event) {
         if (!$this->quad_weight) {
             return;
@@ -87,7 +65,7 @@ class ObjectiveEntry
                 return;
             }
         }
-        $event->getEntityManager()->remove($this->quad_weight);
+        $event->getObjectManager()->remove($this->quad_weight);
         $this->quad_weight = NULL;
     }
 

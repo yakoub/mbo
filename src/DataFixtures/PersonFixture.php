@@ -5,21 +5,18 @@ namespace App\DataFixtures;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\Person;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class PersonFixture extends Fixture
 {
-    private $pass_encoder;
-
-    public function __construct(UserPasswordEncoderInterface $pass_encoder) {
-      $this->pass_encoder = $pass_encoder;
+    public function __construct(private UserPasswordHasherInterface $pass_hasher) {
     }
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         foreach ([1, 2] as $f) {
           $first = new Person();
           $first->setName('manager-' . $f);
-          $first->setPassword($this->pass_encoder->encodePassword(
+          $first->setPassword($this->pass_hasher->hashPassword(
             $first,
             'pass-' . $f,
           ));
@@ -32,7 +29,7 @@ class PersonFixture extends Fixture
           foreach (range(1, 10) as $s) {
             $second = new Person();
             $second->setName("manager-$f-$s");
-            $second->setPassword($this->pass_encoder->encodePassword(
+            $second->setPassword($this->pass_hasher->hashPassword(
               $second,
               "pass-$f-$s",
             ));
@@ -46,7 +43,7 @@ class PersonFixture extends Fixture
             foreach (range(1, 5) as $t) {
               $third = new Person();
               $third->setName("employee-$f-$s-$t");
-              $third->setPassword($this->pass_encoder->encodePassword(
+              $third->setPassword($this->pass_hasher->hashPassword(
                 $third,
                 "pass-$f-$s-$t",
               ));

@@ -3,37 +3,26 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\QuadWeightRepository;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\QuadWeightRepository")
- */
+#[ORM\Entity(repositoryClass: QuadWeightRepository::class)]
 class QuadWeight
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id()]
+    #[ORM\GeneratedValue()]
+    #[ORM\Column(type: "integer")]
     private $id;
 
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     */
+    #[ORM\Column(type: "float", nullable: true)]
     private $first;
 
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     */
+    #[ORM\Column(type: "float", nullable: true)]
     private $second;
 
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     */
+    #[ORM\Column(type: "float", nullable: true)]
     private $third;
 
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     */
+    #[ORM\Column(type: "float", nullable: true)]
     private $fourth;
 
     public function getId()

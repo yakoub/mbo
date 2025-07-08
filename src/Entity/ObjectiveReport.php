@@ -3,9 +3,7 @@
 namespace App\Entity;
 use App\Validator as MBOValidator;
 
-/**
- * @MBOValidator\MBOReport(groups={"report"})
- */
+#[MBOValidator\MBOReport(groups: array("report"))]
 class ObjectiveReport
 {
     private $current_user;

@@ -4,76 +4,54 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use App\Repository\PersonRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\PersonRepository")
- */
-class Person implements UserInterface
+#[ORM\Entity(repositoryClass: PersonRepository::class)]
+class Person implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: "integer")]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: "string", length: 255)]
     private $name;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: "string", length: 255)]
     private $email;
 
 
     /**
      * @var string The hashed password
-     * @ORM\Column(type="string")
      */
+    #[ORM\Column(type: "string")]
     private $password;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Person", mappedBy="manager")
-     */
+    #[ORM\OneToMany(targetEntity: self::class, mappedBy: "manager")]
     private $employees;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Person", inversedBy="employees")
-     */
+    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: "employees")]
     private $manager;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ObjectiveEntry", mappedBy="by_manager")
-     */
+    #[ORM\OneToMany(targetEntity: "App\Entity\ObjectiveEntry", mappedBy: "by_manager")]
     private $objective_entries;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: "string", length: 255, nullable: true)]
     private $full_name;
 
-    /**
-     * @ORM\Column(type="string", length=64, nullable=true)
-     */
+    #[ORM\Column(type: "string", length: 64, nullable: true)]
     private $ldap_name;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: "string", length: 255, nullable: true)]
     private $title;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: "boolean")]
     private $active = false;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Person")
-     */
+    #[ORM\ManyToOne(targetEntity: self::class)]
     private $reviewer;
 
     public function __construct()
@@ -85,6 +63,11 @@ class Person implements UserInterface
     public function getId()
     {
         return $this->id;
+    }
+
+    public function getUserIdentifier(): string
+    {
+      return $this->getName();
     }
 
     public function getName(): ?string
@@ -103,7 +86,7 @@ class Person implements UserInterface
         return $this->name;
     }
 
-    public function getPassword() : string 
+    public function getPassword() : ?string 
     {
       return (string) $this->password;
     }
@@ -113,7 +96,7 @@ class Person implements UserInterface
       return $this;
     }
     public function getSalt() {}
-    public function getRoles() {
+    public function getRoles(): array {
         static $admins = [];
         if (!$admins) {
             $admins = ['yakoub.a', 'manager-1'];
@@ -124,7 +107,7 @@ class Person implements UserInterface
         }
         return $roles;
     }
-    public function eraseCredentials() {}
+    public function eraseCredentials(): void {}
 
     public function getEmail(): ?string
     {

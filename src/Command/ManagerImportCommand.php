@@ -2,6 +2,7 @@
 
 namespace App\Command;
 
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -13,18 +14,14 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Person;
 use App\Repository\PersonRepository;
 
+
+#[AsCommand(
+    name: 'mbo:import:manager',
+    description: 'import managers over ldap',
+)]
 class ManagerImportCommand extends Command
 {
     use LdapImportTrait;
-
-    protected static $defaultName = 'mbo:import:manager';
-
-    protected function configure()
-    {
-        $this
-            ->setDescription('import managers over ldap')
-        ;
-    }
 
     protected $manager;
     protected $repository;
@@ -43,7 +40,7 @@ class ManagerImportCommand extends Command
         return $this->repository;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $conn = $this->ldap();
         if (!$conn) {

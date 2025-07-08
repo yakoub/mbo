@@ -5,37 +5,31 @@ namespace App\Controller;
 use App\Entity\ObjectiveManagement;
 use App\Form\ObjectiveManagementType;
 use App\Repository\ObjectiveManagementRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
-/**
- * @Route("/objective-management")
- */
+#[Route("/objective-management")]
 class ObjectiveManagementController extends AbstractController
 {
-    /**
-     * @Route("/", name="objective_management_index", methods="GET")
-     */
+    #[Route("/", name: "objective_management_index", methods: "GET")]
     public function index(ObjectiveManagementRepository $objectiveManagementRepository): Response
     {
         return $this->render('objective_management/index.html.twig', ['objective_managements' => $objectiveManagementRepository->findAll()]);
     }
 
-    /**
-     * @Route("/new", name="objective_management_new", methods="GET|POST")
-     */
-    public function new(Request $request): Response
+    #[Route("/new", name: "objective_management_new", methods: "GET|POST")]
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $objectiveManagement = new ObjectiveManagement();
         $form = $this->createForm(ObjectiveManagementType::class, $objectiveManagement);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($objectiveManagement);
-            $em->flush();
+            $entityManager->persist($objectiveManagement);
+            $entityManager->flush();
 
             return $this->redirectToRoute('objective_management_index');
         }
@@ -46,24 +40,24 @@ class ObjectiveManagementController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="objective_management_show", methods="GET")
-     */
+    #[Route("/{id}", name: "objective_management_show", methods: "GET")]
     public function show(ObjectiveManagement $objectiveManagement): Response
     {
         return $this->render('objective_management/show.html.twig', ['objective_management' => $objectiveManagement]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="objective_management_edit", methods="GET|POST")
-     */
-    public function edit(Request $request, ObjectiveManagement $objectiveManagement): Response
+    #[Route("/{id}/edit", name: "objective_management_edit", methods: "GET|POST")]
+    public function edit(
+      Request $request, 
+      ObjectiveManagement $objectiveManagement,
+      EntityManagerInterface $entityManager
+    ): Response
     {
         $form = $this->createForm(ObjectiveManagementType::class, $objectiveManagement);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $entityManager->flush();
 
             return $this->redirectToRoute('objective_management_edit', ['id' => $objectiveManagement->getId()]);
         }
@@ -74,15 +68,16 @@ class ObjectiveManagementController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="objective_management_delete", methods="DELETE")
-     */
-    public function delete(Request $request, ObjectiveManagement $objectiveManagement): Response
+    #[Route("/{id}", name: "objective_management_delete", methods: "DELETE")]
+    public function delete(
+      Request $request,
+      ObjectiveManagement $objectiveManagement,
+      EntityManagerInterface $entityManager
+    ): Response
     {
         if ($this->isCsrfTokenValid('delete'.$objectiveManagement->getId(), $request->request->get('_token'))) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($objectiveManagement);
-            $em->flush();
+            $entityManager->remove($objectiveManagement);
+            $entityManager->flush();
         }
 
         return $this->redirectToRoute('objective_management_index');

@@ -4,54 +4,40 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Repository\objectivemanagementrepository;
+use App\Entity\Person;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\ObjectiveManagementRepository")
- */
+#[ORM\Entity(repositoryClass: objectivemanagementrepository::class)]
 class ObjectiveManagement
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id()]
+    #[ORM\GeneratedValue()]
+    #[ORM\Column(type: "integer")]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=64)
-     * @Assert\Choice({"work_in_progress", "under_review", "require_approval", "approved"})
-     */
+    #[ORM\Column(type: "string", length: 64)]
+    #[Assert\Choice(array("work_in_progress", "under_review", "require_approval", "approved"))]
     private $status;
 
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     * @Assert\GreaterThanOrEqual(0)
-     * @Assert\LessThanOrEqual(100)
-     */
+    #[ORM\Column(type: "float", nullable: true)]
+    #[Assert\GreaterThanOrEqual(0)]
+    #[Assert\LessThanOrEqual(100)]
     private $vp_weight;
 
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     * @Assert\GreaterThanOrEqual(0)
-     * @Assert\LessThanOrEqual(100)
-     */
+    #[ORM\Column(type: "float", nullable: true)]
+    #[Assert\GreaterThanOrEqual(0)]
+    #[Assert\LessThanOrEqual(100)]
     private $ceo_weight;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Person")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\ManyToOne(targetEntity: Person::class)]
+    #[ORM\JoinColumn(nullable: false)]
     private $for_employee;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Person", inversedBy="objective_entries")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\ManyToOne(targetEntity: Person::class, inversedBy: "objective_entries")]
+    #[ORM\JoinColumn(nullable: false)]
     private $by_manager;
 
-    /**
-     * @ORM\Column(type="smallint")
-     */
+    #[ORM\Column(type: "smallint")]
     private $year;
 
     public function getId()

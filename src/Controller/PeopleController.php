@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Person;
 use App\Repository\PersonRepository;
+use Doctrine\ORM\EntityManagerInterface;
 
 class PeopleController extends AbstractController
 {
@@ -24,7 +25,7 @@ class PeopleController extends AbstractController
         return $this->render('people_admin/tree.html.twig', $context);
     }
 
-    public function activate_children(Person $person) {
+    public function activate_children(Person $person, EntityManagerInterface $entityManager) {
         $employees = $person->getEmployees();
         if ($employees->isEmpty()) {
             return $this->json($person->getId(), 204);
@@ -33,7 +34,7 @@ class PeopleController extends AbstractController
             $employee->setActive(true);
         }
         try {
-            $this->getDoctrine()->getManager()->flush();
+            $entityManager->flush();
         }
         catch (\Exception $e) {
             return $this->json($person->getId(), 500);
