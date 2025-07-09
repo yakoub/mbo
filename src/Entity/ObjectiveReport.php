@@ -16,7 +16,7 @@ class ObjectiveReport
     public $objectivesInfrastructure = [];
 
     public function getUserRole() {
-        if ($this->current_user->getLdapName() == 'Guy Sella,CEO') {
+        if (empty($this->current_user->getManager())) {
             return 'ceo';
         }
         $by_manager = $this->management->getByManager();

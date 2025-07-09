@@ -11,8 +11,25 @@ class PersonFixture extends Fixture
 {
     public function __construct(private UserPasswordHasherInterface $pass_hasher) {
     }
+
+    function createRoot(ObjectManager $manager) {
+      $root = new Person();
+      $root->setName('manager-root');
+      $root->setPassword($this->pass_hasher->hashPassword(
+        $root,
+        'pass-root',
+      ));
+
+      $root->setFullName('manager-root');
+      $root->setEmail($root->getName() . '@dd.d');
+      $root->setActive(true);
+      $manager->persist($root);
+      return $root;
+    }
+
     public function load(ObjectManager $manager): void
     {
+        $root = $this->createRoot($manager);
         foreach ([1, 2] as $f) {
           $first = new Person();
           $first->setName('manager-' . $f);
@@ -24,6 +41,7 @@ class PersonFixture extends Fixture
           $first->setFullName('manager-' . $f);
           $first->setEmail($first->getName() . '@dd.d');
           $first->setActive(true);
+          $first->setManager($root);
           $manager->persist($first);
 
           foreach (range(1, 10) as $s) {
