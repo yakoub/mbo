@@ -1,5 +1,5 @@
 # Management by objective 
-and organizational application containing user hirarchy which allows managers to track project objectives of their subordinate employees .
+An organizational application containing user hirarchy which allows managers to track project objectives of their subordinate employees .
 
 ## per year objectives
 provides an html form in table structure and calculates percetages interactivly like spreadsheat .
